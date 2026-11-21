@@ -164,6 +164,9 @@ section{padding:64px 0}
 .gallery figcaption{position:absolute;left:0;right:0;bottom:0;padding:24px 12px 10px;color:#fff;font-weight:600;font-size:15px;background:linear-gradient(transparent,rgba(0,0,0,.6))}
 .gallery figcaption span{display:block;font-weight:400;font-size:13px;opacity:.9}
 @media (max-width:700px){.gallery{grid-template-columns:1fr 1fr}.gallery .g-big{grid-row:auto;aspect-ratio:4/3}}
+.gallery.chiusa figure:nth-child(n+4){display:none}
+@media (max-width:700px){.gallery.chiusa figure:nth-child(n+4){display:block}.gallery.chiusa figure:nth-child(n+6){display:none}}
+.gallery-actions{margin-top:16px}
 .drone-video{margin-top:28px;border-radius:var(--r);overflow:hidden;background:#000}
 .drone-video video{width:100%;aspect-ratio:16/9}
 .about-photo{border-radius:var(--r);overflow:hidden}
@@ -333,7 +336,7 @@ footer p{margin:4px 0}
       </div>
       <p>Piante fiorite in vaso, coltivate stagione per stagione nel vivaio sopra Nervi.</p>
     </div>
-    <div class="gallery">
+    <div class="gallery chiusa" id="serreGrid">
       <figure class="g-big"><img src="media/ranuncoli.jpg" alt="Ranuncoli gialli, rossi e rosa con il mare di Nervi sullo sfondo" loading="lazy"><figcaption>Ranuncoli <span>primavera</span></figcaption></figure>
       <figure><img src="media/ciclamini.jpg" alt="File di ciclamini rossi e bianchi nella serra del vivaio" loading="lazy"><figcaption>Ciclamini <span>autunno e inverno</span></figcaption></figure>
       <figure><img src="media/margherite.jpg" alt="Margherite rosa, bianche e gialle in serra, con la collina sullo sfondo" loading="lazy"><figcaption>Margherite <span>primavera</span></figcaption></figure>
@@ -344,6 +347,7 @@ footer p{margin:4px 0}
       <figure><img src="media/ciclamini-bianchi.jpg" alt="Serra piena di ciclamini bianchi in fiore" loading="lazy"><figcaption>Ciclamini bianchi <span>autunno e inverno</span></figcaption></figure>
       <figure><img src="media/piantine.jpg" alt="File di piantine appena rinvasate nella serra" loading="lazy"><figcaption>Le piantine <span>si parte da qui</span></figcaption></figure>
     </div>
+    <div class="gallery-actions"><button type="button" class="btn btn-line" id="serreToggle" aria-controls="serreGrid" aria-expanded="false">Vedi tutte le foto</button></div>
     <a class="meteo" href="https://app.weathercloud.net/d4384398607" rel="noopener">
       <span class="meteo-txt"><strong>Il meteo in vivaio, in diretta</strong>Dalla nostra stazione meteo sopra Nervi. Tocca per vedere tutti i dati.</span>
       <img class="meteo-img" src="https://app.weathercloud.net/device/sticker/4384398607" alt="Dati meteo in tempo reale della stazione del vivaio" loading="lazy">
@@ -834,6 +838,19 @@ compToggle.addEventListener("click", ()=>{
   compToggle.textContent = aperta ? "Mostra meno foto" : `Vedi tutte le ${nComp} foto`;
   if (!aperta) document.getElementById("composizioni").scrollIntoView({block:"start"});
 });
+
+/* ---- Galleria serre: mostra tutte / meno ---- */
+(function(){
+  const g=document.getElementById("serreGrid"), b=document.getElementById("serreToggle");
+  const n=g.querySelectorAll("figure").length;
+  b.textContent=`Vedi tutte le ${n} foto`;
+  b.addEventListener("click",()=>{
+    const aperta = g.classList.toggle("chiusa")===false;
+    b.setAttribute("aria-expanded",aperta);
+    b.textContent = aperta ? "Mostra meno foto" : `Vedi tutte le ${n} foto`;
+    if(!aperta) document.getElementById("vivaio").scrollIntoView({block:"start"});
+  });
+})();
 
 /* ---- Menu a tre linee ---- */
 const menuBtn = document.getElementById("menuBtn"), menuPanel = document.getElementById("menuPanel");
