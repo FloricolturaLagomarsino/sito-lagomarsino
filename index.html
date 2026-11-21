@@ -166,6 +166,10 @@ section{padding:64px 0}
 .euroflora.e25{grid-template-columns:1fr 1fr;height:520px}
 @media (max-width:700px){.euroflora.e25 img:first-child{grid-column:auto}.euroflora.e25 img{aspect-ratio:3/4}}
 
+.comp-grid{columns:3 260px;column-gap:12px}
+.comp-grid img{width:100%;height:auto;margin:0 0 12px;border-radius:var(--r);break-inside:avoid;display:block}
+@media (max-width:700px){.comp-grid{columns:2;column-gap:8px}.comp-grid img{margin-bottom:8px}}
+
 /* Social */
 .social{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .feed{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
@@ -229,6 +233,7 @@ footer p{margin:4px 0}
     <nav class="nav" aria-label="Menu principale">
       <a href="#chi-siamo">Chi siamo</a>
       <a href="#vivaio">Le serre</a>
+      <a href="#composizioni">Composizioni</a>
       <a href="#novita">Novità</a>
       <a href="#negozi">Negozi e orari</a>
       <a href="#ordina">Ordini</a>
@@ -315,6 +320,31 @@ footer p{margin:4px 0}
       <figure><img src="media/gerani-rosa.jpg" alt="Gerani rosa e bianchi" loading="lazy"><figcaption>Gerani parigini <span>primavera ed estate</span></figcaption></figure>
       <figure><img src="media/serra-gerani.jpg" alt="Interno di una serra con gerani in crescita" loading="lazy"><figcaption>Le serre <span>tutto l'anno</span></figcaption></figure>
     </div>
+  </div>
+</section>
+
+<section id="composizioni">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="kicker">Nei nostri negozi</div>
+        <h2>Composizioni e cerimonie</h2>
+      </div>
+      <p>Mazzi, bouquet da sposa, addobbi per matrimoni, battesimi e cerimonie, composizioni per le feste. Le prepariamo in tutti i nostri negozi, con consegna a domicilio.</p>
+    </div>
+    <div class="comp-grid">
+      <img src="media/comp-chiesa-bianco.jpg" alt="Chiesa addobbata con composizioni di gypsophila, lisianthus bianchi e verde" width="1200" height="801" loading="lazy">
+      <img src="media/comp-bouquet-craspedia.jpg" alt="Bouquet con lisianthus bianchi, craspedia gialle, camomilla ed eucalipto" width="777" height="1036" loading="lazy">
+      <img src="media/comp-altare-rose.jpg" alt="Composizione per l'altare con rose rosa, lisianthus bianchi e foglie di aspidistra" width="1200" height="900" loading="lazy">
+      <img src="media/comp-panca.jpg" alt="Decorazione per panca con lisianthus bianchi, gypsophila e asparagus" width="801" height="1200" loading="lazy">
+      <img src="media/comp-chiesa-ortensie.jpg" alt="Chiesa addobbata con ortensie bianche, felci e nastri sulle panche" width="1200" height="900" loading="lazy">
+      <img src="media/comp-bouquet-succulente.jpg" alt="Bouquet da sposa di piante grasse con bacche bianche e gypsophila" width="1200" height="800" loading="lazy">
+      <img src="media/comp-cascata-rose.jpg" alt="Cascata di rose rosa e lisianthus bianchi ai piedi dell'altare" width="900" height="1200" loading="lazy">
+      <img src="media/comp-natale.jpg" alt="Composizione natalizia con ciclamini, rose, ortensia, bacche rosse e rami" width="900" height="1200" loading="lazy">
+      <img src="media/comp-rose-rosa.jpg" alt="Composizione di rose rosa, lisianthus e gypsophila" width="900" height="1200" loading="lazy">
+      <img src="media/comp-lisianthus.jpg" alt="Mazzo di lisianthus bianchi e viola con eucalipto e gypsophila" width="1200" height="801" loading="lazy">
+    </div>
+    <div style="margin-top:24px"><a class="btn btn-wa" href="#ordina" data-cerimonia>Chiedi un preventivo su WhatsApp</a></div>
   </div>
 </section>
 
@@ -719,6 +749,8 @@ function setupOrder(){
     document.getElementById("orderNumber").textContent = "Il messaggio arriva al numero +" + n.whatsapp.replace(/^39/,"39 ");
   }
   sel.addEventListener("change",update); msg.addEventListener("input",update);
+  const cer = document.querySelector("[data-cerimonia]");
+  if (cer) cer.addEventListener("click",()=>{ const c=[...chips].find(x=>x.dataset.v.includes("cerimonia")); if(c) c.click(); });
   update();
   const general = waLink(CONFIG.whatsapp, "Buongiorno, vorrei informazioni: ");
   document.getElementById("fab").href = general;
