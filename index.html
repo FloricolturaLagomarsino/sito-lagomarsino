@@ -178,9 +178,11 @@ section{padding:64px 0}
 .euroflora.e25{grid-template-columns:1fr 1fr;height:520px}
 @media (max-width:700px){.euroflora.e25 img:first-child{grid-column:auto}.euroflora.e25 img{aspect-ratio:3/4}}
 
-.comp-grid{columns:3 260px;column-gap:12px}
-.comp-grid img{width:100%;height:auto;margin:0 0 12px;border-radius:var(--r);break-inside:avoid;display:block}
-@media (max-width:700px){.comp-grid{columns:2;column-gap:8px}.comp-grid img{margin-bottom:8px}}
+.comp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.comp-grid img{width:100%;height:100%;aspect-ratio:4/5;object-fit:cover;border-radius:var(--r);display:block}
+.comp-grid.chiusa img:nth-child(n+5){display:none}
+.comp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+@media (max-width:700px){.comp-grid{grid-template-columns:1fr 1fr;gap:8px}}
 
 .meteo{margin-top:16px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;padding:16px 18px;border-radius:var(--r);border:1px solid var(--line);background:var(--surface);color:var(--muted);text-decoration:none;font-size:14px;line-height:1.4}
 .meteo:hover{border-color:var(--sea)}
@@ -355,7 +357,7 @@ footer p{margin:4px 0}
       </div>
       <p>Mazzi, bouquet da sposa, addobbi per matrimoni, battesimi e cerimonie, composizioni per le feste. Le prepariamo in tutti i nostri negozi, con consegna a domicilio.</p>
     </div>
-    <div class="comp-grid">
+    <div class="comp-grid chiusa" id="compGrid">
       <img src="media/comp-navata-pampas.jpg" alt="Navata con decorazioni di pampas, rose rosa e lisianthus sulle panche" width="900" height="1200" loading="lazy">
       <img src="media/comp-chiesa-bianco.jpg" alt="Chiesa addobbata con composizioni di gypsophila, lisianthus bianchi e verde" width="1200" height="801" loading="lazy">
       <img src="media/comp-bouquet-craspedia.jpg" alt="Bouquet con lisianthus bianchi, craspedia gialle, camomilla ed eucalipto" width="777" height="1036" loading="lazy">
@@ -373,7 +375,10 @@ footer p{margin:4px 0}
       <img src="media/comp-lisianthus.jpg" alt="Mazzo di lisianthus bianchi e viola con eucalipto e gypsophila" width="1200" height="801" loading="lazy">
       <img src="media/comp-cascata-lilla.jpg" alt="Cascata di rose bianche, rosa e lilla con gypsophila" width="675" height="1200" loading="lazy">
     </div>
-    <div style="margin-top:24px"><a class="btn btn-wa" href="#ordina" data-cerimonia>Chiedi un preventivo su WhatsApp</a></div>
+    <div class="comp-actions">
+      <button type="button" class="btn btn-line" id="compToggle" aria-controls="compGrid" aria-expanded="false">Vedi tutte le foto</button>
+      <a class="btn btn-wa" href="#ordina" data-cerimonia>Chiedi un preventivo su WhatsApp</a>
+    </div>
   </div>
 </section>
 
@@ -806,6 +811,17 @@ if (!matchMedia("(prefers-reduced-motion: reduce)").matches){ const pr = v.play 
 if (matchMedia("(prefers-reduced-motion: reduce)").matches) v.removeAttribute("autoplay");
 
 if (CONFIG.avviso){ document.getElementById("noticeText").textContent = CONFIG.avviso; document.getElementById("notice").hidden = false; }
+
+/* ---- Galleria composizioni: mostra tutte / meno ---- */
+const compGrid = document.getElementById("compGrid"), compToggle = document.getElementById("compToggle");
+const nComp = compGrid.querySelectorAll("img").length;
+compToggle.textContent = `Vedi tutte le ${nComp} foto`;
+compToggle.addEventListener("click", ()=>{
+  const aperta = compGrid.classList.toggle("chiusa") === false;
+  compToggle.setAttribute("aria-expanded", aperta);
+  compToggle.textContent = aperta ? "Mostra meno foto" : `Vedi tutte le ${nComp} foto`;
+  if (!aperta) document.getElementById("composizioni").scrollIntoView({block:"start"});
+});
 
 /* ---- Menu a tre linee ---- */
 const menuBtn = document.getElementById("menuBtn"), menuPanel = document.getElementById("menuPanel");
