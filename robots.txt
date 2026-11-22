@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://floricolturalagomarsino.it/sitemap.xml
