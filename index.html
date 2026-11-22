@@ -226,6 +226,14 @@ section{padding:64px 0}
 .famiglia-strip figcaption{position:absolute;left:0;right:0;bottom:0;padding:24px 10px 8px;color:#fff;font-size:13px;font-weight:600;background:linear-gradient(transparent,rgba(0,0,0,.6))}
 @media (max-width:900px){.famiglia-strip{grid-template-columns:repeat(5,70%);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px}.famiglia-strip figure{scroll-snap-align:start}}
 
+.cookie{position:fixed;left:12px;right:12px;bottom:12px;z-index:40;max-width:640px;margin:0 auto;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:var(--r);box-shadow:0 10px 30px rgba(0,0,0,.18);padding:14px 16px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.cookie[hidden]{display:none}
+.cookie p{margin:0;font-size:14px;line-height:1.45;flex:1 1 280px}
+.cookie-btns{display:flex;gap:8px}
+.cookie-btns .btn{padding:9px 16px;font-size:14px}
+.map-note{font-size:12px;color:var(--muted)}
+.legal a{color:inherit}
+
 /* Social */
 .social{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .feed{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
@@ -417,7 +425,7 @@ footer p{margin:4px 0}
     <div class="gallery-actions"><button type="button" class="btn btn-line" id="serreToggle" aria-controls="serreGrid" aria-expanded="false">Vedi tutte le foto</button></div>
     <a class="meteo" href="https://app.weathercloud.net/d4384398607" rel="noopener">
       <span class="meteo-txt"><strong>Il meteo in vivaio, in diretta</strong>Dalla nostra stazione meteo sopra Nervi. Tocca per vedere tutti i dati.</span>
-      <img class="meteo-img" src="https://app.weathercloud.net/device/sticker/4384398607" alt="Dati meteo in tempo reale della stazione del vivaio" loading="lazy">
+      <img class="meteo-img" data-src="https://app.weathercloud.net/device/sticker/4384398607" hidden alt="Dati meteo in tempo reale della stazione del vivaio" loading="lazy">
     </a>
   </div>
 </section>
@@ -608,9 +616,17 @@ footer p{margin:4px 0}
 <footer id="contatti">
   <div class="wrap">
     <div class="cols" id="footCols"></div>
-    <p class="legal">© <span id="year"></span> Floricoltura Lagomarsino Nicolò di Lagomarsino Giulia · Via dei Floricoltori 23r, 16167 Genova Nervi · P.IVA 02706290992</p>
+    <p class="legal">© <span id="year"></span> Floricoltura Lagomarsino Nicolò di Lagomarsino Giulia · Via dei Floricoltori 23r, 16167 Genova Nervi · P.IVA 02706290992 · <a href="privacy.html">Privacy e cookie</a> · <a href="#" id="cookieManage">Gestisci i cookie</a></p>
   </div>
 </footer>
+
+<div class="cookie" id="cookieBar" role="dialog" aria-live="polite" aria-label="Cookie" hidden>
+  <p>Usiamo solo cookie tecnici. Il riquadro meteo è un contenuto esterno: lo mostriamo solo se accetti. Le mappe di Google si caricano solo quando le apri. <a href="privacy.html">Privacy e cookie</a></p>
+  <div class="cookie-btns">
+    <button type="button" class="btn btn-line" id="cookieNo">Solo necessari</button>
+    <button type="button" class="btn btn-wa" id="cookieSi">Accetta</button>
+  </div>
+</div>
 
 <a class="fab" id="fab" href="#ordina" aria-label="Scrivici su WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.4Z"/></svg></a>
 
@@ -828,7 +844,7 @@ function renderStores(){
       <p class="src" data-src="${n.id}">Orari indicativi · in caso di dubbio chiamaci</p>
       ${n.arrivo?`<div class="arrivo"><strong>Come arrivare</strong>${n.arrivo}</div>`:""}
       <div class="map" data-map="${n.id}">
-        <div class="map-cover">${icon.pin}<button type="button" class="btn btn-line" data-loadmap="${n.id}">Mostra la mappa</button></div>
+        <div class="map-cover">${icon.pin}<button type="button" class="btn btn-line" data-loadmap="${n.id}">Mostra la mappa</button><small class="map-note">La mappa è di Google e può usare i suoi cookie</small></div>
       </div>
       <p class="phones">${n.telefoni.length ? "Tel. "+n.telefoni.map(x=>`<a href="${telHref(x)}">${x}</a>`).join(" · ") : "Telefono in arrivo"}</p>
       <div class="store-actions">
@@ -1001,6 +1017,24 @@ compToggle.addEventListener("click", ()=>{
   document.querySelectorAll(".stag").forEach(el=>{
     if (el.dataset.mesi.split(",").map(Number).includes(mese)) el.classList.add("ora");
   });
+})();
+
+/* ---- Cookie ---- */
+(function(){
+  const bar = document.getElementById("cookieBar");
+  let scelta = null;
+  try { scelta = localStorage.getItem("cookieScelta"); } catch(e) {}
+  function applica(){
+    if (scelta === "tutti") document.querySelectorAll("img[data-src]").forEach(i=>{ i.src = i.dataset.src; i.hidden = false; });
+  }
+  function salva(v){
+    scelta = v; try { localStorage.setItem("cookieScelta", v); } catch(e) {}
+    bar.hidden = true; applica();
+  }
+  if (!scelta) bar.hidden = false; else applica();
+  document.getElementById("cookieSi").addEventListener("click", ()=>salva("tutti"));
+  document.getElementById("cookieNo").addEventListener("click", ()=>salva("necessari"));
+  document.getElementById("cookieManage").addEventListener("click", e=>{ e.preventDefault(); bar.hidden = false; });
 })();
 
 /* ---- Menu a tre linee ---- */
