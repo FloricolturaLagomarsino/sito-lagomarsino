@@ -220,6 +220,12 @@ section{padding:64px 0}
 .punta ul{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
 .punta li{font-size:14px;font-weight:600;padding:6px 12px;border-radius:999px;background:var(--surface);border:1px solid var(--line)}
 
+.famiglia-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:32px}
+.famiglia-strip figure{margin:0;position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:3/4;background:var(--line)}
+.famiglia-strip img{width:100%;height:100%;object-fit:cover}
+.famiglia-strip figcaption{position:absolute;left:0;right:0;bottom:0;padding:24px 10px 8px;color:#fff;font-size:13px;font-weight:600;background:linear-gradient(transparent,rgba(0,0,0,.6))}
+@media (max-width:900px){.famiglia-strip{grid-template-columns:repeat(5,70%);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px}.famiglia-strip figure{scroll-snap-align:start}}
+
 /* Social */
 .social{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .feed{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
@@ -331,6 +337,15 @@ footer p{margin:4px 0}
       </div>
     </div>
     <figure class="about-photo" style="margin:0"><img src="media/famiglia.jpg" alt="La famiglia Lagomarsino nel vivaio" loading="lazy"></figure>
+  </div>
+  <div class="wrap">
+    <div class="famiglia-strip">
+      <figure><img src="media/lavoro-giulia.jpg" alt="Giulia prepara una composizione natalizia in negozio" loading="lazy"><figcaption>Giulia prepara una composizione</figcaption></figure>
+      <figure><img src="media/lavoro-rinvasi.jpg" alt="Al lavoro nel capannone del vivaio, tra terriccio e piante" loading="lazy"><figcaption>Al lavoro nel capannone</figcaption></figure>
+      <figure><img src="media/lavoro-bulbi.jpg" alt="Il nonno insegna a un nipotino a piantare i bulbi di tulipano" loading="lazy"><figcaption>I bulbi di tulipano, con il nonno</figcaption></figure>
+      <figure><img src="media/lavoro-annaffiare.jpg" alt="Un nipotino annaffia le piante insieme al nonno" loading="lazy"><figcaption>Si impara presto ad annaffiare</figcaption></figure>
+      <figure><img src="media/vivaio-arcobaleno.jpg" alt="Arcobaleno sopra le serre del vivaio, con il mare di Nervi" loading="lazy"><figcaption>Il vivaio dopo la pioggia</figcaption></figure>
+    </div>
   </div>
   <div class="wrap">
     <div class="drone-video">
