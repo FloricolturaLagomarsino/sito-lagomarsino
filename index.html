@@ -313,9 +313,7 @@ footer p{margin:4px 0}
   <div class="hero-media">
     <div class="hero-fallback" aria-hidden="true"></div>
     <!-- VIDEO DRONE: carica il file nella cartella del sito e sostituisci "video-drone.mp4" -->
-    <video id="heroVideo" autoplay muted loop playsinline preload="auto" aria-hidden="true">
-      <source src="media/drone-hero.mp4" type="video/mp4">
-    </video>
+    <video id="heroVideo" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
   </div>
   <div class="wrap">
     <h1>Fiori e piante coltivati <em>sulle alture di Nervi</em></h1>
@@ -971,6 +969,8 @@ function renderFooter(){
 
 /* ---- Video drone: nascondi la nota quando il video c'è ---- */
 const v = document.getElementById("heroVideo");
+// Telefono: versione 720p più leggera; computer: Full HD. ?v= evita la vecchia copia in memoria.
+v.src = (window.innerWidth < 900 ? "media/drone-hero-m.mp4" : "media/drone-hero.mp4") + "?v=4";
 v.addEventListener("error",()=>v.remove(), true);
 v.addEventListener("playing",()=>v.classList.add("on"));
 v.muted = true;
