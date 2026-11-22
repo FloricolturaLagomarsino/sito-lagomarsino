@@ -193,6 +193,18 @@ section{padding:64px 0}
 .meteo-txt{flex:1 1 220px}
 .meteo-img{max-width:100%;height:auto;border-radius:8px}
 
+.servizi{background:var(--surface);border-top:1px solid var(--line)}
+.serv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.serv{border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;background:var(--paper);border-top:3px solid var(--leaf)}
+.serv h3{font-family:var(--body);font-weight:700;font-size:17px;margin:0 0 6px}
+.serv p{margin:0;font-size:15px;color:var(--muted)}
+.fiere{margin-top:28px;padding:18px 20px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);max-width:640px}
+.fiere p{margin:0 0 8px}
+.fiere ul{margin:0;padding-left:20px;columns:2 220px;column-gap:24px}
+.fiere li{margin:3px 0;break-inside:avoid}
+.arrivo{margin:12px 20px 0;padding:12px 14px;border-radius:10px;background:color-mix(in srgb,var(--leaf) 9%,var(--surface));font-size:14px;line-height:1.45}
+.arrivo strong{display:block;margin-bottom:2px}
+
 /* Social */
 .social{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .feed{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
@@ -258,6 +270,7 @@ footer p{margin:4px 0}
       <a href="#chi-siamo">Chi siamo</a>
       <a href="#vivaio">Le serre</a>
       <a href="#composizioni">Composizioni</a>
+      <a href="#servizi">Servizi</a>
       <a href="#novita">Novità</a>
       <a href="#negozi">Negozi e orari</a>
       <a href="#ordina">Ordini</a>
@@ -276,7 +289,7 @@ footer p{margin:4px 0}
   </div>
   <div class="wrap">
     <h1>Fiori e piante coltivati <em>sulle alture di Nervi</em></h1>
-    <p>Produciamo piante fiorite in vaso nelle nostre serre affacciate sul golfo. Ci trovi al vivaio e nei negozi di Nervi, Albaro e Recco.</p>
+    <p>Da tre generazioni coltiviamo piante fiorite in vaso nelle nostre serre affacciate sul golfo. Ci trovi al vivaio e nei negozi di Nervi, Albaro e Recco.</p>
     <div class="cta">
       <a class="btn btn-wa" data-wa="" href="#ordina"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.4Z"/></svg>Ordina su WhatsApp</a>
       <a class="btn btn-light" href="#negozi">Negozi e orari</a>
@@ -291,13 +304,14 @@ footer p{margin:4px 0}
   <div class="wrap about">
     <div>
       <div class="kicker">Chi siamo</div>
-      <h2 style="font-size:clamp(32px,5vw,46px)">Un vivaio di produzione affacciato sul golfo</h2>
-      <p>La Floricoltura Lagomarsino coltiva piante in vaso, soprattutto da fiore, nelle serre di via dei Floricoltori sopra Nervi. Vendiamo al dettaglio e all'ingrosso, direttamente in azienda, nei negozi di Nervi, Albaro e Recco e nel chiosco di Recco.</p>
-      <p>In primavera vale la pena salire in azienda anche solo per il panorama: le serre in fiore e il golfo di Genova sotto.</p>
+      <h2 style="font-size:clamp(32px,5vw,46px)">Tre generazioni di fiori sopra il mare</h2>
+      <p>Tutto è cominciato circa ottant'anni fa con nonno Eugenio Lagomarsino, che coltivava orchidee in un terreno sul mare tra Quinto e Nervi e le portava a vendere al mercato dei fiori.</p>
+      <p>Oggi in vivaio lavorano suo figlio Antonio, per tutti Tonino, e il nipote Eugenio. La nipote Giulia segue i punti vendita di Nervi, Albaro e Recco.</p>
+      <p>Nelle serre di via dei Floricoltori coltiviamo piante in vaso, soprattutto da fiore, e le vendiamo al dettaglio e all'ingrosso. Dalle serre si vede il mare: vale la pena salire anche solo per il panorama.</p>
       <div class="facts">
+        <div class="fact"><b>80</b><span>anni di storia</span></div>
+        <div class="fact"><b>3</b><span>generazioni</span></div>
         <div class="fact"><b>5</b><span>punti vendita</span></div>
-        <div class="fact"><b>Dettaglio</b><span>e ingrosso</span></div>
-        <div class="fact"><b>Km 0</b><span>coltivato da noi</span></div>
       </div>
     </div>
     <figure class="about-photo" style="margin:0"><img src="media/famiglia.jpg" alt="La famiglia Lagomarsino nel vivaio" loading="lazy"></figure>
@@ -311,8 +325,8 @@ footer p{margin:4px 0}
     <p class="src" style="margin:8px 0 0">Il vivaio visto dal drone</p>
   </div>
   <div class="wrap" style="margin-top:48px">
-    <div class="kicker">Euroflora</div>
-    <h3 style="font-size:clamp(26px,4vw,34px);margin-bottom:8px">Le nostre piante a Euroflora</h3>
+    <div class="kicker">Fiere ed eventi</div>
+    <h3 style="font-size:clamp(26px,4vw,34px);margin-bottom:8px">Le nostre piante a Euroflora e non solo</h3>
     <p style="margin:0 0 18px;color:var(--muted);max-width:60ch"><strong style="color:var(--ink)">2025, Waterfront di Levante.</strong> Un'aiuola fiorita con la mongolfiera di palloncini dove i visitatori si fermavano a fare la foto. Il nostro allestimento ha ricevuto diversi primi premi.</p>
     <div class="euroflora e25">
       <img src="media/euroflora25-2.jpg" alt="Allestimento Floricoltura Lagomarsino a Euroflora 2025: cesta a mongolfiera con palloncini e aiuole fiorite, con i cartellini dei primi premi" loading="lazy">
@@ -323,6 +337,16 @@ footer p{margin:4px 0}
       <img src="media/euroflora-1.jpg" alt="Allestimento Lagomarsino a Euroflora 2022: fontana circondata da margherite bianche, gerani e cesti fioriti" loading="lazy">
       <img src="media/euroflora-2.jpg" alt="Cesti di fiori gialli e bianchi davanti alla fontana, con il mare sullo sfondo" loading="lazy">
       <img src="media/euroflora-3.jpg" alt="Panchina arcobaleno con fioriere di gerani e cesti fioriti appesi ai rami" loading="lazy">
+    </div>
+    <div class="fiere">
+      <p><strong>Dove trovarci, oltre a Euroflora</strong></p>
+      <ul>
+        <li>Fiera Primavera di Genova</li>
+        <li>Mostra mercato Porto Antico Verde</li>
+        <li>Yacht &amp; Garden, Sestri Ponente</li>
+        <li>Florarte, Parco di Arenzano</li>
+        <li>Festa della Focaccia di Recco</li>
+      </ul>
     </div>
   </div>
 </section>
@@ -373,7 +397,7 @@ footer p{margin:4px 0}
         <div class="kicker">Nei nostri negozi</div>
         <h2>Composizioni e cerimonie</h2>
       </div>
-      <p>Mazzi, bouquet da sposa, addobbi per matrimoni, battesimi e cerimonie, composizioni per le feste. Le prepariamo in tutti i nostri negozi, con consegna a domicilio.</p>
+      <p>Composizioni floreali per ogni occasione: matrimoni, battesimi, funerali, eventi e feste. Le prepariamo in tutti i nostri negozi, con consegna a domicilio. Il preventivo è gratuito.</p>
     </div>
     <div class="comp-grid chiusa" id="compGrid">
       <img src="media/comp-cortile.jpg" alt="Cerimonia all'aperto in un cortile con sedie decorate di gypsophila e pampas" width="701" height="1200" loading="lazy">
@@ -404,7 +428,44 @@ footer p{margin:4px 0}
     </div>
     <div class="comp-actions">
       <button type="button" class="btn btn-line" id="compToggle" aria-controls="compGrid" aria-expanded="false">Vedi tutte le foto</button>
-      <a class="btn btn-wa" href="#ordina" data-cerimonia>Chiedi un preventivo su WhatsApp</a>
+      <a class="btn btn-wa" href="#ordina" data-cerimonia>Chiedi un preventivo gratuito</a>
+    </div>
+  </div>
+</section>
+
+<section id="servizi" class="servizi">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="kicker">Cosa facciamo per te</div>
+        <h2>Servizi</h2>
+      </div>
+    </div>
+    <div class="serv-grid">
+      <article class="serv">
+        <h3>Consegne a domicilio</h3>
+        <p>Consegniamo da Camogli a Genova centro, a partire da 5 €. Meglio ordinare il giorno prima, ma spesso riusciamo a consegnare in giornata.</p>
+      </article>
+      <article class="serv">
+        <h3>Composizioni per ogni occasione</h3>
+        <p>Matrimoni, battesimi, funerali ed eventi. Ti facciamo un preventivo gratuito in base a quello che ti serve.</p>
+      </article>
+      <article class="serv">
+        <h3>Consigli per le tue piante</h3>
+        <p>Porta la tua pianta in negozio, oppure mandaci una foto su WhatsApp o Instagram: ti aiutiamo a curarla e a salvarla.</p>
+      </article>
+      <article class="serv">
+        <h3>Rinvasi al vivaio</h3>
+        <p>Scegli vasi e piante: te li facciamo trovare invasati e concimati, pronti da portare a casa.</p>
+      </article>
+      <article class="serv">
+        <h3>Vendita all'ingrosso</h3>
+        <p>Per giardinieri, aziende e condomini. Riforniamo ogni settimana i negozi di Genova con il nostro servizio di consegne.</p>
+      </article>
+      <article class="serv">
+        <h3>Pagamenti</h3>
+        <p>Accettiamo contanti, carte e bonifico.</p>
+      </article>
     </div>
   </div>
 </section>
@@ -522,6 +583,7 @@ const CONFIG = {
       whatsapp: "39010322769",
       placeId: "",           // ← Place ID Google della scheda
       mapsQuery: "Floricoltura Lagomarsino, Via dei Floricoltori 23, 16167 Genova",
+      arrivo: "Parcheggio clienti gratuito. Via dei Floricoltori è la traversa a monte di via Donato Somma: salite fino in cima seguendo le indicazioni. Siamo a 10 minuti dall'uscita autostradale di Genova Nervi.",
       coords: "44.3850229,9.0466373",
       mapsUrl: "https://maps.app.goo.gl/7y19ZDALQMUBebHg8",
       foto: "media/vista-golfo.jpg", fotoAlt: "Vista sul golfo dal vivaio",
@@ -695,6 +757,7 @@ function renderStores(){
       <div class="store-more" id="dett-${n.id}" hidden>
       <ul class="hours" data-hours="${n.id}">${righe}</ul>
       <p class="src" data-src="${n.id}">Orari indicativi · in caso di dubbio chiamaci</p>
+      ${n.arrivo?`<div class="arrivo"><strong>Come arrivare</strong>${n.arrivo}</div>`:""}
       <div class="map" data-map="${n.id}">
         <div class="map-cover">${icon.pin}<button type="button" class="btn btn-line" data-loadmap="${n.id}">Mostra la mappa</button></div>
       </div>
