@@ -205,6 +205,21 @@ section{padding:64px 0}
 .arrivo{margin:12px 20px 0;padding:12px 14px;border-radius:10px;background:color-mix(in srgb,var(--leaf) 9%,var(--surface));font-size:14px;line-height:1.45}
 .arrivo strong{display:block;margin-bottom:2px}
 
+.stagioni{padding-top:0}
+.stag-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:760px){.stag-grid{grid-template-columns:1fr}}
+.stag{border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;background:var(--surface);position:relative}
+.stag h3{font-family:var(--display);font-weight:400;font-size:26px;margin:0 0 6px}
+.stag p{margin:0;color:var(--muted);font-size:15px}
+.stag-ora{display:none;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--bloom);margin-bottom:4px}
+.stag.ora{border-color:var(--bloom);box-shadow:0 0 0 1px var(--bloom) inset}
+.stag.ora .stag-ora{display:block}
+.punta{margin-top:20px;padding:18px 20px;border-radius:var(--r);background:color-mix(in srgb,var(--leaf) 9%,var(--surface))}
+.punta h3{font-family:var(--body);font-weight:700;font-size:17px;margin:0 0 4px}
+.punta p{margin:0 0 10px;color:var(--muted);font-size:15px}
+.punta ul{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.punta li{font-size:14px;font-weight:600;padding:6px 12px;border-radius:999px;background:var(--surface);border:1px solid var(--line)}
+
 /* Social */
 .social{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .feed{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
@@ -269,6 +284,7 @@ footer p{margin:4px 0}
     <nav class="nav" id="menuPanel" aria-label="Menu principale">
       <a href="#chi-siamo">Chi siamo</a>
       <a href="#vivaio">Le serre</a>
+      <a href="#stagioni">Stagioni</a>
       <a href="#composizioni">Composizioni</a>
       <a href="#servizi">Servizi</a>
       <a href="#novita">Novità</a>
@@ -388,6 +404,43 @@ footer p{margin:4px 0}
       <span class="meteo-txt"><strong>Il meteo in vivaio, in diretta</strong>Dalla nostra stazione meteo sopra Nervi. Tocca per vedere tutti i dati.</span>
       <img class="meteo-img" src="https://app.weathercloud.net/device/sticker/4384398607" alt="Dati meteo in tempo reale della stazione del vivaio" loading="lazy">
     </a>
+  </div>
+</section>
+
+<section id="stagioni" class="stagioni">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="kicker">Coltivate qui, per questo clima</div>
+        <h2>Cosa trovi, stagione per stagione</h2>
+      </div>
+      <p>Le nostre piante crescono e si vendono qui: non fanno lunghi viaggi e sono già abituate al clima genovese, quindi a casa tua non soffrono il cambio d'ambiente.</p>
+    </div>
+    <div class="stag-grid">
+      <article class="stag" data-mesi="9,10,11,12,1,2">
+        <span class="stag-ora">In questo periodo</span>
+        <h3>Autunno e inverno</h3>
+        <p>Settembrini, ciclamini, viole, stelle di Natale.</p>
+      </article>
+      <article class="stag" data-mesi="3,4,5">
+        <span class="stag-ora">In questo periodo</span>
+        <h3>Primavera</h3>
+        <p>Alberi da frutto, azalee, rose, margherite, begonie, gerani, dipladenie, surfinie, buganvillee.</p>
+      </article>
+      <article class="stag" data-mesi="6,7,8">
+        <span class="stag-ora">In questo periodo</span>
+        <h3>Estate</h3>
+        <p>Peperoncini, lantane, dimorfoteche, portulache, piante grasse.</p>
+      </article>
+    </div>
+    <div class="punta">
+      <h3>Le nostre piante di punta</h3>
+      <p>Curiamo con particolare attenzione qualità e resistenza di:</p>
+      <ul>
+        <li>Ciclamini</li><li>Gerani zonali, parigini, profumati e imperiali</li><li>Begonie</li><li>Fioriture annuali</li>
+        <li>Petunie</li><li>Margherite</li><li>Ortensie</li><li>Peperoncini</li><li>Dipladenie</li>
+      </ul>
+    </div>
   </div>
 </section>
 
@@ -924,6 +977,14 @@ compToggle.addEventListener("click", ()=>{
     b.setAttribute("aria-expanded",aperta);
     b.textContent = aperta ? "Mostra meno foto" : `Vedi tutte le ${n} foto`;
     if(!aperta) document.getElementById("vivaio").scrollIntoView({block:"start"});
+  });
+})();
+
+/* ---- Stagione in corso ---- */
+(function(){
+  const mese = new Date().getMonth()+1;
+  document.querySelectorAll(".stag").forEach(el=>{
+    if (el.dataset.mesi.split(",").map(Number).includes(mese)) el.classList.add("ora");
   });
 })();
 
