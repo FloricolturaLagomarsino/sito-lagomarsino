@@ -1,0 +1,10 @@
+<!DOCTYPE html><html lang="it"><head><meta charset="utf-8"><meta name="robots" content="noindex"><title>Invio foto</title></head>
+<body style="font-family:system-ui;padding:20px">Invio della foto in corso… questa finestra si chiude da sola.
+<script>
+(async()=>{
+  const f=new URLSearchParams(location.search).get("f");
+  if(!/^[a-z0-9-]+\.jpg$/.test(f||"")) return;
+  const b=await (await fetch("media/social/"+f)).arrayBuffer();
+  if(window.opener){ window.opener.postMessage({tipo:"foto-lagomarsino",nome:f,dati:b},"https://www.facebook.com"); setTimeout(()=>window.close(),1500); }
+})();
+</script></body></html>
