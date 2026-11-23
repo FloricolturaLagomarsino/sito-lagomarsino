@@ -802,6 +802,12 @@ section{scroll-margin-top:70px}
 </style>
 </head>
 <body>
+<script>(function(){var m=location.search.match(/prova=(\d)/); if(m) document.documentElement.classList.add("prova"+m[1]);})();</script>
+<style>
+.prova2 .top,.prova2 main,.prova2 footer,.prova2 .cookie,.prova2 .fab,.prova2 .notice{display:none!important}
+.prova3 .hero .wrap,.prova3 .hero::after,.prova3 .slitta,.prova3 #particelle,.prova3 .regali,.prova3 .festone{display:none!important}
+.prova4 .cookie,.prova4 .fab{display:none!important}
+</style>
 
 <header class="top">
   <div class="festone solo-natale" aria-hidden="true"></div>
@@ -1528,7 +1534,7 @@ function renderFeed(){
   document.getElementById("fbLink").href = CONFIG.facebook;
   document.getElementById("igLink").href = CONFIG.instagram;
   const feed = document.getElementById("feed");
-  if (CONFIG.beholdFeedId){
+  if (CONFIG.beholdFeedId && !document.documentElement.classList.contains("prova2")){
     // Instagram automatico tramite Behold
     const s=document.createElement("script"); s.type="module"; s.src="https://w.behold.so/widget.js"; document.head.appendChild(s);
     feed.innerHTML = `<div class="ig-box"><a class="tag-ig" href="${CONFIG.instagram}" rel="noopener">Ultimo post su Instagram</a><behold-widget feed-id="${CONFIG.beholdFeedId}"></behold-widget></div>`;
@@ -1591,7 +1597,9 @@ function renderFooter(){
 }
 
 /* ---- Video drone: nascondi la nota quando il video c'è ---- */
-const v = document.getElementById("heroVideo");
+let v = document.getElementById("heroVideo");
+if (document.documentElement.classList.contains("prova1")){ // prova: elemento video nuovo creato da script
+  const nv=document.createElement("video"); nv.id="heroVideo"; nv.muted=true; nv.loop=true; nv.autoplay=true; nv.playsInline=true; nv.setAttribute("playsinline",""); v.replaceWith(nv); v=nv; }
 // Telefono: versione 720p più leggera; computer: Full HD. ?v= evita la vecchia copia in memoria.
 v.src = (window.innerWidth < 900 ? "media/drone-hero-m.mp4" : "media/drone-hero.mp4") + "?v=5";
 let tentativi=0;
@@ -1600,11 +1608,12 @@ v.addEventListener("error",()=>{ // errore di caricamento o decodifica: riprova 
   else v.remove();
 }, true);
 // Diagnostica: aprire il sito con ?diag=1 per vedere lo stato del video
-if (/diag=1/.test(location.search)){
+if (/diag=1|prova=\d/.test(location.search)){
   const d=document.createElement("div"); d.style.cssText="position:fixed;left:6px;bottom:6px;z-index:99999;background:rgba(0,0,0,.8);color:#fff;font:12px/1.4 monospace;padding:6px 8px;border-radius:6px;max-width:94vw;white-space:pre-wrap";
-  document.body.appendChild(d); const ev=[];
+  document.body.appendChild(d); const ev=[]; let fr=0;
+  if (v.requestVideoFrameCallback){ const cb=()=>{fr++; v.requestVideoFrameCallback(cb);}; v.requestVideoFrameCallback(cb); }
   ["play","playing","pause","waiting","stalled","error","ended","emptied","abort"].forEach(n=>v.addEventListener(n,()=>{ev.push(n+"@"+v.currentTime.toFixed(1)); if(ev.length>8) ev.shift();}));
-  setInterval(()=>{ const e=v.error; d.textContent="video "+(v.currentSrc||"").split("/").pop()+"\nt="+v.currentTime.toFixed(1)+" pausa="+v.paused+" stato="+v.readyState+"/"+v.networkState+" buf="+(v.buffered.length?v.buffered.end(v.buffered.length-1).toFixed(1):"-")+(e?" ERRORE "+e.code+" "+(e.message||""):"")+" nel-sito="+v.isConnected+"\n"+ev.join(" ")+"\n"+navigator.userAgent.slice(0,90); },500);
+  setInterval(()=>{ const e=v.error; const q=v.getVideoPlaybackQuality?v.getVideoPlaybackQuality():{}; d.textContent="PROVA "+((location.search.match(/prova=(\d)/)||[])[1]||"-")+" · fotogrammi mostrati="+fr+" persi="+(q.droppedVideoFrames||0)+"\nvideo "+(v.currentSrc||"").split("/").pop()+"\nt="+v.currentTime.toFixed(1)+" pausa="+v.paused+" stato="+v.readyState+"/"+v.networkState+" buf="+(v.buffered.length?v.buffered.end(v.buffered.length-1).toFixed(1):"-")+(e?" ERRORE "+e.code+" "+(e.message||""):"")+" nel-sito="+v.isConnected+"\n"+ev.join(" ")+"\n"+navigator.userAgent.slice(0,90); },500);
 }
 v.addEventListener("playing",()=>v.classList.add("on"));
 v.muted = true;

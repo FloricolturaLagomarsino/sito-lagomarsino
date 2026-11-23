@@ -6,58 +6,19 @@
 <meta name="robots" content="noindex">
 <title>Prova video</title>
 <style>
-  body{margin:0;font-family:system-ui,sans-serif;background:#163a2a;color:#fff;text-align:center}
-  h1{font-size:20px;margin:14px 10px 6px}
-  p{margin:4px 12px 12px;font-size:15px;opacity:.9}
-  .bot{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:0 8px 12px}
-  .bot button{font-size:22px;font-weight:700;width:64px;height:52px;border-radius:12px;border:2px solid #fff;background:transparent;color:#fff}
-  .bot button.on{background:#fff;color:#163a2a}
-  .box{position:relative;width:100%;max-width:720px;margin:0 auto;aspect-ratio:16/9;background:#000;overflow:hidden}
-  .box video{width:100%;height:100%;object-fit:cover;display:block}
-  .box.d video{opacity:0;transition:opacity .6s}.box.d video.on{opacity:1}
-  .box.d::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 15%,rgba(8,20,14,.6) 100%)}
-  .box canvas{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
-  .ora{position:absolute;right:8px;top:8px;z-index:3;background:rgba(0,0,0,.7);padding:4px 10px;border-radius:8px;font:700 20px monospace}
-  .lett{position:absolute;left:8px;top:8px;z-index:3;background:#fff;color:#163a2a;padding:2px 12px;border-radius:8px;font:700 22px system-ui}
+  body{margin:0;font-family:system-ui,sans-serif;background:#163a2a;color:#fff;padding:16px;text-align:center}
+  h1{font-size:21px;margin:8px 0}
+  p{font-size:16px;line-height:1.45;opacity:.95;max-width:520px;margin:8px auto 18px}
+  a{display:block;max-width:420px;margin:12px auto;padding:18px;border-radius:14px;background:#fff;color:#163a2a;font:700 24px system-ui;text-decoration:none}
+  a small{display:block;font:400 14px system-ui;margin-top:4px;color:#3d5a4b}
 </style>
 </head>
 <body>
-<h1>Prova video: quale si muove fino in fondo?</h1>
-<p>Toccate A, B, C e D uno alla volta e guardate per 15 secondi: il video deve passare dal mare alle serre e poi ai ciclamini. Il numero in alto a destra sono i secondi.</p>
-<div class="bot">
-  <button data-v="a">A</button><button data-v="b">B</button><button data-v="c">C</button><button data-v="d">D</button>
-</div>
-<div class="box" id="box"><span class="lett" id="lett"></span><span class="ora" id="ora">0.0</span></div>
-<script>
-const VAR={
-  a:{src:"media/drone-hero-m.mp4?v=5"},
-  b:{src:"media/prova/b-baseline.mp4?v=1"},
-  c:{src:"media/prova/c-vp9.webm?v=1",type:'video/webm; codecs="vp9"'},
-  d:{src:"media/drone-hero-m.mp4?v=5",extra:true}
-};
-const box=document.getElementById("box"), ora=document.getElementById("ora"), lett=document.getElementById("lett");
-let video=null, raf=null;
-function mostra(k){
-  document.querySelectorAll(".bot button").forEach(b=>b.classList.toggle("on",b.dataset.v===k));
-  if(video){video.pause();video.removeAttribute("src");video.load();video.remove();}
-  box.querySelectorAll("canvas").forEach(c=>c.remove()); cancelAnimationFrame(raf);
-  box.className="box"+(VAR[k].extra?" d":""); lett.textContent=k.toUpperCase();
-  video=document.createElement("video"); video.muted=true; video.loop=true; video.autoplay=true; video.playsInline=true; video.setAttribute("playsinline","");
-  if(VAR[k].type && !video.canPlayType(VAR[k].type)){ ora.textContent="non supportato"; return; }
-  video.src=VAR[k].src; box.prepend(video);
-  video.addEventListener("playing",()=>video.classList.add("on"));
-  video.play().catch(()=>{});
-  if(VAR[k].extra){ // come nel sito: neve animata sopra il video
-    const c=document.createElement("canvas"); box.appendChild(c); const x=c.getContext("2d");
-    const fiocchi=Array.from({length:60},()=>({x:Math.random(),y:Math.random(),r:1+Math.random()*2.5,v:.0008+Math.random()*.0015}));
-    (function giro(){ c.width=box.clientWidth*devicePixelRatio; c.height=box.clientHeight*devicePixelRatio; x.fillStyle="rgba(255,255,255,.9)";
-      fiocchi.forEach(f=>{f.y+=f.v; if(f.y>1)f.y=0; x.beginPath(); x.arc(f.x*c.width,f.y*c.height,f.r*devicePixelRatio,0,7); x.fill();});
-      raf=requestAnimationFrame(giro); })();
-  }
-}
-setInterval(()=>{ if(video) ora.textContent=video.currentTime.toFixed(1); },200);
-document.querySelectorAll(".bot button").forEach(b=>b.onclick=()=>mostra(b.dataset.v));
-mostra("a");
-</script>
+<h1>Prova video, seconda parte</h1>
+<p>Toccate una prova alla volta: si apre il sito. Guardate il video per 15 secondi, poi tornate indietro e passate alla prova successiva. Scrivetemi quali numeri arrivano ai ciclamini e quali si bloccano sul mare.</p>
+<a href="/?prova=1">Prova 1<small>il sito com'è, con il video caricato in un altro modo</small></a>
+<a href="/?prova=2">Prova 2<small>solo il video, senza il resto della pagina</small></a>
+<a href="/?prova=3">Prova 3<small>il video senza scritte e decorazioni sopra</small></a>
+<a href="/?prova=4">Prova 4<small>senza il banner dei cookie e il pulsante WhatsApp</small></a>
 </body>
 </html>
