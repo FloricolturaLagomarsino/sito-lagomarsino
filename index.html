@@ -524,6 +524,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.1;text-wrap:ba
 .hero-fallback{position:absolute;inset:0;background:#163a2a url("media/hero-poster.jpg") center/cover no-repeat}
 .hero-media video{opacity:0;transition:opacity .6s}
 .hero-media video.on{opacity:1}
+.hero-tela{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .6s}.hero-tela.on{opacity:1}
 @media (prefers-reduced-motion: reduce){.hero-fallback{background-image:url("media/hero-poster.jpg")}}
 .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 15%,rgba(8,20,14,.45) 38%,rgba(8,20,14,.72) 62%,rgba(8,20,14,.85) 100%)}
 .hero .wrap{position:relative;z-index:1;padding-top:120px;padding-bottom:40px;width:100%}
@@ -1602,7 +1603,7 @@ if (document.documentElement.classList.contains("prova1")){ // prova: elemento v
   const nv=document.createElement("video"); nv.id="heroVideo"; nv.muted=true; nv.loop=true; nv.autoplay=true; nv.playsInline=true; nv.setAttribute("playsinline",""); v.replaceWith(nv); v=nv; }
 // Telefono: versione 720p più leggera; computer: Full HD. ?v= evita la vecchia copia in memoria.
 // Telefono in verticale: video già tagliato in verticale (il telefono non deve ingrandirlo e ritagliarlo)
-v.src = (window.innerHeight > window.innerWidth*1.15 ? "media/drone-hero-v.mp4" : window.innerWidth < 900 ? "media/drone-hero-m.mp4" : "media/drone-hero.mp4") + "?v=6";
+v.src = (window.innerHeight > window.innerWidth*1.15 ? "media/drone-hero-v.mp4" : window.innerWidth < 900 ? "media/drone-hero-m.mp4" : "media/drone-hero.mp4") + "?v=7";
 let tentativi=0;
 v.addEventListener("error",()=>{ // errore di caricamento o decodifica: riprova da dove era arrivato, poi foto fissa
   if (tentativi++ < 3){ const t=v.currentTime||0; v.src=v.src.split("&r=")[0]+"&r="+tentativi; v.load(); v.addEventListener("loadedmetadata",()=>{ try{v.currentTime=t+0.1;}catch(e){} v.play().catch(()=>{}); },{once:true}); }
@@ -1629,6 +1630,23 @@ if (!matchMedia("(prefers-reduced-motion: reduce)").matches){
   v.addEventListener("waiting",()=>{ clearTimeout(attesa); attesa=setTimeout(()=>{ if(v.readyState<3){ const t=v.currentTime; v.load(); v.currentTime=t; riparti(); } },6000); });
   v.addEventListener("playing",()=>clearTimeout(attesa));
   setInterval(riparti,3000);
+}
+
+// Android: alcuni telefoni smettono di disegnare il video dopo pochi secondi (il video gira ma l'immagine resta ferma).
+// Lì copiamo i fotogrammi su una tela sopra il video, che si aggiorna sempre.
+if (v.isConnected && (/canvas=1/.test(location.search) || (/Android/i.test(navigator.userAgent) && !/canvas=0/.test(location.search)))){
+  const tela=document.createElement("canvas"); tela.className="hero-tela"; tela.setAttribute("aria-hidden","true");
+  v.after(tela); const cx=tela.getContext("2d");
+  function disegna(){
+    if (v.readyState>=2 && v.videoWidth){
+      const r=Math.min(devicePixelRatio||1,2), W=tela.clientWidth, H=tela.clientHeight;
+      if (tela.width!==Math.round(W*r) || tela.height!==Math.round(H*r)){ tela.width=Math.round(W*r); tela.height=Math.round(H*r); }
+      const s=Math.max(tela.width/v.videoWidth, tela.height/v.videoHeight), w=v.videoWidth*s, h=v.videoHeight*s;
+      cx.drawImage(v,(tela.width-w)/2,(tela.height-h)/2,w,h); tela.classList.add("on");
+    }
+    requestAnimationFrame(disegna);
+  }
+  requestAnimationFrame(disegna);
 }
 
 if (CONFIG.avviso){ document.getElementById("noticeText").textContent = CONFIG.avviso; document.getElementById("notice").hidden = false; }
