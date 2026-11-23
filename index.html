@@ -924,6 +924,10 @@ section{scroll-margin-top:70px}
       <figure><img src="media/comp-natale.jpg" alt="Composizione natalizia con ciclamini, rose, ortensia e bacche rosse" loading="lazy"><figcaption>Composizioni per le feste</figcaption></figure>
       <figure><img src="media/lavoro-giulia.jpg" alt="Bouquet natalizio con rose rosse, protee e pigne preparato in negozio" loading="lazy"><figcaption>Bouquet natalizi</figcaption></figure>
       <figure><img src="media/ciclamino-rosso.jpg" alt="Ciclamino rosso coltivato nelle serre del Vivaio" loading="lazy"><figcaption>Ciclamini dal Vivaio</figcaption></figure>
+      <figure><img src="media/recco-vetrina.jpg" alt="Vetrina natalizia del negozio di Recco con cervo, lanterne e luci" loading="lazy"><figcaption>La vetrina di Recco</figcaption></figure>
+      <figure><img src="media/natale-cactus.jpg" alt="Composizione natalizia con cactus fioriti, neve e casetta di legno" loading="lazy"><figcaption>Idee regalo</figcaption></figure>
+      <figure><img src="media/natale-schiaccianoci.jpg" alt="Schiaccianoci di legno e vasi natalizi" loading="lazy"><figcaption>Decorazioni</figcaption></figure>
+      <figure><img src="media/natale-pupazzo.jpg" alt="Pupazzo di neve e centrotavola con rose e bacche innevate" loading="lazy"><figcaption>Centrotavola</figcaption></figure>
     </div>
     <p class="avviso-feste" id="avvisoFeste" hidden></p>
     <div class="cta">
@@ -1295,7 +1299,7 @@ const CONFIG = {
       descrizione: "Tra Quinto e Nervi, con un'ampia scelta di piante da interno e da esterno, composizioni floreali e consegne a domicilio.",   // ← descrizione breve, modificabile
       indirizzo: "Via G. Oberdan 9r, 16167 Genova",
       telefoni: ["010 3202736"],
-      whatsapp: "39010322769",   // ← provvisorio: WhatsApp del vivaio finché non c'è quello del negozio
+      whatsapp: "390103202736",
       placeId: "",
       mapsQuery: "Floricoltura Lagomarsino, Via Guglielmo Oberdan 9r, 16167 Genova",
       foto: "media/negozio-nervi.jpg", fotoAlt: "Interno del negozio di via Oberdan con stelle di Natale e piante verdi",
@@ -1352,6 +1356,7 @@ const CONFIG = {
       whatsapp: "390185721143",
       placeId: "",
       mapsQuery: "Floricoltura Lagomarsino, Via Roma 142, 16036 Recco",
+      foto: "media/recco-negozio.jpg", fotoAlt: "Il negozio di via Roma a Recco addobbato per Natale, con albero, orsacchiotti e vasi", fotoPos: "center 68%",
       coords: "44.3652294,9.1469372",
       mapsUrl: "https://maps.app.goo.gl/ZRq27i4DVkSC86g7A",
       orari: [
@@ -1440,7 +1445,7 @@ function renderStores(){
       return `<li class="${g===t.giorno?"today":""} ${special?"special":""}"><span>${GIORNI[g]}</span><span>${val}</span></li>`;
     }).join("");
     return `<article class="store" id="negozio-${n.id}">
-      ${n.foto?`<div class="store-photo"><img src="${n.foto}" alt="${n.fotoAlt||""}" loading="lazy"></div>`:""}
+      ${n.foto?`<div class="store-photo"><img src="${n.foto}" alt="${n.fotoAlt||""}" loading="lazy"${n.fotoPos?` style="object-position:${n.fotoPos}"`:""}></div>`:""}
       <div class="store-top">
         <span class="store-type">${n.tipo}</span>
         <h3>${n.nome}</h3>
