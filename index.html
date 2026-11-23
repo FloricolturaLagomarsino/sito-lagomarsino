@@ -1277,6 +1277,7 @@ const CONFIG = {
   negozi: [
     {
       id: "azienda",
+      piede: "Vivaio di Genova Nervi",   // ← nome nel piè di pagina
       tipo: "Azienda e vivaio",
       nome: "Vivaio di Nervi",
       etichetta: "vivaio di Nervi",
@@ -1303,6 +1304,7 @@ const CONFIG = {
     },
     {
       id: "nervi",
+      piede: "Punto vendita Genova Nervi",   // ← nome nel piè di pagina
       tipo: "Negozio",
       nome: "Nervi · Via Oberdan",
       etichetta: "negozio di Nervi in via Oberdan",
@@ -1328,6 +1330,7 @@ const CONFIG = {
     },
     {
       id: "albaro",
+      piede: "Punto vendita Genova Albaro",   // ← nome nel piè di pagina
       tipo: "Negozio · Nuova apertura",
       nome: "Albaro",
       etichetta: "negozio di Albaro",
@@ -1343,6 +1346,7 @@ const CONFIG = {
     },
     {
       id: "recco-chiosco",
+      piede: "Chiosco di Recco",   // ← nome nel piè di pagina
       tipo: "Chiosco",
       nome: "Recco · Via XX Settembre",
       etichetta: "chiosco di Recco in via XX Settembre",
@@ -1359,6 +1363,7 @@ const CONFIG = {
     },
     {
       id: "recco",
+      piede: "Punto vendita Recco",   // ← nome nel piè di pagina
       tipo: "Negozio",
       nome: "Recco · Via Roma",
       etichetta: "negozio di Recco in via Roma",
@@ -1599,8 +1604,8 @@ function setupOrder(){
 
 /* ---- Footer ---- */
 function renderFooter(){
-  const cols = CONFIG.negozi.map(n=>`<div><h3>${n.nome}</h3>
-    <p>${n.indirizzo}</p><p>${n.telefoni.length ? n.telefoni.map(x=>`<a href="${telHref(x)}">${x}</a>`).join(" · ") : "Telefono in arrivo"}</p>${n.email?`<p><a href="mailto:${n.email}">${n.email}</a></p>`:""}</div>`).join("");
+  const cols = CONFIG.negozi.map(n=>`<div><h3>${n.piede||n.nome}</h3>
+    <p>${n.indirizzo}</p><p>${n.telefoni.length ? n.telefoni.map(x=>`<a href="${telHref(x)}">${x}</a>`).join(" · ") : "Telefono in arrivo"}${n.whatsapp?` · <a href="${waLink(n.whatsapp,"Buongiorno, ")}" rel="noopener">WhatsApp</a>`:""}</p>${n.email?`<p><a href="mailto:${n.email}">${n.email}</a></p>`:""}</div>`).join("");
   document.getElementById("footCols").innerHTML = cols + `<div><h3>Scrivici</h3>
     <p>WhatsApp Vivaio: <a href="${waLink(CONFIG.whatsapp,"Buongiorno, ")}">010 322769</a></p>
     <p>Email: <a href="mailto:${CONFIG.email}">${CONFIG.email}</a></p>
