@@ -1601,7 +1601,8 @@ let v = document.getElementById("heroVideo");
 if (document.documentElement.classList.contains("prova1")){ // prova: elemento video nuovo creato da script
   const nv=document.createElement("video"); nv.id="heroVideo"; nv.muted=true; nv.loop=true; nv.autoplay=true; nv.playsInline=true; nv.setAttribute("playsinline",""); v.replaceWith(nv); v=nv; }
 // Telefono: versione 720p più leggera; computer: Full HD. ?v= evita la vecchia copia in memoria.
-v.src = (window.innerWidth < 900 ? "media/drone-hero-m.mp4" : "media/drone-hero.mp4") + "?v=5";
+// Telefono in verticale: video già tagliato in verticale (il telefono non deve ingrandirlo e ritagliarlo)
+v.src = (window.innerHeight > window.innerWidth*1.15 ? "media/drone-hero-v.mp4" : window.innerWidth < 900 ? "media/drone-hero-m.mp4" : "media/drone-hero.mp4") + "?v=6";
 let tentativi=0;
 v.addEventListener("error",()=>{ // errore di caricamento o decodifica: riprova da dove era arrivato, poi foto fissa
   if (tentativi++ < 3){ const t=v.currentTime||0; v.src=v.src.split("&r=")[0]+"&r="+tentativi; v.load(); v.addEventListener("loadedmetadata",()=>{ try{v.currentTime=t+0.1;}catch(e){} v.play().catch(()=>{}); },{once:true}); }
