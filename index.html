@@ -1593,12 +1593,22 @@ function renderFooter(){
 /* ---- Video drone: nascondi la nota quando il video c'è ---- */
 const v = document.getElementById("heroVideo");
 // Telefono: versione 720p più leggera; computer: Full HD. ?v= evita la vecchia copia in memoria.
-v.src = (window.innerWidth < 900 ? "media/drone-hero-m.mp4" : "media/drone-hero.mp4") + "?v=4";
+v.src = (window.innerWidth < 900 ? "media/drone-hero-m.mp4" : "media/drone-hero.mp4") + "?v=5";
 v.addEventListener("error",()=>v.remove(), true);
 v.addEventListener("playing",()=>v.classList.add("on"));
 v.muted = true;
 if (!matchMedia("(prefers-reduced-motion: reduce)").matches){ const pr = v.play && v.play(); if (pr && pr.catch) pr.catch(()=>{}); }
 if (matchMedia("(prefers-reduced-motion: reduce)").matches) v.removeAttribute("autoplay");
+// Se il browser (risparmio energetico, cambio scheda, rete lenta) ferma il video, lo facciamo ripartire
+if (!matchMedia("(prefers-reduced-motion: reduce)").matches){
+  const riparti=()=>{ if(v.isConnected && v.paused && !document.hidden){ const q=v.play(); if(q&&q.catch) q.catch(()=>{}); } };
+  v.addEventListener("pause",()=>setTimeout(riparti,300));
+  document.addEventListener("visibilitychange",riparti);
+  let attesa=null;
+  v.addEventListener("waiting",()=>{ clearTimeout(attesa); attesa=setTimeout(()=>{ if(v.readyState<3){ const t=v.currentTime; v.load(); v.currentTime=t; riparti(); } },6000); });
+  v.addEventListener("playing",()=>clearTimeout(attesa));
+  setInterval(riparti,3000);
+}
 
 if (CONFIG.avviso){ document.getElementById("noticeText").textContent = CONFIG.avviso; document.getElementById("notice").hidden = false; }
 
