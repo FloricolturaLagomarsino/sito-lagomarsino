@@ -520,11 +520,10 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.1;text-wrap:ba
 /* Hero */
 .hero{position:relative;overflow:hidden;color:#fff;background:#163a2a;min-height:clamp(520px,82svh,760px);display:flex;align-items:flex-end}
 .hero-media{position:absolute;inset:0}
-.hero-media video{width:100%;height:100%;object-fit:cover}
+.hero-media video{position:absolute;inset:0;z-index:1;width:100%;height:100%;object-fit:cover}
 .hero-fallback{position:absolute;inset:0;background:#163a2a url("media/hero-poster.jpg") center/cover no-repeat}
 .hero-media video{opacity:0;transition:opacity .6s}
 .hero-media video.on{opacity:1}
-.hero-tela{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .6s}.hero-tela.on{opacity:1}
 @media (prefers-reduced-motion: reduce){.hero-fallback{background-image:url("media/hero-poster.jpg")}}
 .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 15%,rgba(8,20,14,.45) 38%,rgba(8,20,14,.72) 62%,rgba(8,20,14,.85) 100%)}
 .hero .wrap{position:relative;z-index:1;padding-top:120px;padding-bottom:40px;width:100%}
@@ -803,12 +802,6 @@ section{scroll-margin-top:70px}
 </style>
 </head>
 <body>
-<script>(function(){var m=location.search.match(/prova=(\d)/); if(m) document.documentElement.classList.add("prova"+m[1]);})();</script>
-<style>
-.prova2 .top,.prova2 main,.prova2 footer,.prova2 .cookie,.prova2 .fab,.prova2 .notice{display:none!important}
-.prova3 .hero .wrap,.prova3 .hero::after,.prova3 .slitta,.prova3 #particelle,.prova3 .regali,.prova3 .festone{display:none!important}
-.prova4 .cookie,.prova4 .fab{display:none!important}
-</style>
 
 <header class="top">
   <div class="festone solo-natale" aria-hidden="true"></div>
@@ -1535,7 +1528,7 @@ function renderFeed(){
   document.getElementById("fbLink").href = CONFIG.facebook;
   document.getElementById("igLink").href = CONFIG.instagram;
   const feed = document.getElementById("feed");
-  if (CONFIG.beholdFeedId && !document.documentElement.classList.contains("prova2")){
+  if (CONFIG.beholdFeedId){
     // Instagram automatico tramite Behold
     const s=document.createElement("script"); s.type="module"; s.src="https://w.behold.so/widget.js"; document.head.appendChild(s);
     feed.innerHTML = `<div class="ig-box"><a class="tag-ig" href="${CONFIG.instagram}" rel="noopener">Ultimo post su Instagram</a><behold-widget feed-id="${CONFIG.beholdFeedId}"></behold-widget></div>`;
@@ -1598,25 +1591,14 @@ function renderFooter(){
 }
 
 /* ---- Video drone: nascondi la nota quando il video c'è ---- */
-let v = document.getElementById("heroVideo");
-if (document.documentElement.classList.contains("prova1")){ // prova: elemento video nuovo creato da script
-  const nv=document.createElement("video"); nv.id="heroVideo"; nv.muted=true; nv.loop=true; nv.autoplay=true; nv.playsInline=true; nv.setAttribute("playsinline",""); v.replaceWith(nv); v=nv; }
-// Telefono: versione 720p più leggera; computer: Full HD. ?v= evita la vecchia copia in memoria.
-// Telefono in verticale: video già tagliato in verticale (il telefono non deve ingrandirlo e ritagliarlo)
+const v = document.getElementById("heroVideo");
+// Telefono in verticale: video verticale; telefono orizzontale/tablet: 720p; computer: Full HD. ?v= evita la vecchia copia in memoria.
 v.src = (window.innerHeight > window.innerWidth*1.15 ? "media/drone-hero-v.mp4" : window.innerWidth < 900 ? "media/drone-hero-m.mp4" : "media/drone-hero.mp4") + "?v=7";
 let tentativi=0;
 v.addEventListener("error",()=>{ // errore di caricamento o decodifica: riprova da dove era arrivato, poi foto fissa
   if (tentativi++ < 3){ const t=v.currentTime||0; v.src=v.src.split("&r=")[0]+"&r="+tentativi; v.load(); v.addEventListener("loadedmetadata",()=>{ try{v.currentTime=t+0.1;}catch(e){} v.play().catch(()=>{}); },{once:true}); }
   else v.remove();
 }, true);
-// Diagnostica: aprire il sito con ?diag=1 per vedere lo stato del video
-if (/diag=1|prova=\d/.test(location.search)){
-  const d=document.createElement("div"); d.style.cssText="position:fixed;left:6px;bottom:6px;z-index:99999;background:rgba(0,0,0,.8);color:#fff;font:12px/1.4 monospace;padding:6px 8px;border-radius:6px;max-width:94vw;white-space:pre-wrap";
-  document.body.appendChild(d); const ev=[]; let fr=0;
-  if (v.requestVideoFrameCallback){ const cb=()=>{fr++; v.requestVideoFrameCallback(cb);}; v.requestVideoFrameCallback(cb); }
-  ["play","playing","pause","waiting","stalled","error","ended","emptied","abort"].forEach(n=>v.addEventListener(n,()=>{ev.push(n+"@"+v.currentTime.toFixed(1)); if(ev.length>8) ev.shift();}));
-  setInterval(()=>{ const e=v.error; const q=v.getVideoPlaybackQuality?v.getVideoPlaybackQuality():{}; d.textContent="PROVA "+((location.search.match(/prova=(\d)/)||[])[1]||"-")+" · fotogrammi mostrati="+fr+" persi="+(q.droppedVideoFrames||0)+"\nvideo "+(v.currentSrc||"").split("/").pop()+"\nt="+v.currentTime.toFixed(1)+" pausa="+v.paused+" stato="+v.readyState+"/"+v.networkState+" buf="+(v.buffered.length?v.buffered.end(v.buffered.length-1).toFixed(1):"-")+(e?" ERRORE "+e.code+" "+(e.message||""):"")+" nel-sito="+v.isConnected+"\n"+ev.join(" ")+"\n"+navigator.userAgent.slice(0,90); },500);
-}
 v.addEventListener("playing",()=>v.classList.add("on"));
 v.muted = true;
 if (!matchMedia("(prefers-reduced-motion: reduce)").matches){ const pr = v.play && v.play(); if (pr && pr.catch) pr.catch(()=>{}); }
@@ -1630,23 +1612,6 @@ if (!matchMedia("(prefers-reduced-motion: reduce)").matches){
   v.addEventListener("waiting",()=>{ clearTimeout(attesa); attesa=setTimeout(()=>{ if(v.readyState<3){ const t=v.currentTime; v.load(); v.currentTime=t; riparti(); } },6000); });
   v.addEventListener("playing",()=>clearTimeout(attesa));
   setInterval(riparti,3000);
-}
-
-// Android: alcuni telefoni smettono di disegnare il video dopo pochi secondi (il video gira ma l'immagine resta ferma).
-// Lì copiamo i fotogrammi su una tela sopra il video, che si aggiorna sempre.
-if (v.isConnected && (/canvas=1/.test(location.search) || (/Android/i.test(navigator.userAgent) && !/canvas=0/.test(location.search)))){
-  const tela=document.createElement("canvas"); tela.className="hero-tela"; tela.setAttribute("aria-hidden","true");
-  v.after(tela); const cx=tela.getContext("2d");
-  function disegna(){
-    if (v.readyState>=2 && v.videoWidth){
-      const r=Math.min(devicePixelRatio||1,2), W=tela.clientWidth, H=tela.clientHeight;
-      if (tela.width!==Math.round(W*r) || tela.height!==Math.round(H*r)){ tela.width=Math.round(W*r); tela.height=Math.round(H*r); }
-      const s=Math.max(tela.width/v.videoWidth, tela.height/v.videoHeight), w=v.videoWidth*s, h=v.videoHeight*s;
-      cx.drawImage(v,(tela.width-w)/2,(tela.height-h)/2,w,h); tela.classList.add("on");
-    }
-    requestAnimationFrame(disegna);
-  }
-  requestAnimationFrame(disegna);
 }
 
 if (CONFIG.avviso){ document.getElementById("noticeText").textContent = CONFIG.avviso; document.getElementById("notice").hidden = false; }
