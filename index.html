@@ -493,7 +493,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.1;text-wrap:ba
 .wrap{max-width:1120px;margin:0 auto;padding:0 18px}
 
 /* Barra superiore */
-.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 96%,transparent);border-bottom:1px solid var(--line)}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;height:60px}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
 .logo{height:30px;width:auto}
@@ -765,19 +765,19 @@ section{scroll-margin-top:70px}
    radial-gradient(circle at 50% 70%,#fbc02d 0 4px,transparent 5px) 24px 0/72px 14px repeat-x,
    radial-gradient(circle at 50% 70%,#43a047 0 4px,transparent 5px) 48px 0/72px 14px repeat-x,
    linear-gradient(#2e3b30,#2e3b30) 0 4px/100% 1px no-repeat}
-.festone::after{content:"";position:absolute;inset:0;background:inherit;filter:brightness(1.6) blur(2px);opacity:0;animation:luci 2.4s ease-in-out infinite}
+.festone::after{content:"";position:absolute;inset:0;background:inherit;opacity:0;animation:luci 2.4s ease-in-out infinite}
 @keyframes luci{50%{opacity:.8}}
 /* neve */
 .neve{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
 .hero .wrap{z-index:3}
 /* slitta */
 .slitta{position:absolute;top:9%;left:0;width:min(46vw,360px);z-index:2;pointer-events:none;animation:volo 24s linear infinite;will-change:transform}
-.slitta svg{width:100%;height:auto;display:block;animation:dondolo 1.6s ease-in-out infinite;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25))}
+.slitta svg{width:100%;height:auto;display:block;animation:dondolo 1.6s ease-in-out infinite}
 @keyframes volo{0%{transform:translateX(-110%)}55%{transform:translateX(calc(100vw + 10%))}100%{transform:translateX(calc(100vw + 10%))}}
 @keyframes dondolo{50%{transform:translateY(-8px) rotate(-1.5deg)}}
 /* pacchi regalo */
 .regali{position:absolute;right:max(16px,4vw);bottom:18px;z-index:2;display:flex;align-items:flex-end;gap:4px;pointer-events:none}
-.regali svg{display:block;filter:drop-shadow(0 6px 8px rgba(0,0,0,.35))}
+.regali svg{display:block}
 .regali svg{width:58px;animation:salto 3.2s ease-in-out infinite}
 .regali svg:nth-child(2){animation-delay:.5s}.regali svg:nth-child(3){animation-delay:1s}.regali svg:nth-child(4){animation-delay:1.5s}
 .regali .d-albero{width:84px;animation:none}.regali .d-stella{width:74px;animation:ondeggia 4s ease-in-out infinite;transform-origin:50% 100%}
