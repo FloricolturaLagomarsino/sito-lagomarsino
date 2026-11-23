@@ -410,21 +410,35 @@
 }
 </script>
 <script>
-/* TEMI STAGIONALI: si attivano da soli nelle date indicate (mese-giorno).
-   Per vedere un tema in anteprima: floricolturalagomarsino.it/?tema=natale  (?tema=nessuno per spegnerlo) */
+/* TEMI STAGIONALI: si attivano da soli nelle date indicate (mese-giorno). Vince il primo dell'elenco.
+   Anteprima: floricolturalagomarsino.it/?tema=valentino  (natale, donna, pasqua, mamma, estate, halloween, ognissanti; ?tema=nessuno per spegnere) */
 window.TEMI = [
-  { id: "natale", da: "12-01", a: "01-06" }
+  { id: "valentino",  da: "02-01", a: "02-14" },
+  { id: "donna",      da: "03-01", a: "03-08" },
+  { id: "pasqua",     pasqua: [-14, 1] },          // da 2 settimane prima di Pasqua a Pasquetta
+  { id: "mamma",      mamma: 10 },                 // 10 giorni prima della Festa della mamma (2ª domenica di maggio)
+  { id: "estate",     da: "06-15", a: "08-31" },
+  { id: "halloween",  da: "10-15", a: "10-27" },
+  { id: "ognissanti", da: "10-28", a: "11-02" },
+  { id: "natale",     da: "12-01", a: "01-06" }
 ];
 (function(){
   var q = new URLSearchParams(location.search).get("tema");
-  var md = new Intl.DateTimeFormat("en-CA",{timeZone:"Europe/Rome",month:"2-digit",day:"2-digit"}).format(new Date()).replace("/","-");
+  var p = new Intl.DateTimeFormat("en-CA",{timeZone:"Europe/Rome",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date()).split("-");
+  var y = +p[0], md = p[1] + "-" + p[2];
+  function f(d){ return String(d.getUTCMonth()+1).padStart(2,"0") + "-" + String(d.getUTCDate()).padStart(2,"0"); }
+  function pasqua(Y){ var a=Y%19,b=Math.floor(Y/100),c=Y%100,d=Math.floor(b/4),e=b%4,g=Math.floor((8*b+13)/25),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),mo=Math.floor((h+l-7*m+114)/31),gi=((h+l-7*m+114)%31)+1; return new Date(Date.UTC(Y,mo-1,gi)); }
+  function mamma(Y){ var d=new Date(Date.UTC(Y,4,1)); var primaDom = 1 + (7 - d.getUTCDay()) % 7; return new Date(Date.UTC(Y,4,primaDom+7)); }
   var attivo = null;
   if (q) attivo = q === "nessuno" ? null : q;
   else window.TEMI.forEach(function(t){
-    var dentro = t.da <= t.a ? (md >= t.da && md <= t.a) : (md >= t.da || md <= t.a);
+    var da = t.da, a = t.a;
+    if (t.pasqua){ var P = pasqua(y); da = f(new Date(P.getTime()+t.pasqua[0]*864e5)); a = f(new Date(P.getTime()+t.pasqua[1]*864e5)); }
+    if (t.mamma){ var M = mamma(y); da = f(new Date(M.getTime()-t.mamma*864e5)); a = f(M); }
+    var dentro = da <= a ? (md >= da && md <= a) : (md >= da || md <= a);
     if (dentro && !attivo) attivo = t.id;
   });
-  if (attivo) document.documentElement.classList.add("tema-" + attivo);
+  if (attivo){ var c = document.documentElement.classList; c.add("tema-" + attivo, "con-tema"); if (attivo !== "natale") c.add("con-festa"); }
   window.TEMA = attivo;
 })();
 </script>
@@ -659,6 +673,25 @@ section{padding:64px 0}
 
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
+
+/* =================== ALTRI TEMI (sezione e decorazioni generiche) =================== */
+.solo-festa,.solo-tema{display:none !important}
+.con-festa .solo-festa{display:block !important}
+.con-festa .regali.solo-festa{display:flex !important}
+.con-tema .solo-tema{display:block !important}
+:root.tema-valentino{--bloom:#d81b60}  .tema-valentino .hero h1 em{color:#ffb3cf}
+:root.tema-donna{--bloom:#a87b00}      .tema-donna .hero h1 em{color:#ffe066}
+:root.tema-pasqua{--bloom:#7e57c2;--leaf:#4e7d2a} .tema-pasqua .hero h1 em{color:#e6ee9c}
+:root.tema-mamma{--bloom:#e91e63}      .tema-mamma .hero h1 em{color:#ffc1d6}
+:root.tema-estate{--bloom:#e65100;--leaf:#00796b} .tema-estate .hero h1 em{color:#ffd54f}
+:root.tema-halloween{--bloom:#e65100}  .tema-halloween .hero h1 em{color:#ffb74d}
+:root.tema-ognissanti{--bloom:#6d4c41} .tema-ognissanti .hero h1 em{color:#efe6dc}
+@media (prefers-color-scheme: dark){
+  :root.tema-donna:not([data-theme="light"]){--bloom:#ffd54f}
+  :root.tema-ognissanti:not([data-theme="light"]){--bloom:#bcaaa4}
+  :root.tema-pasqua:not([data-theme="light"]){--bloom:#b39ddb}
+}
+
 /* Social */
 .social{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .feed{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
@@ -752,6 +785,7 @@ section{scroll-margin-top:70px}
 .natale-grid figure{margin:0;border-radius:var(--r);overflow:hidden;aspect-ratio:4/5;position:relative;background:var(--line)}
 .natale-grid img{width:100%;height:100%;object-fit:cover}
 .natale-grid figcaption{position:absolute;left:0;right:0;bottom:0;padding:24px 10px 8px;color:#fff;font-weight:600;font-size:14px;background:linear-gradient(transparent,rgba(0,0,0,.6))}
+@media (min-width:761px){.natale-grid.tre{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:760px){.natale-grid{grid-template-columns:1fr 1fr}}
 .natale .cta{margin-top:20px}
 .avviso-feste{margin:14px 0 0;padding:12px 16px;border-radius:12px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--oro);max-width:60ch;font-weight:500}
@@ -787,7 +821,8 @@ section{scroll-margin-top:70px}
     <!-- VIDEO DRONE: carica il file nella cartella del sito e sostituisci "video-drone.mp4" -->
     <video id="heroVideo" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
   </div>
-  <canvas class="neve solo-natale" id="neve" aria-hidden="true"></canvas>
+  <canvas class="neve solo-tema" id="particelle" aria-hidden="true"></canvas>
+  <div class="regali solo-festa" id="angoloFesta" aria-hidden="true"></div>
   <div class="slitta solo-natale" aria-hidden="true">
     <svg viewBox="0 0 320 110" xmlns="http://www.w3.org/2000/svg">
       <!-- briglie -->
@@ -847,6 +882,24 @@ section{scroll-margin-top:70px}
 <div class="notice" id="notice" hidden><div class="wrap" id="noticeText"></div></div>
 
 <main>
+<section class="natale solo-festa" id="festa">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="kicker" id="festaKicker"></div>
+        <h2 id="festaTitolo"></h2>
+      </div>
+      <p id="festaTesto"></p>
+    </div>
+    <div class="natale-grid" id="festaFoto"></div>
+    <p class="avviso-feste" id="festaAvviso" hidden></p>
+    <div class="cta">
+      <a class="btn btn-wa" href="#ordina" id="festaCta"></a>
+      <a class="btn btn-line" href="#negozi">Negozi e orari</a>
+    </div>
+  </div>
+</section>
+
 <section class="natale solo-natale" id="natale">
   <div class="wrap">
     <div class="sec-head">
@@ -1571,26 +1624,77 @@ compToggle.addEventListener("click", ()=>{
   document.getElementById("cookieManage").addEventListener("click", e=>{ e.preventDefault(); bar.hidden = false; });
 })();
 
-/* ---- Tema natalizio ---- */
+/* ---- Temi stagionali ---- */
 (function(){
-  if (window.TEMA !== "natale") return;
-  // Avviso orari delle feste (lascia vuoto per nasconderlo)
-  const AVVISO_FESTE = "";
-  if (AVVISO_FESTE){ const a=document.getElementById("avvisoFeste"); a.textContent=AVVISO_FESTE; a.hidden=false; }
-  // Voce "Natale" nel menu
-  const nav=document.getElementById("menuPanel"), l=document.createElement("a");
-  l.href="#natale"; l.textContent="Natale"; nav.insertBefore(l, nav.firstChild);
-  // Nevicata
-  const c=document.getElementById("neve"); if(!c) return;
+  const T = window.TEMA; if (!T) return;
+  const HEART='<svg viewBox="0 0 40 36"><path d="M20 34 C-6 16 4 -4 20 8 C36 -4 46 16 20 34z" fill="COL"/></svg>';
+  const EGG=(c1,c2)=>`<svg viewBox="0 0 40 52"><ellipse cx="20" cy="28" rx="18" ry="23" fill="${c1}"/><path d="M3 26 q8 -6 17 0 t17 0" stroke="${c2}" stroke-width="4" fill="none"/><path d="M4 36 q8 -6 16 0 t16 0" stroke="#fff" stroke-width="3" fill="none" opacity=".8"/></svg>`;
+  const PUMPKIN='<svg viewBox="0 0 60 52"><path d="M30 10 q2 -8 8 -9" stroke="#3e6b2f" stroke-width="4" fill="none" stroke-linecap="round"/><ellipse cx="18" cy="31" rx="15" ry="19" fill="#ef6c00"/><ellipse cx="42" cy="31" rx="15" ry="19" fill="#ef6c00"/><ellipse cx="30" cy="31" rx="14" ry="20" fill="#fb8c00"/><path d="M20 26 l5 -5 l5 5z M34 26 l5 -5 l5 5z" fill="#3b2412"/><path d="M19 37 q11 9 22 0 l-4 4 l-3 -3 l-4 4 l-4 -4 l-3 3z" fill="#3b2412"/></svg>';
+  const MIMOSA='<svg viewBox="0 0 70 70"><path d="M10 64 Q30 40 60 8" stroke="#6b8e23" stroke-width="3" fill="none"/>'+[[22,48],[28,40],[34,33],[40,26],[47,20],[53,13],[30,50],[38,42],[45,34],[52,26],[18,40],[26,32],[33,25],[41,18]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="4.5" fill="#ffd400"/><circle cx="${x+3}" cy="${y+2}" r="3" fill="#ffe24d"/>`).join("")+'</svg>';
+  const SOLE='<svg viewBox="0 0 64 64"><g stroke="#ffb300" stroke-width="4" stroke-linecap="round">'+Array.from({length:12},(_,i)=>{const a=i*Math.PI/6;return `<line x1="${32+Math.cos(a)*20}" y1="${32+Math.sin(a)*20}" x2="${32+Math.cos(a)*29}" y2="${32+Math.sin(a)*29}"/>`}).join("")+'</g><circle cx="32" cy="32" r="15" fill="#ffca28"/></svg>';
+  const BOUQUET='<svg viewBox="0 0 64 70"><path d="M22 40 L32 68 L42 40z" fill="#f8bbd0"/><path d="M32 46 L24 28 M32 46 L32 22 M32 46 L40 28" stroke="#558b2f" stroke-width="3"/><circle cx="23" cy="24" r="9" fill="#e91e63"/><circle cx="32" cy="17" r="9" fill="#ff80ab"/><circle cx="41" cy="24" r="9" fill="#ec407a"/><circle cx="23" cy="24" r="3" fill="#fff59d"/><circle cx="32" cy="17" r="3" fill="#fff59d"/><circle cx="41" cy="24" r="3" fill="#fff59d"/></svg>';
+  const DATI = {
+    valentino:{menu:"San Valentino",kicker:"14 febbraio",titolo:"San Valentino",testo:"Rose rosse, bouquet e piante fiorite da regalare a chi ami. Prenota il tuo mazzo: lo prepariamo con cura e lo consegniamo da Camogli a Genova.",cta:"Prenota il tuo mazzo",part:"cuori",angolo:HEART.replace("COL","#e53935")+HEART.replace("COL","#f06292")+HEART.replace("COL","#c2185b"),
+      foto:[["comp-rose-rosse","Grande mazzo di rose rosse","Rose rosse"],["comp-cascata-rose","Cascata di rose rosa e lisianthus","Composizioni"],["comp-lisianthus","Mazzo di lisianthus bianchi e viola","Bouquet"],["ciclamino-rosso","Ciclamino rosso in vaso","Piante fiorite"]]},
+    donna:{menu:"Festa della Donna",kicker:"8 marzo",titolo:"Festa della Donna",testo:"Mimosa, mazzi e piante fiorite per l'8 marzo. Passa in negozio o prenota su WhatsApp.",cta:"Prenota la mimosa",part:"mimosa",angolo:MIMOSA,
+      foto:[["margherite-gialle","Margherite gialle in fiore","Fiori gialli"],["comp-bouquet-craspedia","Bouquet giallo e bianco","Bouquet"],["ranuncoli","Ranuncoli con il mare sullo sfondo","Ranuncoli"],["lewisia","Lewisie in fiore","Piante fiorite"]]},
+    pasqua:{menu:"Pasqua",kicker:"Buona Pasqua",titolo:"La primavera è arrivata",testo:"Piante fiorite, composizioni pasquali e tutte le fioriture di primavera coltivate nelle nostre serre. Perfette da regalare o per la tavola di Pasqua.",cta:"Prenota per Pasqua",part:"petali",angolo:EGG("#9575cd","#fff176")+EGG("#81c784","#f48fb1")+EGG("#ffb74d","#4fc3f7"),
+      foto:[["ranuncoli","Ranuncoli con il mare sullo sfondo","Ranuncoli"],["margherite","Margherite rosa, bianche e gialle","Margherite"],["iberis","Iberis bianca in fiore","Iberis"],["lewisia","Lewisie in fiore","Lewisia"]]},
+    mamma:{menu:"Festa della Mamma",kicker:"Seconda domenica di maggio",titolo:"Festa della Mamma",testo:"Il regalo più bello è un fiore: piante fiorite, ortensie, bouquet e composizioni per la mamma. Prenota per tempo, consegniamo da Camogli a Genova.",cta:"Prenota il regalo",part:"petali",angolo:BOUQUET,
+      foto:[["gerani-rosa","Gerani rosa e bianchi","Gerani"],["comp-lisianthus","Mazzo di lisianthus","Bouquet"],["margherite","Margherite in fiore","Margherite"],["ranuncoli","Ranuncoli","Ranuncoli"]]},
+    estate:{menu:"Estate",kicker:"Estate",titolo:"Colora il tuo balcone",testo:"Gerani, dipladenie, peperoncini, piante grasse e fioriture estive: piante abituate al sole della Liguria, pronte per balconi e giardini.",cta:"Chiedi un consiglio",part:"farfalle",angolo:SOLE,
+      foto:[["gerani-rossi","Gerani rossi in serra","Gerani"],["mandevilla","Dipladenia rosa","Dipladenie"],["peperoncini","Peperoncini ornamentali con il mare","Peperoncini"],["basilico","Serra con basilico e dipladenie","Aromatiche"]]},
+    halloween:{menu:"Autunno",kicker:"Halloween e autunno",titolo:"Colori d'autunno",testo:"Ciclamini, piante d'autunno e allestimenti dai colori caldi per la casa e le feste di fine ottobre.",cta:"Chiedi un consiglio",part:"foglie",angolo:PUMPKIN+PUMPKIN,
+      foto:[["comp-porta-autunno","Ghirlanda autunnale","Allestimenti"],["comp-altare-autunno","Composizione autunnale","Composizioni"],["peperoncini","Peperoncini ornamentali","Peperoncini"],["ciclamini-bicolore","Ciclamini bicolore","Ciclamini"]]},
+    ognissanti:{menu:"Ognissanti",kicker:"1 e 2 novembre",titolo:"Ognissanti e Commemorazione dei defunti",testo:"Crisantemi, ciclamini e composizioni per ricordare i propri cari. Ti consigliamo di prenotare con qualche giorno di anticipo.",cta:"Prenota su WhatsApp",part:"",angolo:"",
+      foto:[["ciclamini-bianchi","Ciclamini bianchi","Ciclamini bianchi"],["ciclamini","Ciclamini in serra","Ciclamini"],["comp-chiesa-bianco","Composizioni bianche","Composizioni"]]}
+  };
+  // Avvisi con orari speciali per ciascuna festa (lascia "" per nasconderli)
+  const AVVISI = { natale:"", valentino:"", donna:"", pasqua:"", mamma:"", estate:"", halloween:"", ognissanti:"" };
+  const nav=document.getElementById("menuPanel"), link=document.createElement("a");
+  if (T === "natale"){
+    if (AVVISI.natale){ const a=document.getElementById("avvisoFeste"); a.textContent=AVVISI.natale; a.hidden=false; }
+    link.href="#natale"; link.textContent="Natale";
+  } else if (DATI[T]){
+    const d=DATI[T];
+    document.getElementById("festaKicker").textContent=d.kicker;
+    document.getElementById("festaTitolo").textContent=d.titolo;
+    document.getElementById("festaTesto").textContent=d.testo;
+    document.getElementById("festaCta").textContent=d.cta;
+    document.getElementById("festaFoto").innerHTML=d.foto.map(([f,alt,cap])=>`<figure><img src="media/${f}.jpg" alt="${alt}" loading="lazy"><figcaption>${cap}</figcaption></figure>`).join("");
+    if (d.foto.length===3) document.getElementById("festaFoto").classList.add("tre");
+    if (AVVISI[T]){ const a=document.getElementById("festaAvviso"); a.textContent=AVVISI[T]; a.hidden=false; }
+    document.getElementById("angoloFesta").innerHTML=d.angolo;
+    link.href="#festa"; link.textContent=d.menu;
+  } else return;
+  nav.insertBefore(link, nav.firstChild);
+
+  // Particelle nell'apertura
+  const tipo = T==="natale" ? "neve" : (DATI[T]||{}).part;
+  const c=document.getElementById("particelle"); if(!c || !tipo) return;
   const fermo = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const ctx=c.getContext("2d"); let W,H,fiocchi=[];
-  function dim(){ const r=c.getBoundingClientRect(), d=Math.min(devicePixelRatio||1,2); W=r.width; H=r.height; c.width=W*d; c.height=H*d; ctx.setTransform(d,0,0,d,0,0);
-    const n=Math.round(Math.min(120, W*H/9000)); fiocchi=Array.from({length:n},()=>({x:Math.random()*W,y:Math.random()*H,r:1+Math.random()*2.6,v:.3+Math.random()*.9,o:Math.random()*6.28,a:.5+Math.random()*.5})); }
-  function disegna(){ ctx.clearRect(0,0,W,H);
-    for(const f of fiocchi){ ctx.globalAlpha=f.a; ctx.beginPath(); ctx.arc(f.x,f.y,f.r,0,6.283); ctx.fillStyle="#fff"; ctx.fill(); } ctx.globalAlpha=1; }
-  function passo(){ for(const f of fiocchi){ f.y+=f.v; f.o+=.01; f.x+=Math.sin(f.o)*.4; if(f.y>H+4){ f.y=-4; f.x=Math.random()*W; } } disegna(); requestAnimationFrame(passo); }
+  const ctx=c.getContext("2d"); let W,H,P=[];
+  const COL={neve:["#fff"],cuori:["#ff5c8a","#e53935","#f8bbd0"],mimosa:["#ffd400","#ffe24d","#f2c200"],petali:["#f8bbd0","#fff59d","#c5e1a5","#e1bee7"],farfalle:["#ffca28","#ff7043","#4fc3f7","#f06292"],foglie:["#e65100","#f57c00","#c62828","#8d6e63"]}[tipo];
+  const quanti={neve:120,cuori:28,mimosa:45,petali:35,farfalle:14,foglie:30}[tipo];
+  function nuovo(rand){ return {x:Math.random()*W,y:rand?Math.random()*H:-12,s:(tipo==="neve"?1:4)+Math.random()*(tipo==="neve"?2.6:5),v:.3+Math.random()*(tipo==="farfalle"?.5:.9),o:Math.random()*6.28,r:Math.random()*6.28,c:COL[Math.floor(Math.random()*COL.length)],a:.6+Math.random()*.4}; }
+  function dim(){ const b=c.getBoundingClientRect(), d=Math.min(devicePixelRatio||1,2); W=b.width; H=b.height; c.width=W*d; c.height=H*d; ctx.setTransform(d,0,0,d,0,0);
+    const n=Math.round(Math.min(quanti, quanti*W*H/(1366*700)+quanti/3)); P=Array.from({length:n},()=>nuovo(true)); }
+  function forma(p){
+    ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.r); ctx.globalAlpha=p.a; ctx.fillStyle=p.c; const s=p.s; ctx.beginPath();
+    if (tipo==="neve"||tipo==="mimosa"){ ctx.arc(0,0,s/(tipo==="mimosa"?1.6:1),0,6.283); }
+    else if (tipo==="cuori"){ ctx.moveTo(0,s*.9); ctx.bezierCurveTo(-s*1.6,-s*.1,-s*.6,-s*1.3,0,-s*.4); ctx.bezierCurveTo(s*.6,-s*1.3,s*1.6,-s*.1,0,s*.9); }
+    else if (tipo==="petali"){ ctx.ellipse(0,0,s*.55,s,0,0,6.283); }
+    else if (tipo==="foglie"){ ctx.moveTo(0,-s); ctx.quadraticCurveTo(s*.9,0,0,s); ctx.quadraticCurveTo(-s*.9,0,0,-s); }
+    else if (tipo==="farfalle"){ const w=Math.abs(Math.sin(p.o*6))*s; ctx.ellipse(-w*.6,0,w*.7,s*.8,0,0,6.283); ctx.ellipse(w*.6,0,w*.7,s*.8,0,0,6.283); }
+    ctx.fill(); ctx.restore(); }
+  function passo(){ ctx.clearRect(0,0,W,H);
+    for(const p of P){ p.o+=.01;
+      if (tipo==="farfalle"){ p.x+=Math.cos(p.o)*.8; p.y+=Math.sin(p.o*1.3)*.6-.15; if(p.y<-20) p.y=H+10; if(p.x<-20) p.x=W+10; if(p.x>W+20) p.x=-10; }
+      else { p.y+=p.v; p.x+=Math.sin(p.o)*.5; p.r+=tipo==="neve"?0:.01; if(p.y>H+12) Object.assign(p,nuovo(false)); }
+      forma(p); }
+    requestAnimationFrame(passo); }
   dim(); addEventListener("resize", dim);
-  if (fermo) disegna(); else requestAnimationFrame(passo);
+  if (fermo){ ctx.clearRect(0,0,W,H); P.forEach(forma); } else requestAnimationFrame(passo);
 })();
 
 /* ---- Menu a tre linee ---- */
