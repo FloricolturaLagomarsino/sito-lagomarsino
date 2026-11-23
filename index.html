@@ -159,6 +159,7 @@
    },
    "hasMap": "https://maps.app.goo.gl/NRV5jtzQkmZprbcGA",
    "telephone": "+39 010 3202736",
+   "email": "lagomarsinonervi@gmail.com",
    "areaServed": "Genova, Golfo Paradiso",
    "priceRange": "€€",
    "openingHoursSpecification": [
@@ -1305,6 +1306,7 @@ const CONFIG = {
       descrizione: "Tra Quinto e Nervi, con un'ampia scelta di piante da interno e da esterno, composizioni floreali e consegne a domicilio.",   // ← descrizione breve, modificabile
       indirizzo: "Via G. Oberdan 9r, 16167 Genova",
       telefoni: ["010 3202736"],
+      email: "lagomarsinonervi@gmail.com",
       whatsapp: "390103202736",
       placeId: "",
       mapsQuery: "Floricoltura Lagomarsino, Via Guglielmo Oberdan 9r, 16167 Genova",
@@ -1471,6 +1473,7 @@ function renderStores(){
         <div class="map-cover">${icon.pin}<button type="button" class="btn btn-line" data-loadmap="${n.id}">Mostra la mappa</button><small class="map-note">La mappa è di Google e può usare i suoi cookie</small></div>
       </div>
       <p class="phones">${n.telefoni.length ? "Tel. "+n.telefoni.map(x=>`<a href="${telHref(x)}">${x}</a>`).join(" · ") : "Telefono in arrivo"}</p>
+      ${n.email?`<p class="phones">Email <a href="mailto:${n.email}">${n.email}</a></p>`:""}
       <div class="store-actions">
         <a class="btn btn-line" href="${n.coords?mapsDir(n.coords):mapsDir(n.mapsQuery)}" rel="noopener">Indicazioni</a>
         ${n.telefoni.length ? `<a class="btn btn-line" href="${telHref(n.telefoni[0])}">Chiama</a>` : `<a class="btn btn-line" href="${mapsLink(n.mapsQuery)}" rel="noopener">Mappa</a>`}
@@ -1593,7 +1596,7 @@ function setupOrder(){
 /* ---- Footer ---- */
 function renderFooter(){
   const cols = CONFIG.negozi.map(n=>`<div><h3>${n.nome}</h3>
-    <p>${n.indirizzo}</p><p>${n.telefoni.length ? n.telefoni.map(x=>`<a href="${telHref(x)}">${x}</a>`).join(" · ") : "Telefono in arrivo"}</p></div>`).join("");
+    <p>${n.indirizzo}</p><p>${n.telefoni.length ? n.telefoni.map(x=>`<a href="${telHref(x)}">${x}</a>`).join(" · ") : "Telefono in arrivo"}</p>${n.email?`<p><a href="mailto:${n.email}">${n.email}</a></p>`:""}</div>`).join("");
   document.getElementById("footCols").innerHTML = cols + `<div><h3>Scrivici</h3>
     <p>WhatsApp Vivaio: <a href="${waLink(CONFIG.whatsapp,"Buongiorno, ")}">010 322769</a></p>
     <p>Email: <a href="mailto:${CONFIG.email}">${CONFIG.email}</a></p>
