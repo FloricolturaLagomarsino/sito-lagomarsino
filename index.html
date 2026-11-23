@@ -409,6 +409,25 @@
  ]
 }
 </script>
+<script>
+/* TEMI STAGIONALI: si attivano da soli nelle date indicate (mese-giorno).
+   Per vedere un tema in anteprima: floricolturalagomarsino.it/?tema=natale  (?tema=nessuno per spegnerlo) */
+window.TEMI = [
+  { id: "natale", da: "12-01", a: "01-06" }
+];
+(function(){
+  var q = new URLSearchParams(location.search).get("tema");
+  var md = new Intl.DateTimeFormat("en-CA",{timeZone:"Europe/Rome",month:"2-digit",day:"2-digit"}).format(new Date()).replace("/","-");
+  var attivo = null;
+  if (q) attivo = q === "nessuno" ? null : q;
+  else window.TEMI.forEach(function(t){
+    var dentro = t.da <= t.a ? (md >= t.da && md <= t.a) : (md >= t.da || md <= t.a);
+    if (dentro && !attivo) attivo = t.id;
+  });
+  if (attivo) document.documentElement.classList.add("tema-" + attivo);
+  window.TEMA = attivo;
+})();
+</script>
 <link rel="icon" href="media/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -691,11 +710,58 @@ footer p{margin:4px 0}
 /* WhatsApp fluttuante */
 .fab{position:fixed;right:16px;bottom:16px;z-index:30;width:58px;height:58px;border-radius:50%;background:var(--wa);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,.25)}
 .fab svg{width:30px;height:30px}
+
+/* =================== TEMA NATALE (attivo con html.tema-natale) =================== */
+.solo-natale{display:none !important}
+:root.tema-natale{--bloom:#c62828;--leaf:#1e5b34;--oro:#d4a017}
+@media (prefers-color-scheme: dark){:root.tema-natale:not([data-theme="light"]){--bloom:#ef5350;--leaf:#81c784;--oro:#f2c94c}}
+:root.tema-natale[data-theme="dark"]{--bloom:#ef5350;--leaf:#81c784;--oro:#f2c94c}
+.tema-natale .solo-natale{display:block !important}
+.tema-natale .regali.solo-natale{display:flex !important}
+section{scroll-margin-top:70px}
+.tema-natale .hero h1 em{color:#ffd27a}
+.tema-natale .kicker{color:var(--bloom)}
+/* festone di lucine sotto la barra in alto */
+.festone{position:absolute;left:0;right:0;bottom:-11px;height:14px;pointer-events:none;
+  background:
+   radial-gradient(circle at 50% 70%,#e53935 0 4px,transparent 5px) 0 0/72px 14px repeat-x,
+   radial-gradient(circle at 50% 70%,#fbc02d 0 4px,transparent 5px) 24px 0/72px 14px repeat-x,
+   radial-gradient(circle at 50% 70%,#43a047 0 4px,transparent 5px) 48px 0/72px 14px repeat-x,
+   linear-gradient(#2e3b30,#2e3b30) 0 4px/100% 1px no-repeat}
+.festone::after{content:"";position:absolute;inset:0;background:inherit;filter:brightness(1.6) blur(2px);opacity:0;animation:luci 2.4s ease-in-out infinite}
+@keyframes luci{50%{opacity:.8}}
+/* neve */
+.neve{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+.hero .wrap{z-index:3}
+/* slitta */
+.slitta{position:absolute;top:9%;left:0;width:min(46vw,360px);z-index:2;pointer-events:none;animation:volo 24s linear infinite;will-change:transform}
+.slitta svg{width:100%;height:auto;display:block;animation:dondolo 1.6s ease-in-out infinite;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25))}
+@keyframes volo{0%{transform:translateX(-110%)}55%{transform:translateX(calc(100vw + 10%))}100%{transform:translateX(calc(100vw + 10%))}}
+@keyframes dondolo{50%{transform:translateY(-8px) rotate(-1.5deg)}}
+/* pacchi regalo */
+.regali{position:absolute;right:max(16px,4vw);bottom:18px;z-index:2;display:flex;align-items:flex-end;gap:4px;pointer-events:none}
+.regali svg{display:block;filter:drop-shadow(0 6px 8px rgba(0,0,0,.35))}
+.regali svg:nth-child(1){width:64px;animation:salto 3.2s ease-in-out infinite}
+.regali svg:nth-child(2){width:86px;animation:salto 3.2s ease-in-out .5s infinite}
+.regali svg:nth-child(3){width:54px;animation:salto 3.2s ease-in-out 1s infinite}
+@keyframes salto{0%,70%,100%{transform:translateY(0)}78%{transform:translateY(-14px) rotate(-4deg)}86%{transform:translateY(0)}}
+@media (max-width:700px){.regali{bottom:16px;right:10px}.regali svg:nth-child(1){width:40px}.regali svg:nth-child(2){width:54px}.regali svg:nth-child(3){width:34px}}
+/* sezione Natale */
+.natale{background:linear-gradient(180deg,color-mix(in srgb,var(--bloom) 10%,var(--paper)),var(--paper));border-bottom:1px solid var(--line)}
+.natale-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:8px}
+.natale-grid figure{margin:0;border-radius:var(--r);overflow:hidden;aspect-ratio:4/5;position:relative;background:var(--line)}
+.natale-grid img{width:100%;height:100%;object-fit:cover}
+.natale-grid figcaption{position:absolute;left:0;right:0;bottom:0;padding:24px 10px 8px;color:#fff;font-weight:600;font-size:14px;background:linear-gradient(transparent,rgba(0,0,0,.6))}
+@media (max-width:760px){.natale-grid{grid-template-columns:1fr 1fr}}
+.natale .cta{margin-top:20px}
+.avviso-feste{margin:14px 0 0;padding:12px 16px;border-radius:12px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--oro);max-width:60ch;font-weight:500}
+@media (prefers-reduced-motion: reduce){.slitta,.slitta svg,.regali svg,.festone::after{animation:none}.slitta{transform:translateX(55vw)}}
 </style>
 </head>
 <body>
 
 <header class="top">
+  <div class="festone solo-natale" aria-hidden="true"></div>
   <div class="wrap">
     <a class="brand" href="#inizio" aria-label="Floricoltura Lagomarsino, torna all'inizio">
       <img class="logo" src="media/logo.png" alt="Floricoltura Lagomarsino" width="500" height="55">
@@ -721,6 +787,53 @@ footer p{margin:4px 0}
     <!-- VIDEO DRONE: carica il file nella cartella del sito e sostituisci "video-drone.mp4" -->
     <video id="heroVideo" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
   </div>
+  <canvas class="neve solo-natale" id="neve" aria-hidden="true"></canvas>
+  <div class="slitta solo-natale" aria-hidden="true">
+    <svg viewBox="0 0 320 110" xmlns="http://www.w3.org/2000/svg">
+      <!-- briglie -->
+      <path d="M110 70 Q170 52 214 56 M110 74 Q190 70 262 60" stroke="#c9a227" stroke-width="2" fill="none"/>
+      <!-- renna 2 -->
+      <g transform="translate(196 34)">
+        <ellipse cx="22" cy="28" rx="20" ry="10" fill="#8d5a3b"/>
+        <path d="M8 34 l-6 18 M14 36 l2 18 M30 36 l-2 18 M36 33 l8 16" stroke="#6b4129" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M38 24 q6 -10 12 -10" stroke="#8d5a3b" stroke-width="7" stroke-linecap="round" fill="none"/>
+        <ellipse cx="54" cy="12" rx="8" ry="6" fill="#8d5a3b"/>
+        <path d="M50 6 l-4 -10 l-4 3 M46 -4 l3 -5 M54 6 l2 -11 l5 2 M56 -5 l-1 -6" stroke="#5a3a22" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        <circle cx="61" cy="13" r="2" fill="#3b2416"/><circle cx="54" cy="10" r="1.4" fill="#1b1b1b"/>
+        <path d="M2 26 q-6 -2 -4 -8" stroke="#f5f0e6" stroke-width="3" stroke-linecap="round"/>
+      </g>
+      <!-- renna 1 con il naso rosso -->
+      <g transform="translate(244 24)">
+        <ellipse cx="22" cy="28" rx="20" ry="10" fill="#9c6644"/>
+        <path d="M8 34 l-8 16 M14 36 l0 18 M30 36 l0 18 M36 33 l10 14" stroke="#73492f" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M38 24 q6 -10 12 -10" stroke="#9c6644" stroke-width="7" stroke-linecap="round" fill="none"/>
+        <ellipse cx="54" cy="12" rx="8" ry="6" fill="#9c6644"/>
+        <path d="M50 6 l-4 -10 l-4 3 M46 -4 l3 -5 M54 6 l2 -11 l5 2 M56 -5 l-1 -6" stroke="#5a3a22" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        <circle cx="62" cy="13" r="3.2" fill="#e53935"/><circle cx="54" cy="10" r="1.4" fill="#1b1b1b"/>
+        <path d="M2 26 q-6 -2 -4 -8" stroke="#f5f0e6" stroke-width="3" stroke-linecap="round"/>
+      </g>
+      <!-- slitta -->
+      <path d="M14 66 h92 q14 0 14 -14 v-6 h-10 v8 q0 4 -6 4 h-78 q-10 0 -14 -10 z" fill="#c62828"/>
+      <path d="M8 84 h108 q12 0 16 -10" stroke="#d4a017" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <path d="M30 66 v18 M90 66 v18" stroke="#d4a017" stroke-width="3"/>
+      <rect x="18" y="38" width="22" height="20" rx="3" fill="#2e7d32"/><path d="M29 38 v20 M18 48 h22" stroke="#fbc02d" stroke-width="3"/>
+      <rect x="36" y="44" width="16" height="14" rx="2" fill="#fbc02d"/><path d="M44 44 v14" stroke="#c62828" stroke-width="3"/>
+      <!-- Babbo Natale -->
+      <path d="M58 58 q0 -26 20 -26 q18 0 18 26 z" fill="#d32f2f"/>
+      <path d="M58 58 h38" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="78" cy="24" r="10" fill="#f2c7a5"/>
+      <path d="M68 26 q10 18 20 0 q-2 12 -10 14 q-8 -2 -10 -14z" fill="#fff"/>
+      <path d="M67 20 q4 -16 22 -10 q6 4 10 14 l-4 2 q-4 -8 -8 -10 z" fill="#d32f2f"/>
+      <path d="M66 21 h24" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="98" cy="25" r="4" fill="#fff"/>
+      <path d="M94 44 q14 -4 18 10" stroke="#d32f2f" stroke-width="7" stroke-linecap="round" fill="none"/>
+    </svg>
+  </div>
+  <div class="regali solo-natale" aria-hidden="true">
+    <svg viewBox="0 0 60 64"><rect x="4" y="22" width="52" height="40" rx="3" fill="#2e7d32"/><rect x="2" y="14" width="56" height="12" rx="3" fill="#388e3c"/><path d="M30 14 v48" stroke="#fbc02d" stroke-width="7"/><path d="M30 14 q-16 -14 -20 -4 q4 8 20 4 q16 -14 20 -4 q-4 8 -20 4" fill="#fbc02d"/></svg>
+    <svg viewBox="0 0 60 64"><rect x="4" y="22" width="52" height="40" rx="3" fill="#c62828"/><rect x="2" y="14" width="56" height="12" rx="3" fill="#d32f2f"/><path d="M30 14 v48 M4 42 h52" stroke="#fff3c4" stroke-width="6"/><path d="M30 14 q-16 -14 -20 -4 q4 8 20 4 q16 -14 20 -4 q-4 8 -20 4" fill="#fff3c4"/></svg>
+    <svg viewBox="0 0 60 64"><rect x="4" y="22" width="52" height="40" rx="3" fill="#f2c94c"/><rect x="2" y="14" width="56" height="12" rx="3" fill="#f6d365"/><path d="M30 14 v48" stroke="#c62828" stroke-width="7"/><path d="M30 14 q-16 -14 -20 -4 q4 8 20 4 q16 -14 20 -4 q-4 8 -20 4" fill="#c62828"/></svg>
+  </div>
   <div class="wrap">
     <h1>Fiori e piante coltivati <em>sulle alture di Nervi</em><span class="sr-only"> · Floricoltura Lagomarsino, vivaio e fiorai a Genova e Recco</span></h1>
     <p>Da tre generazioni coltiviamo piante fiorite in vaso nelle nostre serre affacciate sul golfo. Ci trovi al vivaio e nei negozi di Nervi, Albaro e Recco.</p>
@@ -734,6 +847,29 @@ footer p{margin:4px 0}
 <div class="notice" id="notice" hidden><div class="wrap" id="noticeText"></div></div>
 
 <main>
+<section class="natale solo-natale" id="natale">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="kicker">Buone Feste</div>
+        <h2>Il Natale da Lagomarsino</h2>
+      </div>
+      <p>Stelle di Natale, ciclamini, composizioni e centrotavola per le feste, coltivati e preparati da noi. Consegniamo da Camogli a Genova.</p>
+    </div>
+    <div class="natale-grid">
+      <figure><img src="media/stelle-natale.jpg" alt="Stelle di Natale rosse, rosa e bianche in negozio" loading="lazy"><figcaption>Stelle di Natale</figcaption></figure>
+      <figure><img src="media/comp-natale.jpg" alt="Composizione natalizia con ciclamini, rose, ortensia e bacche rosse" loading="lazy"><figcaption>Composizioni per le feste</figcaption></figure>
+      <figure><img src="media/lavoro-giulia.jpg" alt="Bouquet natalizio con rose rosse, protee e pigne preparato in negozio" loading="lazy"><figcaption>Bouquet natalizi</figcaption></figure>
+      <figure><img src="media/ciclamino-rosso.jpg" alt="Ciclamino rosso coltivato nelle serre del vivaio" loading="lazy"><figcaption>Ciclamini dal vivaio</figcaption></figure>
+    </div>
+    <p class="avviso-feste" id="avvisoFeste" hidden></p>
+    <div class="cta">
+      <a class="btn btn-wa" href="#ordina">Prenota per le feste su WhatsApp</a>
+      <a class="btn btn-line" href="#negozi">Negozi e orari</a>
+    </div>
+  </div>
+</section>
+
 <section id="chi-siamo">
   <div class="wrap about">
     <div>
@@ -1433,6 +1569,28 @@ compToggle.addEventListener("click", ()=>{
   document.getElementById("cookieSi").addEventListener("click", ()=>salva("tutti"));
   document.getElementById("cookieNo").addEventListener("click", ()=>salva("necessari"));
   document.getElementById("cookieManage").addEventListener("click", e=>{ e.preventDefault(); bar.hidden = false; });
+})();
+
+/* ---- Tema natalizio ---- */
+(function(){
+  if (window.TEMA !== "natale") return;
+  // Avviso orari delle feste (lascia vuoto per nasconderlo)
+  const AVVISO_FESTE = "";
+  if (AVVISO_FESTE){ const a=document.getElementById("avvisoFeste"); a.textContent=AVVISO_FESTE; a.hidden=false; }
+  // Voce "Natale" nel menu
+  const nav=document.getElementById("menuPanel"), l=document.createElement("a");
+  l.href="#natale"; l.textContent="Natale"; nav.insertBefore(l, nav.firstChild);
+  // Nevicata
+  const c=document.getElementById("neve"); if(!c) return;
+  const fermo = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const ctx=c.getContext("2d"); let W,H,fiocchi=[];
+  function dim(){ const r=c.getBoundingClientRect(), d=Math.min(devicePixelRatio||1,2); W=r.width; H=r.height; c.width=W*d; c.height=H*d; ctx.setTransform(d,0,0,d,0,0);
+    const n=Math.round(Math.min(120, W*H/9000)); fiocchi=Array.from({length:n},()=>({x:Math.random()*W,y:Math.random()*H,r:1+Math.random()*2.6,v:.3+Math.random()*.9,o:Math.random()*6.28,a:.5+Math.random()*.5})); }
+  function disegna(){ ctx.clearRect(0,0,W,H);
+    for(const f of fiocchi){ ctx.globalAlpha=f.a; ctx.beginPath(); ctx.arc(f.x,f.y,f.r,0,6.283); ctx.fillStyle="#fff"; ctx.fill(); } ctx.globalAlpha=1; }
+  function passo(){ for(const f of fiocchi){ f.y+=f.v; f.o+=.01; f.x+=Math.sin(f.o)*.4; if(f.y>H+4){ f.y=-4; f.x=Math.random()*W; } } disegna(); requestAnimationFrame(passo); }
+  dim(); addEventListener("resize", dim);
+  if (fermo) disegna(); else requestAnimationFrame(passo);
 })();
 
 /* ---- Menu a tre linee ---- */
