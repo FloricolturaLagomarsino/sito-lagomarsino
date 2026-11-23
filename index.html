@@ -1247,6 +1247,15 @@ const CONFIG = {
   // es. { data: "2026-12-26", negozi: ["recco"], nota: "Chiuso per inventario" }
   chiusure: [],
 
+  // ORARI SPECIALI DELLE FESTE: valgono ogni anno ("MM-GG") o in una data precisa ("AAAA-MM-GG").
+  // orari: [] = chiuso; orari: null = aperto con la nota indicata (orari non noti)
+  speciali: [
+    { data: "12-24", negozi: ["nervi","recco"], orari: ["08:30-19:30"], nota: "orario continuato" },
+    { data: "12-24", negozi: ["albaro","recco-chiosco"], orari: null, nota: "orario continuato" },
+    { data: "12-25", negozi: ["nervi","albaro","recco-chiosco","recco"], orari: ["08:00-12:30"], nota: "Natale, solo mattina" },
+    { data: "12-25", negozi: ["azienda"], orari: [], nota: "Natale" }
+  ],
+
   negozi: [
     {
       id: "azienda",
@@ -1375,20 +1384,26 @@ function oraRoma(){
 const toMin = s => { const [h,m]=s.split(":").map(Number); return h*60+m; };
 const fmt = s => s.replace("-", "–");
 
+function specialeOggi(id, data){
+  return (CONFIG.speciali||[]).find(c => (c.data===data || c.data===data.slice(5)) && (c.negozi==="tutti" || (c.negozi||[]).includes(id)));
+}
 function chiusuraOggi(id, data){
   return CONFIG.chiusure.find(c => c.data===data && (c.negozi==="tutti" || (c.negozi||[]).includes(id)));
 }
 
 function statoManuale(n){
-  if (!n.orari) return { cls:"", txt:"Orari in arrivo" };
   const t = oraRoma();
-  if (chiusuraOggi(n.id, t.data)) return { cls:"closed", txt:"Chiuso oggi" };
-  const fasce = n.orari[t.giorno].map(f=>f.split("-").map(toMin));
+  const sp = specialeOggi(n.id, t.data);
+  if (sp && sp.orari === null) return { cls:"open", txt:`Oggi ${sp.nota}` };
+  if (!n.orari && !sp) return { cls:"", txt:"Orari in arrivo" };
+  if (chiusuraOggi(n.id, t.data) || (sp && sp.orari.length===0)) return { cls:"closed", txt:`Chiuso oggi${sp?" ("+sp.nota+")":""}` };
+  const fasce = (sp ? sp.orari : n.orari[t.giorno]).map(f=>f.split("-").map(toMin));
   for (const [a,b] of fasce){
     if (t.minuti>=a && t.minuti<b) return b-t.minuti<=30 ? {cls:"soon",txt:`Aperto · chiude alle ${minToStr(b)}`} : {cls:"open",txt:`Aperto ora · fino alle ${minToStr(b)}`};
   }
   const prossima = fasce.find(([a])=>a>t.minuti);
   if (prossima) return { cls:"closed", txt:`Chiuso · apre alle ${minToStr(prossima[0])}` };
+  if (!n.orari) return { cls:"closed", txt:"Chiuso ora" };
   for (let i=1;i<=7;i++){
     const g=(t.giorno+i)%7, f=n.orari[g];
     if (f.length) return { cls:"closed", txt:`Chiuso · apre ${i===1?"domani":GIORNI[g].toLowerCase()} alle ${f[0].split("-")[0]}` };
@@ -1413,8 +1428,11 @@ function renderStores(){
   box.innerHTML = CONFIG.negozi.map(n=>{
     const st = statoManuale(n);
     const righe = !n.orari ? `<li><span>Orari</span><span>in arrivo</span></li>` : ORDINE.map(g=>{
-      const special = g===t.giorno && chiusuraOggi(n.id,t.data);
-      const val = special ? `Chiuso (${special.nota||"chiusura straordinaria"})` : (n.orari[g].length ? n.orari[g].map(fmt).join(", ") : "Chiuso");
+      const sp = g===t.giorno && specialeOggi(n.id,t.data);
+      const ch = g===t.giorno && chiusuraOggi(n.id,t.data);
+      const special = sp || ch;
+      const val = sp ? (sp.orari===null ? sp.nota : sp.orari.length ? `${sp.orari.map(fmt).join(", ")} (${sp.nota})` : `Chiuso (${sp.nota})`)
+                : ch ? `Chiuso (${ch.nota||"chiusura straordinaria"})` : (n.orari[g].length ? n.orari[g].map(fmt).join(", ") : "Chiuso");
       return `<li class="${g===t.giorno?"today":""} ${special?"special":""}"><span>${GIORNI[g]}</span><span>${val}</span></li>`;
     }).join("");
     return `<article class="store" id="negozio-${n.id}">
@@ -1656,7 +1674,7 @@ compToggle.addEventListener("click", ()=>{
       foto:[["ciclamini-bianchi","Ciclamini bianchi","Ciclamini bianchi"],["ciclamini","Ciclamini in serra","Ciclamini"],["comp-chiesa-bianco","Composizioni bianche","Composizioni"]]}
   };
   // Avvisi con orari speciali per ciascuna festa (lascia "" per nasconderli)
-  const AVVISI = { natale:"", valentino:"", donna:"", pasqua:"", mamma:"", estate:"", halloween:"", ognissanti:"" };
+  const AVVISI = { natale:"Orari delle feste · 24 dicembre: i negozi fanno orario continuato. 25 dicembre: i negozi sono aperti dalle 8:00 alle 12:30. Il vivaio il 24 segue l'orario normale ed è chiuso il giorno di Natale.", valentino:"", donna:"", pasqua:"", mamma:"", estate:"", halloween:"", ognissanti:"" };
   const nav=document.getElementById("menuPanel"), link=document.createElement("a");
   if (T === "natale"){
     if (AVVISI.natale){ const a=document.getElementById("avvisoFeste"); a.textContent=AVVISI.natale; a.hidden=false; }
