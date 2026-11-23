@@ -692,6 +692,10 @@ section{padding:64px 0}
   :root.tema-pasqua:not([data-theme="light"]){--bloom:#b39ddb}
 }
 
+.ig-box{max-width:340px;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);background:var(--paper);position:relative;min-height:200px}
+.ig-box .tag-ig{position:absolute;top:10px;left:10px;z-index:2;font-size:12px;font-weight:700;background:rgba(0,0,0,.5);color:#fff;padding:3px 9px;border-radius:999px;text-decoration:none}
+@media (max-width:700px){.ig-box{max-width:none}}
+
 /* Social */
 .social{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .feed{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
@@ -1145,7 +1149,7 @@ section{scroll-margin-top:70px}
     <div class="social-text">
       <div class="kicker">Dai nostri social</div>
       <h2>Novità, video e promozioni</h2>
-      <p>Qui trovi l'ultimo post. Tutti gli altri video, le foto e le promozioni sono sulle nostre pagine.</p>
+      <p>Qui trovi il nostro ultimo post, aggiornato in automatico. Tutti gli altri video, le foto e le promozioni sono sulle nostre pagine.</p>
       <div class="social-links">
         <a class="btn btn-ig" id="igLink" href="https://www.instagram.com/floricoltura_lagomarsino/" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>Instagram</a>
         <a class="btn btn-fb" id="fbLink" href="https://www.facebook.com/floricolturalagomarsino" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H7v4h3v8h4v-8h3l1-4h-4V8z"/></svg>Facebook</a>
@@ -1232,7 +1236,7 @@ const CONFIG = {
   facebook: "https://www.facebook.com/floricolturalagomarsino",
   // Feed automatici: metti true quando il sito è online (nell'anteprima Claude non si vedono)
   feedFacebook: false,
-  beholdFeedId: "",    // ← codice "Feed ID" di Behold per Instagram   // ← link pagina Facebook
+  beholdFeedId: "zEbY4FSIH29o6EkrQE6x",    // ← codice "Feed ID" di Behold per Instagram   // ← link pagina Facebook
   instagram: "https://www.instagram.com/floricoltura_lagomarsino/", // ← link profilo Instagram
 
   // Avviso in cima al sito (lascia "" per nasconderlo)
@@ -1527,7 +1531,7 @@ function renderFeed(){
   if (CONFIG.beholdFeedId){
     // Instagram automatico tramite Behold
     const s=document.createElement("script"); s.type="module"; s.src="https://w.behold.so/widget.js"; document.head.appendChild(s);
-    feed.outerHTML = `<behold-widget feed-id="${CONFIG.beholdFeedId}"></behold-widget>` + (CONFIG.feedFacebook?fbBox():"");
+    feed.innerHTML = `<div class="ig-box"><a class="tag-ig" href="${CONFIG.instagram}" rel="noopener">Ultimo post su Instagram</a><behold-widget feed-id="${CONFIG.beholdFeedId}"></behold-widget></div>`;
     return;
   }
   if (CONFIG.feedFacebook){ feed.outerHTML = fbBox(); return; }
