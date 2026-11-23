@@ -793,6 +793,7 @@ section{scroll-margin-top:70px}
 .natale-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:8px}
 .natale-grid figure{margin:0;border-radius:var(--r);overflow:hidden;aspect-ratio:4/5;position:relative;background:var(--line)}
 .natale-grid img{width:100%;height:100%;object-fit:cover}
+.natale-grid.chiusa figure:nth-child(n+5){display:none}
 .natale-grid figcaption{position:absolute;left:0;right:0;bottom:0;padding:24px 10px 8px;color:#fff;font-weight:600;font-size:14px;background:linear-gradient(transparent,rgba(0,0,0,.6))}
 @media (min-width:761px){.natale-grid.tre{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:760px){.natale-grid{grid-template-columns:1fr 1fr}}
@@ -919,7 +920,7 @@ section{scroll-margin-top:70px}
       </div>
       <p>Stelle di Natale, ciclamini, composizioni e centrotavola per le feste, coltivati e preparati da noi. Consegniamo da Camogli a Genova.</p>
     </div>
-    <div class="natale-grid">
+    <div class="natale-grid chiusa" id="nataleGrid">
       <figure><img src="media/stelle-natale.jpg" alt="Stelle di Natale rosse, rosa e bianche in negozio" loading="lazy"><figcaption>Stelle di Natale</figcaption></figure>
       <figure><img src="media/comp-natale.jpg" alt="Composizione natalizia con ciclamini, rose, ortensia e bacche rosse" loading="lazy"><figcaption>Composizioni per le feste</figcaption></figure>
       <figure><img src="media/lavoro-giulia.jpg" alt="Bouquet natalizio con rose rosse, protee e pigne preparato in negozio" loading="lazy"><figcaption>Bouquet natalizi</figcaption></figure>
@@ -928,6 +929,11 @@ section{scroll-margin-top:70px}
       <figure><img src="media/natale-cactus.jpg" alt="Composizione natalizia con cactus fioriti, neve e casetta di legno" loading="lazy"><figcaption>Idee regalo</figcaption></figure>
       <figure><img src="media/natale-schiaccianoci.jpg" alt="Schiaccianoci di legno e vasi natalizi" loading="lazy"><figcaption>Decorazioni</figcaption></figure>
       <figure><img src="media/natale-pupazzo.jpg" alt="Pupazzo di neve e centrotavola con rose e bacche innevate" loading="lazy"><figcaption>Centrotavola</figcaption></figure>
+      <figure><img src="media/natale-renne.jpg" alt="Renne di ceramica con alberelli innevati" loading="lazy"><figcaption>Renne in ceramica</figcaption></figure>
+      <figure><img src="media/natale-albero.jpg" alt="Dettaglio dell'albero di Natale con fiocco rosso e luci" loading="lazy"><figcaption>L'albero del negozio</figcaption></figure>
+      <figure><img src="media/befana.jpg" alt="Befana con la scopa tra bacche rosse e pigne" loading="lazy"><figcaption>Aspettando la Befana</figcaption></figure>
+    </div>
+    <div class="gallery-actions"><button type="button" class="btn btn-line" id="nataleToggle" aria-controls="nataleGrid" aria-expanded="false">Vedi altre foto</button>
     </div>
     <p class="avviso-feste" id="avvisoFeste" hidden></p>
     <div class="cta">
@@ -1631,6 +1637,20 @@ compToggle.addEventListener("click", ()=>{
   compToggle.textContent = aperta ? "Mostra meno foto" : `Vedi tutte le ${nComp} foto`;
   if (!aperta) document.getElementById("composizioni").scrollIntoView({block:"start"});
 });
+
+/* ---- Galleria Natale: prime 4 foto, poi "Vedi altre foto" ---- */
+(function(){
+  const g=document.getElementById("nataleGrid"), b=document.getElementById("nataleToggle"); if(!g||!b) return;
+  const altre=g.querySelectorAll("figure").length-4;
+  if (altre<=0){ b.parentElement.remove(); g.classList.remove("chiusa"); return; }
+  b.textContent=`Vedi altre ${altre} foto`;
+  b.addEventListener("click",()=>{
+    const aperta=g.classList.toggle("chiusa")===false;
+    b.setAttribute("aria-expanded",aperta);
+    b.textContent=aperta?"Mostra meno foto":`Vedi altre ${altre} foto`;
+    if(!aperta) document.getElementById("natale").scrollIntoView({block:"start"});
+  });
+})();
 
 /* ---- Galleria serre: mostra tutte / meno ---- */
 (function(){
