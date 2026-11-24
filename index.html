@@ -518,9 +518,14 @@ window.TEMI = [
 })();
 </script>
 <link rel="icon" href="media/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" href="media/fonts/Figtree-var.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="media/fonts/DMSerifDisplay-Regular.woff" as="font" type="font/woff" crossorigin>
+<style>
+/* Caratteri ospitati sul sito (niente collegamenti ai server di Google). Licenza: media/fonts/OFL.txt */
+@font-face{font-family:"DM Serif Display";src:url(media/fonts/DMSerifDisplay-Regular.woff) format("woff");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"DM Serif Display";src:url(media/fonts/DMSerifDisplay-Italic.woff) format("woff");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"Figtree";src:url(media/fonts/Figtree-var.woff) format("woff");font-weight:300 900;font-style:normal;font-display:swap}
+</style>
 <style>
 /* Layout: hero con video drone → avvisi → schede negozi (orari live, mappa, WhatsApp) → social → chi siamo → contatti. Mobile first. */
 :root{
