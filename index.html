@@ -1583,7 +1583,7 @@ function renderStores(){
       </div>
       <div class="store-more" id="dett-${n.id}" hidden>
       <ul class="hours" data-hours="${n.id}">${righe}</ul>
-      <p class="src" data-src="${n.id}">Orari indicativi · in caso di dubbio chiamaci</p>
+      <p class="src" data-src="${n.id}">${n.daGoogle?"Orari presi da Google Maps · in caso di dubbio chiamaci":"Orari indicativi · in caso di dubbio chiamaci"}</p>
       ${n.arrivo?`<div class="arrivo"><strong>Come arrivare</strong>${n.arrivo}</div>`:""}
       <div class="map" data-map="${n.id}">
         <div class="map-cover">${icon.pin}<button type="button" class="btn btn-line" data-loadmap="${n.id}">Mostra la mappa</button><small class="map-note">La mappa è di Google e può usare i suoi cookie</small></div>
@@ -1896,6 +1896,12 @@ document.addEventListener("keydown", e=>{ if(e.key==="Escape" && menuPanel.class
 document.addEventListener("click", e=>{ if(menuPanel.classList.contains("open") && !e.target.closest(".top")) menu(false); });
 
 renderStores(); renderFeed(); setupOrder(); renderFooter(); caricaGoogle();
+/* Orari copiati ogni notte da Google Maps (file scritto dall'aggiornamento automatico su GitHub) */
+fetch("/orari-google.json",{cache:"no-cache"}).then(r=>r.ok?r.json():null).then(d=>{
+  if(!d||!d.negozi) return; let cambiati=false;
+  CONFIG.negozi.forEach(n=>{ const o=d.negozi[n.id]; if(Array.isArray(o)&&o.length===7){ n.orari=o; n.daGoogle=true; cambiati=true; } });
+  if(cambiati) renderStores();
+}).catch(()=>{});
 setInterval(()=>{ if(!CONFIG.google.apiKey) document.querySelectorAll(".store").forEach(el=>{
   const n = CONFIG.negozi.find(x=>"negozio-"+x.id===el.id); if(!n.orari) return; const st=statoManuale(n);
   const s=el.querySelector(".status"); s.className="status "+st.cls; s.innerHTML=`<i></i>${st.txt}`;

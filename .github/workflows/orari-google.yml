@@ -1,0 +1,30 @@
+name: Orari da Google Maps
+
+on:
+  schedule:
+    - cron: "17 3 * * *"   # ogni notte verso le 4/5 ora italiana
+  workflow_dispatch:         # si può lanciare a mano da GitHub → Actions
+
+permissions:
+  contents: write
+
+jobs:
+  orari:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Scarica gli orari dalle schede Google
+        env:
+          GOOGLE_PLACES_KEY: ${{ secrets.GOOGLE_PLACES_KEY }}
+        run: python3 tools/orari_google.py
+      - name: Pubblica se sono cambiati
+        run: |
+          if [ -n "$(git status --porcelain orari-google.json)" ]; then
+            git config user.name "Aggiornamento orari"
+            git config user.email "actions@users.noreply.github.com"
+            git add orari-google.json
+            git commit -m "Orari aggiornati da Google Maps"
+            git push
+          else
+            echo "Nessuna modifica."
+          fi
