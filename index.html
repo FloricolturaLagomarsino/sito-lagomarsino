@@ -297,7 +297,81 @@
    "hasMap": "https://maps.app.goo.gl/TQ8PYsnCFqgAbXF2A",
    "telephone": "+39 351 8618966",
    "areaServed": "Genova, Golfo Paradiso",
-   "priceRange": "€€"
+   "priceRange": "€€",
+   "openingHoursSpecification": [
+    {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": "Sunday",
+     "opens": "08:30",
+     "closes": "12:30"
+    },
+    {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": "Monday",
+     "opens": "08:30",
+     "closes": "12:30"
+    },
+    {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": "Monday",
+     "opens": "15:30",
+     "closes": "19:30"
+    },
+    {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": "Tuesday",
+     "opens": "08:30",
+     "closes": "12:30"
+    },
+    {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": "Tuesday",
+     "opens": "15:30",
+     "closes": "19:30"
+    },
+    {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": "Wednesday",
+     "opens": "08:30",
+     "closes": "12:30"
+    },
+    {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": "Thursday",
+     "opens": "08:30",
+     "closes": "12:30"
+    },
+    {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": "Thursday",
+     "opens": "15:30",
+     "closes": "19:30"
+    },
+    {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": "Friday",
+     "opens": "08:30",
+     "closes": "12:30"
+    },
+    {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": "Friday",
+     "opens": "15:30",
+     "closes": "19:30"
+    },
+    {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": "Saturday",
+     "opens": "08:30",
+     "closes": "12:30"
+    },
+    {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": "Saturday",
+     "opens": "15:30",
+     "closes": "19:30"
+    }
+   ]
   },
   {
    "@type": "Florist",
@@ -1359,7 +1433,15 @@ const CONFIG = {
       foto: "media/chiosco-recco.jpg", fotoAlt: "Il chiosco di fiori in via XX Settembre a Recco, con girasoli, rose e piante", fotoPos: "center 60%",
       coords: "44.3621753,9.1450519",
       mapsUrl: "https://maps.app.goo.gl/TQ8PYsnCFqgAbXF2A",
-      orari: null            // ← orari da inserire
+      orari: [
+        ["08:30-12:30"],
+        ["08:30-12:30","15:30-19:30"],
+        ["08:30-12:30","15:30-19:30"],
+        ["08:30-12:30"],
+        ["08:30-12:30","15:30-19:30"],
+        ["08:30-12:30","15:30-19:30"],
+        ["08:30-12:30","15:30-19:30"]
+      ]
     },
     {
       id: "recco",
