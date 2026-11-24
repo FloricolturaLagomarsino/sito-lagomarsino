@@ -1329,6 +1329,7 @@ const CONFIG = {
   facebook: "https://www.facebook.com/floricolturalagomarsino",
   // Feed automatici: metti true quando il sito è online (nell'anteprima Claude non si vedono)
   feedFacebook: false,
+  goatcounter: "",   // ← nome scelto su goatcounter.com (statistiche visite senza cookie); vuoto = spente
   beholdFeedId: "zEbY4FSIH29o6EkrQE6x",    // ← codice "Feed ID" di Behold per Instagram   // ← link pagina Facebook
   instagram: "https://www.instagram.com/floricoltura_lagomarsino/", // ← link profilo Instagram
 
@@ -1881,6 +1882,12 @@ setInterval(()=>{ if(!CONFIG.google.apiKey) document.querySelectorAll(".store").
   const n = CONFIG.negozi.find(x=>"negozio-"+x.id===el.id); if(!n.orari) return; const st=statoManuale(n);
   const s=el.querySelector(".status"); s.className="status "+st.cls; s.innerHTML=`<i></i>${st.txt}`;
 }); }, 60000);
+</script>
+<script>
+/* Statistiche visite con GoatCounter: niente cookie, nessun dato personale salvato */
+(function(){ const c=(typeof CONFIG!=="undefined"&&CONFIG.goatcounter)||""; if(!c) return;
+  const s=document.createElement("script"); s.async=true; s.src="https://gc.zgo.at/count.js";
+  s.dataset.goatcounter="https://"+c+".goatcounter.com/count"; document.body.appendChild(s); })();
 </script>
 </body>
 </html>
