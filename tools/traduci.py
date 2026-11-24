@@ -347,8 +347,6 @@ T = [
 ('x.dataset.v.includes("cerimonia")', 'x.dataset.v.includes("ceremony")'),
 ('"Buongiorno, vorrei informazioni: "', '"Hello, I would like some information: "'),
 ('waLink(n.whatsapp,"Buongiorno, ")', 'waLink(n.whatsapp,"Hello, ")'),
-('<h3>Scrivici</h3>', '<h3>Write to us</h3>'),
-('WhatsApp Vivaio: <a href="${waLink(CONFIG.whatsapp,"Buongiorno, ")}">', 'WhatsApp Nursery: <a href="${waLink(CONFIG.whatsapp,"Hello, ")}">'),
 ('`Vedi tutte le ${nComp} foto`', '`See all ${nComp} photos`'),
 ('`Vedi altre ${altre} foto`', '`See ${altre} more photos`'),
 ('`Vedi tutte le ${n} foto`', '`See all ${n} photos`'),

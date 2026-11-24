@@ -828,7 +828,8 @@ section{padding:64px 0}
 
 /* Footer */
 footer{background:#132219;color:#d7e3da;padding:44px 0 90px;font-size:15px}
-footer .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px}
+footer .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px}
+@media (min-width:1100px){footer .cols{grid-template-columns:repeat(5,1fr);gap:20px}footer .cols p{font-size:14px}}
 footer h3{font-size:22px;color:#fff;margin-bottom:8px}
 footer a{color:#ffb3cf;overflow-wrap:anywhere}
 footer p{margin:4px 0}
@@ -1714,10 +1715,7 @@ function setupOrder(){
 function renderFooter(){
   const cols = CONFIG.negozi.map(n=>`<div><h3>${n.piede||n.nome}</h3>
     <p>${n.indirizzo}</p><p>${n.telefoni.length ? n.telefoni.map(x=>`<a href="${telHref(x)}">${x}</a>`).join(" · ") : "Phone coming soon"}${n.whatsapp?` · <a href="${waLink(n.whatsapp,"Hello, ")}" rel="noopener">WhatsApp</a>`:""}</p>${n.email?`<p><a href="mailto:${n.email}">${n.email}</a></p>`:""}</div>`).join("");
-  document.getElementById("footCols").innerHTML = cols + `<div><h3>Write to us</h3>
-    <p>WhatsApp Nursery: <a href="${waLink(CONFIG.whatsapp,"Hello, ")}">010 322769</a></p>
-    <p>Email: <a href="mailto:${CONFIG.email}">${CONFIG.email}</a></p>
-    <p><a href="${CONFIG.facebook}">Facebook</a> · <a href="${CONFIG.instagram}">Instagram</a></p></div>`;
+  document.getElementById("footCols").innerHTML = cols;
   document.getElementById("year").textContent = new Date().getFullYear();
 }
 
