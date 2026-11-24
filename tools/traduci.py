@@ -228,6 +228,11 @@ T = [
 ('Per giardinieri, aziende e condomini. Riforniamo ogni settimana i negozi di Genova con il nostro servizio di consegne.',
  'For gardeners, businesses and apartment buildings. Every week we supply shops across Genoa with our delivery service.'),
 ('<h3>Pagamenti</h3>', '<h3>Payments</h3>'),
+('<h3>Buoni regalo</h3>', '<h3>Gift vouchers</h3>'),
+("Non sai quale pianta scegliere? Regala un buono: decidi tu l'importo e chi lo riceve sceglie fiori, piante o una composizione nei nostri negozi.",
+ "Not sure which plant to choose? Give a voucher: you decide the amount, and they choose flowers, plants or an arrangement in our shops."),
+('>Chiedi un buono su WhatsApp<', '>Ask for a voucher on WhatsApp<'),
+('"Buongiorno, vorrei un buono regalo da "', '"Hello, I would like a gift voucher for "'),
 ('Accettiamo contanti, carte e bonifico.', 'We accept cash, cards and bank transfer.'),
 # ---------- Social ----------
 ('<div class="kicker">Dai nostri social</div>', '<div class="kicker">From our social media</div>'),
@@ -256,7 +261,7 @@ T = [
 ('>Apri WhatsApp e invia<', '>Open WhatsApp and send<'),
 # ---------- Footer / cookie ----------
 ('Via dei Floricoltori 23r, 16167 Genova Nervi · P.IVA 02706290992 · <a href="privacy.html">Privacy e cookie</a> · <a href="#" id="cookieManage">Gestisci i cookie</a> · <a href="https://lagomarsino.goatcounter.com/" rel="noopener nofollow" title="Statistiche delle visite (accesso riservato)">Statistiche</a>',
- 'Via dei Floricoltori 23r, 16167 Genova Nervi · VAT IT02706290992 · <a href="privacy.html">Privacy and cookies (Italian)</a> · <a href="#" id="cookieManage">Manage cookies</a> · <a href="https://lagomarsino.goatcounter.com/" rel="noopener nofollow" title="Visitor statistics (private)">Statistics</a>'),
+ 'Via dei Floricoltori 23r, 16167 Genova Nervi · VAT IT02706290992 · <a href="privacy.html">Privacy and cookies</a> · <a href="#" id="cookieManage">Manage cookies</a> · <a href="https://lagomarsino.goatcounter.com/" rel="noopener nofollow" title="Visitor statistics (private)">Statistics</a>'),
 ('Usiamo solo cookie tecnici. Il riquadro meteo è un contenuto esterno: lo mostriamo solo se accetti. Le mappe di Google si caricano solo quando le apri. <a href="privacy.html">Privacy e cookie</a>',
  'We only use technical cookies. The weather box is external content: we only show it if you accept. Google Maps only loads when you open it. <a href="privacy.html">Privacy and cookies</a>'),
 ('>Solo necessari<', '>Necessary only<'),
@@ -463,7 +468,7 @@ if AVVISO_IT:
 out = head + ldtxt + body
 # hreflang e percorsi relativi (la pagina sta in /en/)
 out = out.replace('<link rel="alternate" hreflang="it" href="https://floricolturalagomarsino.it/">', '<link rel="alternate" hreflang="it" href="https://floricolturalagomarsino.it/">', 1)
-out = re.sub(r'(src|href|poster|data-src)="(media/|privacy\.html)', r'\1="../\2', out)
+out = re.sub(r'(src|href|poster|data-src)="(media/)', r'\1="../\2', out)
 out = re.sub(r'url\((media/)', r'url(../\1', out)
 out = re.sub(r'"(media/[^"]+)"', r'"../\1"', out)            # percorsi dentro lo script
 out = out.replace('"../../media/', '"../media/')

@@ -722,6 +722,8 @@ section{padding:64px 0}
 .servizi{background:var(--surface);border-top:1px solid var(--line)}
 .serv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
 .serv{border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;background:var(--paper);border-top:3px solid var(--leaf)}
+.serv-buono{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;border-top-color:var(--bloom);background:var(--surface)}
+.serv-buono p{margin-bottom:0;max-width:62ch}
 .serv h3{font-family:var(--body);font-weight:700;font-size:17px;margin:0 0 6px}
 .serv p{margin:0;font-size:15px;color:var(--muted)}
 .fiere{margin-top:28px;padding:18px 20px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);max-width:640px}
@@ -1242,6 +1244,13 @@ section{scroll-margin-top:70px}
         <h3>Pagamenti</h3>
         <p>Accettiamo contanti, carte e bonifico.</p>
       </article>
+      <article class="serv serv-buono" id="buoni-regalo">
+        <div>
+          <h3>Buoni regalo</h3>
+          <p>Non sai quale pianta scegliere? Regala un buono: decidi tu l'importo e chi lo riceve sceglie fiori, piante o una composizione nei nostri negozi.</p>
+        </div>
+        <a class="btn btn-wa" data-buono href="#ordina">Chiedi un buono su WhatsApp</a>
+      </article>
     </div>
   </div>
 </section>
@@ -1706,6 +1715,8 @@ function setupOrder(){
   if (cer) cer.addEventListener("click",()=>{ const c=[...chips].find(x=>x.dataset.v.includes("cerimonia")); if(c) c.click(); });
   update();
   const general = waLink(CONFIG.whatsapp, "Buongiorno, vorrei informazioni: ");
+  const buono = document.querySelector("[data-buono]");
+  if (buono) buono.href = waLink(CONFIG.whatsapp, "Buongiorno, vorrei un buono regalo da ");
   document.getElementById("fab").href = general;
   document.querySelector("[data-wa]").href = general;
 }

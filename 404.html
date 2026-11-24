@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pagina non trovata · Floricoltura Lagomarsino</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/media/favicon.png">
+<style>
+@font-face{font-family:"DM Serif Display";src:url(/media/fonts/DMSerifDisplay-Regular.woff) format("woff");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"DM Serif Display";src:url(/media/fonts/DMSerifDisplay-Italic.woff) format("woff");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"Figtree";src:url(/media/fonts/Figtree-var.woff) format("woff");font-weight:300 900;font-style:normal;font-display:swap}
+:root{--paper:#f6f7f2;--surface:#fff;--ink:#16251d;--muted:#56655c;--leaf:#2f6b45;--bloom:#c2185b;--line:#dfe4da;--wa:#1fa855;color-scheme:light}
+@media (prefers-color-scheme: dark){:root{--paper:#0f1713;--surface:#16211b;--ink:#e8efe9;--muted:#9fb0a5;--leaf:#7cc395;--bloom:#f06292;--line:#26352c;color-scheme:dark}.logo{filter:invert(1)}}
+*{box-sizing:border-box}
+body{margin:0;min-height:100svh;display:flex;flex-direction:column;background:var(--paper);color:var(--ink);font-family:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:17px;line-height:1.6}
+header{padding:16px 20px;border-bottom:1px solid var(--line)}
+.logo{height:30px;width:auto;display:block}
+main{flex:1;display:grid;place-items:center;padding:40px 20px 60px}
+.box{max-width:560px;text-align:center}
+.vaso{width:120px;height:auto;margin:0 auto 10px;display:block}
+.kicker{color:var(--bloom);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:13px}
+h1{font-family:"DM Serif Display",Georgia,serif;font-weight:400;font-size:clamp(34px,7vw,50px);line-height:1.1;margin:8px 0 12px}
+h1 em{color:var(--leaf)}
+p{color:var(--muted);margin:0 auto 24px;max-width:46ch}
+.btns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;font-weight:600;text-decoration:none;border:1px solid var(--line);color:var(--ink);background:var(--surface)}
+.btn-main{background:var(--leaf);border-color:var(--leaf);color:#fff}
+.btn-wa{background:var(--wa);border-color:var(--wa);color:#fff}
+.lang{margin-top:28px;font-size:14px}
+.lang a{color:var(--leaf)}
+</style>
+</head>
+<body>
+<header><a href="/" id="home"><img class="logo" src="/media/logo.png" alt="Floricoltura Lagomarsino" width="500" height="55"></a></header>
+<main>
+  <div class="box">
+    <svg class="vaso" viewBox="0 0 120 120" aria-hidden="true">
+      <path d="M60 70 V42" stroke="#2f6b45" stroke-width="4" stroke-linecap="round"/>
+      <path d="M60 56 q-18 -4 -22 -18 q16 0 22 14" fill="#43a047"/>
+      <path d="M60 50 q16 -6 22 -20 q-16 2 -22 16" fill="#2e7d32"/>
+      <circle cx="60" cy="34" r="9" fill="#c2185b"/><circle cx="60" cy="34" r="3.5" fill="#fdd835"/>
+      <path d="M34 70 h52 l-7 40 h-38 z" fill="#c97b3d"/><rect x="30" y="64" width="60" height="10" rx="3" fill="#b5652c"/>
+      <text x="60" y="98" text-anchor="middle" font-family="Georgia,serif" font-size="18" fill="#fff">404</text>
+    </svg>
+    <div class="kicker" id="k">Pagina non trovata</div>
+    <h1 id="t">Questa pianta <em>qui non c'è</em></h1>
+    <p id="d">L'indirizzo che hai aperto non esiste o è stato spostato. Torna al sito per trovare il Vivaio, i negozi e gli orari.</p>
+    <div class="btns">
+      <a class="btn btn-main" href="/" id="b1">Torna al sito</a>
+      <a class="btn" href="/#negozi" id="b2">Negozi e orari</a>
+      <a class="btn btn-wa" href="https://wa.me/39010322769" id="b3" rel="noopener">Scrivici su WhatsApp</a>
+    </div>
+    <div class="lang" id="l"><a href="/en/">English version</a></div>
+  </div>
+</main>
+<script>
+if (location.pathname.indexOf("/en/") === 0) {
+  document.documentElement.lang = "en";
+  document.title = "Page not found · Floricoltura Lagomarsino";
+  document.getElementById("home").href = "/en/";
+  document.getElementById("k").textContent = "Page not found";
+  document.getElementById("t").innerHTML = "This plant <em>isn't here</em>";
+  document.getElementById("d").textContent = "The address you opened doesn't exist or has moved. Go back to the site to find the Nursery, our shops and opening hours.";
+  var b1 = document.getElementById("b1"); b1.href = "/en/"; b1.textContent = "Back to the site";
+  var b2 = document.getElementById("b2"); b2.href = "/en/#negozi"; b2.textContent = "Shops and hours";
+  document.getElementById("b3").textContent = "Message us on WhatsApp";
+  document.getElementById("l").innerHTML = '<a href="/" lang="it">Versione italiana</a>';
+}
+</script>
+</body>
+</html>
