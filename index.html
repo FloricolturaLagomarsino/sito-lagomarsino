@@ -6,6 +6,9 @@
 <title>Floricoltura Lagomarsino · Vivaio e fiorai a Genova Nervi, Albaro e Recco</title>
 <meta name="description" content="Vivaio di piante e fiori a Genova Nervi: tre generazioni a picco sul mare. Fiorai a Nervi, Albaro e Recco: piante da interno e da esterno, composizioni floreali, consegne a domicilio da Camogli a Genova.">
 <link rel="canonical" href="https://floricolturalagomarsino.it/">
+<link rel="alternate" hreflang="it" href="https://floricolturalagomarsino.it/">
+<link rel="alternate" hreflang="en" href="https://floricolturalagomarsino.it/en/">
+<link rel="alternate" hreflang="x-default" href="https://floricolturalagomarsino.it/">
 <meta name="robots" content="index, follow">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="it_IT">
@@ -584,21 +587,23 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.1;text-wrap:ba
 @media (max-width:380px){.logo{height:24px}}
 .brand b{font-family:var(--display);font-weight:400;font-size:21px;line-height:1}
 .brand small{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.nav{display:flex;gap:18px}
-.nav a{color:var(--ink);text-decoration:none;font-weight:500;font-size:15px}
+.nav{display:flex;align-items:center;gap:18px}
+.nav a{color:var(--ink);text-decoration:none;font-weight:500;font-size:15px;white-space:nowrap}
 .nav a:hover{color:var(--bloom)}
+.nav a.lang{border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:13px;font-weight:600;letter-spacing:.04em}
 .menu-btn{display:none;width:44px;height:44px;margin-right:-8px;border:0;background:transparent;border-radius:10px;cursor:pointer;flex-direction:column;justify-content:center;align-items:center;gap:5px;color:var(--ink)}
 .menu-btn span{display:block;width:24px;height:2px;background:currentColor;border-radius:2px;transition:transform .2s,opacity .2s}
 .menu-btn[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
 .menu-btn[aria-expanded="true"] span:nth-child(2){opacity:0}
 .menu-btn[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 @media (prefers-reduced-motion: reduce){.menu-btn span{transition:none}}
-@media (max-width:1080px){
+@media (max-width:1180px){
   .menu-btn{display:flex}
-  .nav{display:none;position:absolute;top:60px;left:0;right:0;flex-direction:column;gap:0;background:var(--paper);border-bottom:1px solid var(--line);box-shadow:0 14px 28px rgba(0,0,0,.14);padding:6px 18px 14px;max-height:calc(100svh - 60px);overflow-y:auto}
+  .nav{display:none;position:absolute;top:60px;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:var(--paper);border-bottom:1px solid var(--line);box-shadow:0 14px 28px rgba(0,0,0,.14);padding:6px 18px 14px;max-height:calc(100svh - 60px);overflow-y:auto}
   .nav.open{display:flex}
   .nav a{padding:14px 2px;font-size:18px;border-bottom:1px solid var(--line)}
   .nav a:last-child{border-bottom:0}
+  .nav a.lang{align-self:flex-start;margin-top:12px;padding:6px 16px;font-size:14px;border:1px solid var(--line)}
 }
 
 /* Hero */
@@ -905,6 +910,7 @@ section{scroll-margin-top:70px}
       <a href="#negozi">Negozi e orari</a>
       <a href="#ordina">Ordini</a>
       <a href="#contatti">Contatti</a>
+      <a class="lang" href="en/" hreflang="en" lang="en">EN</a>
     </nav>
   </div>
 </header>
