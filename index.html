@@ -823,6 +823,10 @@ section{padding:64px 0}
 .order label{font-weight:600;font-size:15px;display:block;margin-bottom:6px}
 .order select,.order textarea{width:100%;font:inherit;font-size:16px;padding:11px 12px;border-radius:10px;border:1px solid var(--line);background:var(--paper);color:var(--ink)}
 .order textarea{min-height:96px;resize:vertical}
+.order input[type=date],.order input[type=text]{width:100%;font:inherit;font-size:16px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--paper);color:var(--ink);min-height:46px}
+.order-row{display:grid;grid-template-columns:1fr 1.4fr;gap:14px}
+@media (max-width:560px){.order-row{grid-template-columns:1fr}}
+.order .opz{font-weight:400;color:var(--muted);font-size:13px}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chip{font:inherit;font-size:14px;padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:var(--paper);color:var(--ink);cursor:pointer}
 .chip[aria-pressed="true"]{background:var(--leaf);border-color:var(--leaf);color:#fff}
@@ -1309,6 +1313,16 @@ section{scroll-margin-top:70px}
           <button type="button" class="chip" aria-pressed="false" data-v="informazioni">Informazioni</button>
         </div>
       </div>
+      <div class="order-row">
+        <div>
+          <label for="orderDate">Per quando <span class="opz">(facoltativo)</span></label>
+          <input type="date" id="orderDate">
+        </div>
+        <div>
+          <label for="orderCard">Testo del biglietto <span class="opz">(facoltativo)</span></label>
+          <input type="text" id="orderCard" maxlength="200" placeholder="Es. Buon compleanno Anna!">
+        </div>
+      </div>
       <div>
         <label for="orderMsg">Messaggio</label>
         <textarea id="orderMsg" placeholder="Es. 2 vasi di ciclamini rossi, ritiro sabato mattina"></textarea>
@@ -1703,14 +1717,20 @@ function setupOrder(){
     c.setAttribute("aria-pressed","true"); tipo=c.dataset.v; update();
   }));
   const msg = document.getElementById("orderMsg"), send = document.getElementById("orderSend");
+  const dataEl = document.getElementById("orderDate"), bigl = document.getElementById("orderCard");
+  try { const oggi = new Date(); dataEl.min = `${oggi.getFullYear()}-${String(oggi.getMonth()+1).padStart(2,"0")}-${String(oggi.getDate()).padStart(2,"0")}`; } catch(e) {}
   function update(){
     const n = CONFIG.negozi.find(x=>x.id===sel.value);
     const nomeN = n.etichetta;
-    const testo = `Buongiorno, vorrei ${tipo} (${nomeN}).${msg.value.trim()? "\n"+msg.value.trim():""}`;
+    const quando = dataEl.value ? new Date(dataEl.value+"T12:00").toLocaleDateString("it-IT",{weekday:"long",day:"numeric",month:"long"}) : "";
+    const testo = `Buongiorno, vorrei ${tipo} (${nomeN}).`
+      + (quando ? `\nPer: ${quando}` : "")
+      + (bigl.value.trim() ? `\nTesto del biglietto: "${bigl.value.trim()}"` : "")
+      + (msg.value.trim() ? "\n"+msg.value.trim() : "");
     send.href = waLink(n.whatsapp, testo);
     document.getElementById("orderNumber").textContent = "Il messaggio arriva al numero +" + n.whatsapp.replace(/^39/,"39 ");
   }
-  sel.addEventListener("change",update); msg.addEventListener("input",update);
+  sel.addEventListener("change",update); msg.addEventListener("input",update); dataEl.addEventListener("change",update); bigl.addEventListener("input",update);
   const cer = document.querySelector("[data-cerimonia]");
   if (cer) cer.addEventListener("click",()=>{ const c=[...chips].find(x=>x.dataset.v.includes("cerimonia")); if(c) c.click(); });
   update();

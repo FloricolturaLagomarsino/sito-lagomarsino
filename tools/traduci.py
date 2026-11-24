@@ -257,6 +257,12 @@ T = [
 ('data-v="fiori per una cerimonia">Cerimonia<', 'data-v="flowers for a ceremony">Ceremony<'),
 ('data-v="informazioni">Informazioni<', 'data-v="some information">Information<'),
 ('<label for="orderMsg">Messaggio</label>', '<label for="orderMsg">Message</label>'),
+('<label for="orderDate">Per quando <span class="opz">(facoltativo)</span></label>', '<label for="orderDate">When <span class="opz">(optional)</span></label>'),
+('<label for="orderCard">Testo del biglietto <span class="opz">(facoltativo)</span></label>', '<label for="orderCard">Card message <span class="opz">(optional)</span></label>'),
+('placeholder="Es. Buon compleanno Anna!"', 'placeholder="E.g. Happy birthday Anna!"'),
+('toLocaleDateString("it-IT"', 'toLocaleDateString("en-GB"'),
+('`\\nPer: ${quando}`', '`\\nFor: ${quando}`'),
+('`\\nTesto del biglietto: "${bigl.value.trim()}"`', '`\\nCard message: "${bigl.value.trim()}"`'),
 ('placeholder="Es. 2 vasi di ciclamini rossi, ritiro sabato mattina"', 'placeholder="E.g. 2 pots of red cyclamen, pick-up Saturday morning"'),
 ('>Apri WhatsApp e invia<', '>Open WhatsApp and send<'),
 # ---------- Footer / cookie ----------
