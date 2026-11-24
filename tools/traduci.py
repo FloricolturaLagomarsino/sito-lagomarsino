@@ -255,8 +255,8 @@ T = [
 ('placeholder="Es. 2 vasi di ciclamini rossi, ritiro sabato mattina"', 'placeholder="E.g. 2 pots of red cyclamen, pick-up Saturday morning"'),
 ('>Apri WhatsApp e invia<', '>Open WhatsApp and send<'),
 # ---------- Footer / cookie ----------
-('Via dei Floricoltori 23r, 16167 Genova Nervi · P.IVA 02706290992 · <a href="privacy.html">Privacy e cookie</a> · <a href="#" id="cookieManage">Gestisci i cookie</a>',
- 'Via dei Floricoltori 23r, 16167 Genova Nervi · VAT IT02706290992 · <a href="privacy.html">Privacy and cookies (Italian)</a> · <a href="#" id="cookieManage">Manage cookies</a>'),
+('Via dei Floricoltori 23r, 16167 Genova Nervi · P.IVA 02706290992 · <a href="privacy.html">Privacy e cookie</a> · <a href="#" id="cookieManage">Gestisci i cookie</a> · <a href="https://lagomarsino.goatcounter.com/" rel="noopener nofollow" title="Statistiche delle visite (accesso riservato)">Statistiche</a>',
+ 'Via dei Floricoltori 23r, 16167 Genova Nervi · VAT IT02706290992 · <a href="privacy.html">Privacy and cookies (Italian)</a> · <a href="#" id="cookieManage">Manage cookies</a> · <a href="https://lagomarsino.goatcounter.com/" rel="noopener nofollow" title="Visitor statistics (private)">Statistics</a>'),
 ('Usiamo solo cookie tecnici. Il riquadro meteo è un contenuto esterno: lo mostriamo solo se accetti. Le mappe di Google si caricano solo quando le apri. <a href="privacy.html">Privacy e cookie</a>',
  'We only use technical cookies. The weather box is external content: we only show it if you accept. Google Maps only loads when you open it. <a href="privacy.html">Privacy and cookies</a>'),
 ('>Solo necessari<', '>Necessary only<'),
