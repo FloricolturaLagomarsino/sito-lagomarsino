@@ -1343,8 +1343,8 @@ const CONFIG = {
   // orari: [] = chiuso; orari: null = aperto con la nota indicata (orari non noti)
   speciali: [
     { data: "12-24", negozi: ["nervi","recco"], orari: ["08:30-19:30"], nota: "orario continuato" },
-    { data: "12-24", negozi: ["albaro","recco-chiosco"], orari: null, nota: "orario continuato" },
-    { data: "12-25", negozi: ["nervi","albaro","recco-chiosco","recco"], orari: ["08:30-12:30"], nota: "Natale, solo mattina" },
+    { data: "12-24", negozi: ["recco-chiosco"], orari: null, nota: "orario continuato" },
+    { data: "12-25", negozi: ["nervi","recco-chiosco","recco"], orari: ["08:30-12:30"], nota: "Natale, solo mattina" },
     { data: "12-25", negozi: ["azienda"], orari: [], nota: "Natale" }
   ],
 
@@ -1408,7 +1408,7 @@ const CONFIG = {
       tipo: "Negozio · Nuova apertura",
       nome: "Albaro",
       etichetta: "negozio di Albaro",
-      descrizione: "Aperto da poco, con un'ampia scelta di piante da interno e da esterno, composizioni floreali e consegne a domicilio. All'aperto c'è un piccolo spazio con una bella esposizione di piante.",   // ← descrizione breve, modificabile
+      descrizione: "Il nostro nuovo negozio, in fase di apertura: un'ampia scelta di piante da interno e da esterno, composizioni floreali e consegne a domicilio. All'aperto c'è un piccolo spazio con una bella esposizione di piante.",   // ← descrizione breve, modificabile
       indirizzo: "Via Albaro 16r, Genova",
       telefoni: ["353 4981611"],          // ← telefono da inserire
       whatsapp: "393534981611",
@@ -1416,7 +1416,8 @@ const CONFIG = {
       mapsQuery: "Floricoltura Lagomarsino, Via Albaro 16r, Genova",
       coords: "44.4001653,8.9583783",
       mapsUrl: "https://maps.app.goo.gl/R4ZwopH4Q3zwoDz76",
-      orari: null            // ← null = "orari in arrivo"
+      orari: null,           // ← null = "orari in arrivo"
+      inApertura: true,      // ← togliere quando apre e mettere gli orari
     },
     {
       id: "recco-chiosco",
@@ -1503,7 +1504,7 @@ function statoManuale(n){
   const t = oraRoma();
   const sp = specialeOggi(n.id, t.data);
   if (sp && sp.orari === null) return { cls:"open", txt:`Oggi ${sp.nota}` };
-  if (!n.orari && !sp) return { cls:"", txt:"Orari in arrivo" };
+  if (!n.orari && !sp) return { cls:"", txt: n.inApertura ? "In fase di apertura" : "Orari in arrivo" };
   if (chiusuraOggi(n.id, t.data) || (sp && sp.orari.length===0)) return { cls:"closed", txt:`Chiuso oggi${sp?" ("+sp.nota+")":""}` };
   const fasce = (sp ? sp.orari : n.orari[t.giorno]).map(f=>f.split("-").map(toMin));
   for (const [a,b] of fasce){
