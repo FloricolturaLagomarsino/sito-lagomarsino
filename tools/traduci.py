@@ -195,8 +195,8 @@ T = [
 ('<p>Rose, margherite, dimorfoteche, ranuncoli, garofanini, iberis, lewisie, surfinie, gerani, dipladenie, buganvillee, fragole, piantine da orto… e tutte le fioriture di primavera.</p>', '<p>Roses, daisies, African daisies, ranunculus, dianthus, iberis, lewisias, surfinias, geraniums, mandevillas, bougainvilleas, strawberries, vegetable seedlings… and all the spring blooms.</p>'),
 ('<h3>Estate</h3>', '<h3>Summer</h3>'),
 ("<h3>Tutto l'anno</h3>", '<h3>All year round</h3>'),
-("<p>Piante aromatiche di stagione, alberi da frutto, agrumi (limoni, aranci, mandarini…), piante da siepe e rampicanti… e tanto altro.</p>", '<p>Seasonal herbs, fruit trees, citrus (lemons, oranges, mandarins…), hedging plants and climbers… and much more.</p>'),
-('<p>Peperoncini, lantane, dimorfoteche, portulache, begonie, vinca, gerani, dipladenie, piante grasse… e tante altre piante che amano il sole.</p>', '<p>Chilli peppers, lantanas, African daisies, portulacas, begonias, vinca, geraniums, mandevillas, succulents… and many more sun-loving plants.</p>'),
+("<p>Piante aromatiche di stagione, alberi da frutto, agrumi (limoni, aranci, mandarini…), piante da siepe e rampicanti, piante grasse… e tanto altro.</p>", '<p>Seasonal herbs, fruit trees, citrus (lemons, oranges, mandarins…), hedging plants and climbers, succulents… and much more.</p>'),
+('<p>Peperoncini, lantane, dimorfoteche, portulache, begonie, vinca, gerani, dipladenie… e tante altre piante che amano il sole.</p>', '<p>Chilli peppers, lantanas, African daisies, portulacas, begonias, vinca, geraniums, mandevillas… and many more sun-loving plants.</p>'),
 # ---------- Composizioni ----------
 ('<div class="kicker">Nei nostri negozi</div>', '<div class="kicker">In our shops</div>'),
 ('<h2>Composizioni e cerimonie</h2>', '<h2>Arrangements and ceremonies</h2>'),
