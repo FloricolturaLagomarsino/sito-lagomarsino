@@ -701,6 +701,14 @@ section{padding:64px 0}
 .about-photo img{width:100%}
 .store-photo{aspect-ratio:16/8;overflow:hidden}
 .store-photo img{width:100%;height:100%;object-fit:cover}
+.store-photo{position:relative}
+.store-play{position:absolute;left:12px;bottom:12px;display:inline-flex;align-items:center;gap:6px;padding:8px 14px 8px 10px;border:0;border-radius:999px;background:rgba(0,0,0,.62);color:#fff;font:inherit;font-size:14px;font-weight:600;cursor:pointer;backdrop-filter:blur(4px)}
+.store-play svg{width:18px;height:18px}
+.store-play:hover{background:rgba(0,0,0,.78)}
+.video-box{border:0;padding:0;background:transparent;max-width:min(92vw,420px);max-height:92vh}
+.video-box::backdrop{background:rgba(0,0,0,.8)}
+.video-box video{display:block;width:100%;max-height:86vh;border-radius:14px;background:#000}
+.video-box .chiudi{position:absolute;top:8px;right:8px;width:38px;height:38px;border:0;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;font-size:22px;line-height:1;cursor:pointer}
 
 .euroflora{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;height:380px}
 .euroflora img{width:100%;height:100%;object-fit:cover;border-radius:var(--r)}
@@ -1481,7 +1489,8 @@ const CONFIG = {
       email: "floricolturalagomarsinorecco@gmail.com",
       placeId: "",
       mapsQuery: "Floricoltura Lagomarsino Chiosco Recco, Via XX Settembre, 16036 Recco",
-      foto: "../media/chiosco-recco.jpg", fotoAlt: "The flower kiosk in Via XX Settembre in Recco, with sunflowers, roses and plants", fotoPos: "center 60%",
+      foto: "../media/chiosco-recco.jpg",
+      video: "../media/chiosco-recco.mp4", fotoAlt: "The flower kiosk in Via XX Settembre in Recco, with sunflowers, roses and plants", fotoPos: "center 60%",
       coords: "44.3621753,9.1450519",
       mapsUrl: "https://maps.app.goo.gl/TQ8PYsnCFqgAbXF2A",
       orari: [
@@ -1596,7 +1605,7 @@ function renderStores(){
       return `<li class="${g===t.giorno?"today":""} ${special?"special":""}"><span>${GIORNI[g]}</span><span>${val}</span></li>`;
     }).join("");
     return `<article class="store" id="negozio-${n.id}">
-      ${n.foto?`<div class="store-photo"><img src="${n.foto}" alt="${n.fotoAlt||""}" loading="lazy"${n.fotoPos?` style="object-position:${n.fotoPos}"`:""}></div>`:""}
+      ${n.foto?`<div class="store-photo"><img src="${n.foto}" alt="${n.fotoAlt||""}" loading="lazy"${n.fotoPos?` style="object-position:${n.fotoPos}"`:""}>${n.video?`<button type="button" class="store-play" data-video="${n.video}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>Watch the video</button>`:""}</div>`:""}
       <div class="store-top">
         <span class="store-type">${n.tipo}</span>
         <h3>${n.nome}</h3>
@@ -1930,6 +1939,21 @@ document.addEventListener("keydown", e=>{ if(e.key==="Escape" && menuPanel.class
 document.addEventListener("click", e=>{ if(menuPanel.classList.contains("open") && !e.target.closest(".top")) menu(false); });
 
 renderStores(); renderFeed(); setupOrder(); renderFooter(); caricaGoogle();
+/* Video del negozio (si carica solo quando lo apri) */
+document.addEventListener("click", e=>{
+  const b = e.target.closest(".store-play"); if (!b) return;
+  let d = document.getElementById("videoBox");
+  if (!d){ d=document.createElement("dialog"); d.id="videoBox"; d.className="video-box";
+    d.innerHTML='<video controls playsinline muted loop></video><button type="button" class="chiudi" aria-label="Close the video">×</button>';
+    document.body.appendChild(d);
+    d.querySelector(".chiudi").addEventListener("click",()=>d.close());
+    d.addEventListener("click",ev=>{ if(ev.target===d) d.close(); });
+    d.addEventListener("close",()=>{ const v=d.querySelector("video"); v.pause(); });
+  }
+  const v=d.querySelector("video"); if (v.getAttribute("src")!==b.dataset.video) v.src=b.dataset.video;
+  if (d.showModal) d.showModal(); else d.setAttribute("open","");
+  v.play().catch(()=>{});
+});
 /* Orari copiati ogni notte da Google Maps (file scritto dall'aggiornamento automatico su GitHub) */
 fetch("/orari-google.json",{cache:"no-cache"}).then(r=>r.ok?r.json():null).then(d=>{
   if(!d||!d.negozi) return; let cambiati=false;

@@ -354,6 +354,8 @@ T = [
 ('"Tel. "+n.telefoni', '"Tel. "+n.telefoni'),
 (': "Telefono in arrivo"', ': "Phone coming soon"'),
 ('rel="noopener">Indicazioni</a>', 'rel="noopener">Directions</a>'),
+('</svg>Guarda il video</button>', '</svg>Watch the video</button>'),
+('aria-label="Chiudi il video"', 'aria-label="Close the video"'),
 ('">Chiama</a>`', '">Call</a>`'),
 ('rel="noopener">Mappa</a>`', 'rel="noopener">Map</a>`'),
 ('title="Mappa ${n.nome}"', 'title="Map ${n.nome}"'),
