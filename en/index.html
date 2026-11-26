@@ -705,9 +705,9 @@ section{padding:64px 0}
 .store-play{position:absolute;left:12px;bottom:12px;display:inline-flex;align-items:center;gap:6px;padding:8px 14px 8px 10px;border:0;border-radius:999px;background:rgba(0,0,0,.62);color:#fff;font:inherit;font-size:14px;font-weight:600;cursor:pointer;backdrop-filter:blur(4px)}
 .store-play svg{width:18px;height:18px}
 .store-play:hover{background:rgba(0,0,0,.78)}
-.video-box{border:0;padding:0;background:transparent;max-width:min(92vw,420px);max-height:92vh}
+.video-box{border:0;padding:0;background:transparent;max-width:92vw;max-height:92vh}
 .video-box::backdrop{background:rgba(0,0,0,.8)}
-.video-box video{display:block;width:100%;max-height:86vh;border-radius:14px;background:#000}
+.video-box video{display:block;width:auto;height:auto;max-width:min(92vw,1100px);max-height:86vh;border-radius:14px;background:#000}
 .video-box .chiudi{position:absolute;top:8px;right:8px;width:38px;height:38px;border:0;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;font-size:22px;line-height:1;cursor:pointer}
 
 .euroflora{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;height:380px}
@@ -1030,9 +1030,11 @@ section{scroll-margin-top:70px}
     <div class="natale-grid chiusa" id="nataleGrid">
       <figure><img src="../media/natale-abeti.jpg" alt="Real Christmas trees at the Nursery, with the sea behind" loading="lazy"><figcaption>Real Christmas trees</figcaption></figure>
       <figure><img src="../media/natale-ciclamini-vivaio.jpg" alt="Rows of red, pink and white cyclamen in the Nursery greenhouse" loading="lazy"><figcaption>Cyclamen from the Nursery</figcaption></figure>
-      <figure><img src="../media/stelle-natale.jpg" alt="Red, pink and white poinsettias in the shop" loading="lazy"><figcaption>Poinsettias</figcaption></figure>
+      <figure><img src="../media/natale-stelle-vivaio.jpg" alt="Nursery greenhouse full of red poinsettias" loading="lazy"><figcaption>Poinsettias from the Nursery</figcaption></figure>
       <figure><img src="../media/comp-natale.jpg" alt="Christmas arrangement with cyclamen, roses, hydrangea and red berries" loading="lazy"><figcaption>Holiday arrangements</figcaption></figure>
       <figure><img src="../media/lavoro-giulia.jpg" alt="Christmas bouquet with red roses, proteas and pine cones made in the shop" loading="lazy"><figcaption>Christmas bouquets</figcaption></figure>
+      <figure><img src="../media/natale-stelle-bianche.jpg" alt="White, pink and red poinsettias in the Nursery greenhouse" loading="lazy"><figcaption>White, pink and red</figcaption></figure>
+      <figure><img src="../media/stelle-natale.jpg" alt="Red, pink and white poinsettias in the shop" loading="lazy"><figcaption>Poinsettias</figcaption></figure>
       <figure><img src="../media/recco-vetrina.jpg" alt="Christmas window of the Recco shop with a deer, lanterns and lights" loading="lazy"><figcaption>The Recco shop window</figcaption></figure>
       <figure><img src="../media/natale-cactus.jpg" alt="Christmas arrangement with flowering cacti, snow and a little wooden house" loading="lazy"><figcaption>Gift ideas</figcaption></figure>
       <figure><img src="../media/natale-schiaccianoci.jpg" alt="Wooden nutcrackers and Christmas pots" loading="lazy"><figcaption>Decorations</figcaption></figure>
@@ -1420,7 +1422,7 @@ const CONFIG = {
       arrivo: "Free customer parking. Via dei Floricoltori is the side road uphill from Via Donato Somma: drive up to the top following the signs. We are 10 minutes from the Genova Nervi motorway exit.",
       coords: "44.3850229,9.0466373",
       mapsUrl: "https://maps.app.goo.gl/7y19ZDALQMUBebHg8",
-      foto: "../media/vista-golfo.jpg", fotoAlt: "View of the gulf from the nursery",
+      foto: "../media/vista-golfo.jpg", fotoAlt: "View of the gulf from the nursery", video: "../media/vivaio-drone-serre.mp4",
       // Orari: [domenica, lunedì, ..., sabato]; ogni giorno è una lista di fasce "HH:MM-HH:MM"
       orari: [
         ["09:30-12:00"],

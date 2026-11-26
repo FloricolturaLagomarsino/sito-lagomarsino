@@ -704,9 +704,9 @@ section{padding:64px 0}
 .store-play{position:absolute;left:12px;bottom:12px;display:inline-flex;align-items:center;gap:6px;padding:8px 14px 8px 10px;border:0;border-radius:999px;background:rgba(0,0,0,.62);color:#fff;font:inherit;font-size:14px;font-weight:600;cursor:pointer;backdrop-filter:blur(4px)}
 .store-play svg{width:18px;height:18px}
 .store-play:hover{background:rgba(0,0,0,.78)}
-.video-box{border:0;padding:0;background:transparent;max-width:min(92vw,420px);max-height:92vh}
+.video-box{border:0;padding:0;background:transparent;max-width:92vw;max-height:92vh}
 .video-box::backdrop{background:rgba(0,0,0,.8)}
-.video-box video{display:block;width:100%;max-height:86vh;border-radius:14px;background:#000}
+.video-box video{display:block;width:auto;height:auto;max-width:min(92vw,1100px);max-height:86vh;border-radius:14px;background:#000}
 .video-box .chiudi{position:absolute;top:8px;right:8px;width:38px;height:38px;border:0;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;font-size:22px;line-height:1;cursor:pointer}
 
 .euroflora{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;height:380px}
@@ -1029,9 +1029,11 @@ section{scroll-margin-top:70px}
     <div class="natale-grid chiusa" id="nataleGrid">
       <figure><img src="media/natale-abeti.jpg" alt="Alberi di Natale veri al Vivaio, con il mare sullo sfondo" loading="lazy"><figcaption>Alberi di Natale veri</figcaption></figure>
       <figure><img src="media/natale-ciclamini-vivaio.jpg" alt="File di ciclamini rossi, rosa e bianchi nella serra del Vivaio" loading="lazy"><figcaption>Ciclamini dal Vivaio</figcaption></figure>
-      <figure><img src="media/stelle-natale.jpg" alt="Stelle di Natale rosse, rosa e bianche in negozio" loading="lazy"><figcaption>Stelle di Natale</figcaption></figure>
+      <figure><img src="media/natale-stelle-vivaio.jpg" alt="Serra del Vivaio piena di stelle di Natale rosse" loading="lazy"><figcaption>Stelle di Natale dal Vivaio</figcaption></figure>
       <figure><img src="media/comp-natale.jpg" alt="Composizione natalizia con ciclamini, rose, ortensia e bacche rosse" loading="lazy"><figcaption>Composizioni per le feste</figcaption></figure>
       <figure><img src="media/lavoro-giulia.jpg" alt="Bouquet natalizio con rose rosse, protee e pigne preparato in negozio" loading="lazy"><figcaption>Bouquet natalizi</figcaption></figure>
+      <figure><img src="media/natale-stelle-bianche.jpg" alt="Stelle di Natale bianche, rosa e rosse nella serra del Vivaio" loading="lazy"><figcaption>Bianche, rosa e rosse</figcaption></figure>
+      <figure><img src="media/stelle-natale.jpg" alt="Stelle di Natale rosse, rosa e bianche in negozio" loading="lazy"><figcaption>Stelle di Natale</figcaption></figure>
       <figure><img src="media/recco-vetrina.jpg" alt="Vetrina natalizia del negozio di Recco con cervo, lanterne e luci" loading="lazy"><figcaption>La vetrina di Recco</figcaption></figure>
       <figure><img src="media/natale-cactus.jpg" alt="Composizione natalizia con cactus fioriti, neve e casetta di legno" loading="lazy"><figcaption>Idee regalo</figcaption></figure>
       <figure><img src="media/natale-schiaccianoci.jpg" alt="Schiaccianoci di legno e vasi natalizi" loading="lazy"><figcaption>Decorazioni</figcaption></figure>
@@ -1419,7 +1421,7 @@ const CONFIG = {
       arrivo: "Parcheggio clienti gratuito. Via dei Floricoltori è la traversa a monte di via Donato Somma: salite fino in cima seguendo le indicazioni. Siamo a 10 minuti dall'uscita autostradale di Genova Nervi.",
       coords: "44.3850229,9.0466373",
       mapsUrl: "https://maps.app.goo.gl/7y19ZDALQMUBebHg8",
-      foto: "media/vista-golfo.jpg", fotoAlt: "Vista sul golfo dal vivaio",
+      foto: "media/vista-golfo.jpg", fotoAlt: "Vista sul golfo dal vivaio", video: "media/vivaio-drone-serre.mp4",
       // Orari: [domenica, lunedì, ..., sabato]; ogni giorno è una lista di fasce "HH:MM-HH:MM"
       orari: [
         ["09:30-12:00"],
