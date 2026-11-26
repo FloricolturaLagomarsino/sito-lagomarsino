@@ -866,26 +866,17 @@ section{scroll-margin-top:82px}
 .tema-natale .hero h1 em{color:#ffd27a}
 .tema-natale .kicker{color:var(--bloom)}
 /* festone di lucine sotto la barra in alto */
-.festone{position:absolute;left:0;right:0;bottom:-11px;height:14px;pointer-events:none;
-  background:
-   radial-gradient(circle at 50% 70%,#e53935 0 4px,transparent 5px) 0 0/72px 14px repeat-x,
-   radial-gradient(circle at 50% 70%,#fbc02d 0 4px,transparent 5px) 24px 0/72px 14px repeat-x,
-   radial-gradient(circle at 50% 70%,#43a047 0 4px,transparent 5px) 48px 0/72px 14px repeat-x,
-   linear-gradient(#2e3b30,#2e3b30) 0 4px/100% 1px no-repeat}
-.festone::after{content:"";position:absolute;inset:0;background:inherit;opacity:0;animation:luci 2.4s ease-in-out infinite}
+.festone{position:absolute;left:0;right:0;bottom:-20px;height:22px;pointer-events:none;overflow:visible}
+.festone svg{display:block;width:100%;height:22px;overflow:visible}
+.festone path{fill:none;stroke:#2e3b30;stroke-width:1.3}
+.festone circle{pointer-events:auto;cursor:pointer;animation:lampadina 2.6s ease-in-out infinite}
+@keyframes lampadina{50%{opacity:.4}}
 @keyframes luci{50%{opacity:.8}}
 
 
 /* Natale: ghirlanda in fondo alla pagina */
 footer{position:relative}
 .tema-natale footer::before{content:"";position:absolute;left:0;right:0;top:-18px;height:50px;background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22160%22%20height%3D%2240%22%20viewBox%3D%220%200%20160%2040%22%3E%3Cpath%20d%3D%22M0%2014%20q40%2014%2080%200%20t80%200%22%20stroke%3D%22%232e7d32%22%20stroke-width%3D%226%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M0%2014%20q40%2014%2080%200%20t80%200%22%20stroke%3D%22%2343a047%22%20stroke-width%3D%222%22%20fill%3D%22none%22%20stroke-dasharray%3D%223%205%22/%3E%3Cpath%20transform%3D%22translate%2814%2018%29%20rotate%28-20%29%22%20d%3D%22M0%200%20q4%20-5%209%20-3%20q2%20-5%207%20-3%20q1%20-5%207%20-1%20q-3%205%20-7%206%20q2%204%20-3%206%20q-5%201%20-7%20-1%20q-3%203%20-6%200z%22%20fill%3D%22%232e7d32%22%20stroke%3D%22%231b5e20%22%20stroke-width%3D%22.8%22/%3E%3Cpath%20transform%3D%22translate%2830%2024%29%20rotate%2815%29%22%20d%3D%22M0%200%20q4%20-5%209%20-3%20q2%20-5%207%20-3%20q1%20-5%207%20-1%20q-3%205%20-7%206%20q2%204%20-3%206%20q-5%201%20-7%20-1%20q-3%203%20-6%200z%22%20fill%3D%22%232e7d32%22%20stroke%3D%22%231b5e20%22%20stroke-width%3D%22.8%22/%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2218%22%20r%3D%223.2%22%20fill%3D%22%23d32f2f%22/%3E%3Ccircle%20cx%3D%2229%22%20cy%3D%2217%22%20r%3D%221%22%20fill%3D%22%23ff8a80%22/%3E%3Ccircle%20cx%3D%2235%22%20cy%3D%2220%22%20r%3D%223.2%22%20fill%3D%22%23d32f2f%22/%3E%3Ccircle%20cx%3D%2234%22%20cy%3D%2219%22%20r%3D%221%22%20fill%3D%22%23ff8a80%22/%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2223%22%20r%3D%223.2%22%20fill%3D%22%23d32f2f%22/%3E%3Ccircle%20cx%3D%2231%22%20cy%3D%2222%22%20r%3D%221%22%20fill%3D%22%23ff8a80%22/%3E%3Cpath%20transform%3D%22translate%2896%2020%29%20rotate%280%29%22%20d%3D%22M0%200%20q3%20-6%200%20-13%20q-3%207%200%2013z%22%20fill%3D%22%23c62828%22/%3E%3Cpath%20transform%3D%22translate%2896%2020%29%20rotate%2845%29%22%20d%3D%22M0%200%20q3%20-6%200%20-13%20q-3%207%200%2013z%22%20fill%3D%22%23c62828%22/%3E%3Cpath%20transform%3D%22translate%2896%2020%29%20rotate%2890%29%22%20d%3D%22M0%200%20q3%20-6%200%20-13%20q-3%207%200%2013z%22%20fill%3D%22%23c62828%22/%3E%3Cpath%20transform%3D%22translate%2896%2020%29%20rotate%28135%29%22%20d%3D%22M0%200%20q3%20-6%200%20-13%20q-3%207%200%2013z%22%20fill%3D%22%23c62828%22/%3E%3Cpath%20transform%3D%22translate%2896%2020%29%20rotate%28180%29%22%20d%3D%22M0%200%20q3%20-6%200%20-13%20q-3%207%200%2013z%22%20fill%3D%22%23c62828%22/%3E%3Cpath%20transform%3D%22translate%2896%2020%29%20rotate%28225%29%22%20d%3D%22M0%200%20q3%20-6%200%20-13%20q-3%207%200%2013z%22%20fill%3D%22%23c62828%22/%3E%3Cpath%20transform%3D%22translate%2896%2020%29%20rotate%28270%29%22%20d%3D%22M0%200%20q3%20-6%200%20-13%20q-3%207%200%2013z%22%20fill%3D%22%23c62828%22/%3E%3Cpath%20transform%3D%22translate%2896%2020%29%20rotate%28315%29%22%20d%3D%22M0%200%20q3%20-6%200%20-13%20q-3%207%200%2013z%22%20fill%3D%22%23c62828%22/%3E%3Ccircle%20cx%3D%2296%22%20cy%3D%2220%22%20r%3D%222.4%22%20fill%3D%22%23fdd835%22/%3E%3Cpath%20transform%3D%22translate%2860%2022%29%20rotate%28-160%29%22%20d%3D%22M0%200%20q4%20-5%209%20-3%20q2%20-5%207%20-3%20q1%20-5%207%20-1%20q-3%205%20-7%206%20q2%204%20-3%206%20q-5%201%20-7%20-1%20q-3%203%20-6%200z%22%20fill%3D%22%232e7d32%22%20stroke%3D%22%231b5e20%22%20stroke-width%3D%22.8%22/%3E%3Crect%20x%3D%22132%22%20y%3D%2214%22%20width%3D%2218%22%20height%3D%2216%22%20rx%3D%222%22%20fill%3D%22%231565c0%22/%3E%3Crect%20x%3D%22131%22%20y%3D%2211%22%20width%3D%2220%22%20height%3D%225%22%20rx%3D%221.5%22%20fill%3D%22%231e88e5%22/%3E%3Cpath%20d%3D%22M141%2011%20v19%22%20stroke%3D%22%23ffd54f%22%20stroke-width%3D%223%22/%3E%3Cpath%20d%3D%22M141%2011%20q-6%20-6%20-8%20-2%20q2%203%208%202%20q6%20-6%208%20-2%20q-2%203%20-8%202%22%20fill%3D%22%23ffd54f%22/%3E%3Cpath%20transform%3D%22translate%28118%2018%29%20rotate%2810%29%22%20d%3D%22M0%200%20q4%20-5%209%20-3%20q2%20-5%207%20-3%20q1%20-5%207%20-1%20q-3%205%20-7%206%20q2%204%20-3%206%20q-5%201%20-7%20-1%20q-3%203%20-6%200z%22%20fill%3D%22%232e7d32%22%20stroke%3D%22%231b5e20%22%20stroke-width%3D%22.8%22/%3E%3Ccircle%20cx%3D%22114%22%20cy%3D%2214%22%20r%3D%223.2%22%20fill%3D%22%23d32f2f%22/%3E%3Ccircle%20cx%3D%22113%22%20cy%3D%2213%22%20r%3D%221%22%20fill%3D%22%23ff8a80%22/%3E%3Ccircle%20cx%3D%22119%22%20cy%3D%2216%22%20r%3D%223.2%22%20fill%3D%22%23d32f2f%22/%3E%3Ccircle%20cx%3D%22118%22%20cy%3D%2215%22%20r%3D%221%22%20fill%3D%22%23ff8a80%22/%3E%3Ccircle%20cx%3D%22116%22%20cy%3D%2219%22%20r%3D%223.2%22%20fill%3D%22%23d32f2f%22/%3E%3Ccircle%20cx%3D%22115%22%20cy%3D%2218%22%20r%3D%221%22%20fill%3D%22%23ff8a80%22/%3E%3C/svg%3E") 0 0/200px 50px repeat-x;pointer-events:none}
-/* Natale: luci che addobbano la scritta */
-.tema-natale .festone{display:none !important}
-.luci-hero{position:absolute;left:0;top:0;width:100%;z-index:2;pointer-events:none;overflow:visible}
-.luci-hero path{fill:none;stroke:#2e3b30;stroke-width:1.4}
-.luci-hero circle{pointer-events:auto;cursor:pointer;animation:lampadina 2.6s ease-in-out infinite}
-@keyframes lampadina{50%{opacity:.45}}
-.luci-hero.balla circle{animation:lampadina .25s steps(2) infinite;filter:drop-shadow(0 0 4px #fff59d)}
 /* Natale: palle di neve */
 .palla-neve{position:fixed;left:0;top:0;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff 0 40%,#e3eef7 75%,#c5d6e6);box-shadow:0 2px 6px rgba(0,0,0,.25);z-index:60;pointer-events:none}
 .splat{position:fixed;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;background:radial-gradient(circle,#fff 0 35%,rgba(255,255,255,.85) 45%,transparent 70%);z-index:59;pointer-events:none;animation:splat 1.6s ease-out forwards}
@@ -893,9 +884,8 @@ footer{position:relative}
 /* ---- Sorprese (easter egg): tocca le decorazioni ---- */
 .hero .wrap,.hero .cta{pointer-events:none}.hero .wrap h1,.hero .wrap p,.hero .wrap a,.hero .wrap button{pointer-events:auto}
 .regali svg,.slitta svg{pointer-events:auto;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.festone{pointer-events:auto;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.festone.balla::after{animation:luci .22s steps(2) infinite}
-.festone.balla{filter:brightness(1.35) saturate(1.3) drop-shadow(0 0 5px #ffd54f)}
+.festone.balla circle{animation:lampadina .22s steps(2) infinite}
+.festone.balla{filter:brightness(1.3) saturate(1.3) drop-shadow(0 0 5px #ffd54f)}
 .regali svg.salta{animation:salta-su .6s cubic-bezier(.3,1.6,.5,1) !important}
 @keyframes salta-su{40%{transform:translateY(-22px) rotate(-6deg) scale(1.08)}}
 .d-regalo .coperchio{transition:transform .35s cubic-bezier(.3,1.6,.5,1);transform-box:fill-box;transform-origin:0% 100%}
@@ -912,7 +902,7 @@ footer{position:relative}
 @keyframes scoppio{from{transform:translate(var(--x0),var(--y0)) scale(.4);opacity:1}to{transform:translate(calc(var(--x0) + var(--dx)),calc(var(--y0) + var(--dy))) scale(1) rotate(var(--r));opacity:0}}
 .fumetto{position:fixed;z-index:60;pointer-events:none;background:#fff;color:#b71c1c;font-family:var(--display);font-size:20px;padding:6px 12px;border-radius:14px;box-shadow:0 6px 18px rgba(0,0,0,.25);animation:fumetto 1.8s ease forwards}
 @keyframes fumetto{0%{opacity:0;transform:translate(-50%,-80%) scale(.6)}15%{opacity:1;transform:translate(-50%,-120%) scale(1)}80%{opacity:1}100%{opacity:0;transform:translate(-50%,-160%)}}
-@media (prefers-reduced-motion: reduce){.scintilla,.fumetto{display:none}.festone.balla::after{animation:none}}
+@media (prefers-reduced-motion: reduce){.scintilla,.fumetto{display:none}.festone.balla circle{animation:none}}
 /* neve */
 .neve{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
 .hero .wrap{z-index:3}
@@ -947,7 +937,7 @@ footer{position:relative}
 @media (max-width:760px){.natale-grid{grid-template-columns:1fr 1fr}}
 .natale .cta{margin-top:20px}
 .avviso-feste{margin:14px 0 0;padding:12px 16px;border-radius:12px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--oro);max-width:60ch;font-weight:500}
-@media (prefers-reduced-motion: reduce){.slitta .saluto,.slitta,.slitta svg,.regali svg,.festone::after{animation:none}.slitta{transform:translateX(55vw)}}
+@media (prefers-reduced-motion: reduce){.slitta .saluto,.slitta,.slitta svg,.regali svg,.festone circle{animation:none}.slitta{transform:translateX(55vw)}}
 </style>
 </head>
 <body>
@@ -981,7 +971,6 @@ footer{position:relative}
     <video id="heroVideo" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
   </div>
   <canvas class="neve solo-tema" id="particelle" aria-hidden="true"></canvas>
-  <svg class="luci-hero solo-natale" id="luciHero" aria-hidden="true"></svg>
   <div class="regali solo-festa" id="angoloFesta" aria-hidden="true"></div>
   <div class="slitta solo-natale" aria-hidden="true">
     <svg viewBox="0 0 320 110" xmlns="http://www.w3.org/2000/svg">
@@ -1910,49 +1899,30 @@ compToggle.addEventListener("click", ()=>{
 
 
 
-/* ---- Natale: luci che addobbano la scritta e palle di neve ---- */
+
+/* ---- Natale: fila di luci ondulata sotto la barra in alto (resta mentre si scorre) ---- */
 (function(){
-  if (window.TEMA !== "natale") return;
-  const hero = document.getElementById("inizio"), svg = document.getElementById("luciHero"), h1 = hero && hero.querySelector("h1");
-  if (!hero || !svg || !h1) return;
+  const f = document.querySelector(".festone"); if (!f || window.TEMA !== "natale") return;
   const NS = "http://www.w3.org/2000/svg", COL = ["#e53935","#fbc02d","#43a047","#42a5f5","#fb8c00"];
   function disegna(){
-    const H = hero.getBoundingClientRect(), T = h1.getBoundingClientRect();
-    const W = H.width, top = T.top - H.top, left = T.left - H.left, right = Math.min(T.right - H.left, W - 10), bottom = T.bottom - H.top;
-    const step = W < 700 ? 150 : 210, punti = [];
-    for (let x = 0; x <= W + step; x += step) punti.push(x);
-    let d = "M0 4", luci = [];
-    // festoni lungo il bordo in alto: quelli sopra la scritta scendono fino alla scritta
-    for (let i = 0; i < punti.length - 1; i++){
-      const a = punti[i], b = punti[i+1], m = (a+b)/2;
-      const sopra = m > left - step/3 && m < right + step/3;
-      const giu = sopra ? Math.max(30, top - 14) : 22;
-      d += ` Q${m} ${giu*2 - 4} ${b} 4`;
+    const W = f.getBoundingClientRect().width || innerWidth, P = W < 700 ? 48 : 64, n = Math.ceil(W / P);
+    let d = "M0 2", luci = "";
+    for (let i = 0; i < n; i++){
+      const x = i * P; d += ` Q${x + P/2} 18 ${x + P} 2`;
+      [0.3, 0.7].forEach((t, k) => {          // due lampadine per ogni onda
+        const bx = (1-t)*(1-t)*x + 2*(1-t)*t*(x + P/2) + t*t*(x + P), by = (1-t)*(1-t)*2 + 2*(1-t)*t*18 + t*t*2;
+        luci += `<circle cx="${bx.toFixed(1)}" cy="${(by + 3.5).toFixed(1)}" r="${W < 700 ? 3.3 : 4}" fill="${COL[(2*i + k) % COL.length]}" style="animation-delay:${(-Math.random()*2.6).toFixed(2)}s"/>`;
+      });
     }
-    // un secondo filo sotto la scritta, che sale e scende
-    const y2 = bottom - 8, onde = Math.max(2, Math.round((right - left) / (step*0.55)));
-    let d2 = `M${left - 6} ${y2}`;
-    for (let i = 0; i < onde; i++){
-      const a = left - 6 + (right - left + 12) * i / onde, b = left - 6 + (right - left + 12) * (i+1) / onde;
-      d2 += ` Q${(a+b)/2} ${y2 + 9} ${b} ${y2}`;
-    }
-    svg.setAttribute("viewBox", `0 0 ${W} ${y2 + 40}`); svg.style.height = (y2 + 40) + "px";
-    svg.innerHTML = `<path d="${d}"/><path d="${d2}"/>`;
-    svg.querySelectorAll("path").forEach(p => {
-      const L = p.getTotalLength(), n = Math.floor(L / (W < 700 ? 22 : 28));
-      for (let k = 1; k < n; k++){
-        const q = p.getPointAtLength(L * k / n), c = document.createElementNS(NS, "circle");
-        c.setAttribute("cx", q.x.toFixed(1)); c.setAttribute("cy", (q.y + 3.5).toFixed(1)); c.setAttribute("r", W < 700 ? 3.2 : 4);
-        c.setAttribute("fill", COL[k % COL.length]); c.style.animationDelay = (-Math.random()*2.6).toFixed(2) + "s";
-        luci.push(c);
-      }
-    });
-    luci.forEach(c => svg.appendChild(c));
+    f.innerHTML = `<svg viewBox="0 0 ${W} 22" preserveAspectRatio="none"><path d="${d}"/>${luci}</svg>`;
   }
-  let t; const rifai = () => { clearTimeout(t); t = setTimeout(disegna, 120); };
-  addEventListener("resize", rifai); if (document.fonts && document.fonts.ready) document.fonts.ready.then(disegna); disegna();
-  svg.addEventListener("click", () => { svg.classList.add("balla"); clearTimeout(svg._t); svg._t = setTimeout(() => svg.classList.remove("balla"), 3000); });
+  let t; addEventListener("resize", () => { clearTimeout(t); t = setTimeout(disegna, 150); }); disegna();
+})();
 
+/* ---- Natale: palle di neve ---- */
+(function(){
+  if (window.TEMA !== "natale") return;
+  const hero = document.getElementById("inizio"); if (!hero) return;
   // palle di neve: tocca un punto vuoto dell'apertura
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   hero.addEventListener("click", e => {
@@ -2009,7 +1979,8 @@ compToggle.addEventListener("click", ()=>{
   });
   const ROSSI=["#e53935","#fbc02d","#43a047","#ffffff"];
   document.addEventListener("click", e=>{
-    const t = e.target.closest(".regali svg, .slitta svg, .festone"); if (!t) return;
+    const t = e.target.closest(".regali svg, .slitta svg, .festone");
+    if (t && t.classList.contains("festone") && !e.target.closest("circle")) return; if (!t) return;
     const cl = t.classList;
     if (cl.contains("festone")){ classe(t,"balla",3000); return; }
     if (t.closest(".slitta")){ fumetto(t, INGLESE ? "Ho ho ho!" : "Oh oh oh!"); scoppio(t,["✦","❄"],["#fff","#ffd54f"],10); return; }
