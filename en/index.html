@@ -750,6 +750,9 @@ section{padding:64px 0}
 .stag{border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;background:var(--surface);position:relative}
 .stag h3{font-family:var(--display);font-weight:400;font-size:26px;margin:0 0 6px}
 .stag p{margin:0;color:var(--muted);font-size:15px}
+.stag-list{list-style:none;margin:10px 0 12px;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.stag-list li{font-size:14px;padding:4px 10px;border-radius:999px;background:color-mix(in srgb,var(--leaf) 10%,var(--paper));color:var(--ink);border:1px solid color-mix(in srgb,var(--leaf) 22%,transparent)}
+.stag p:last-child{font-style:italic}
 .stag-ora{display:none;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--bloom);margin-bottom:4px}
 .stag.ora{border-color:var(--bloom);box-shadow:0 0 0 1px var(--bloom) inset}
 .stag.ora .stag-ora{display:block}
@@ -1194,17 +1197,20 @@ section{scroll-margin-top:82px}
       <article class="stag" data-mesi="9,10,11,12,1,2">
         <span class="stag-ora">In season now</span>
         <h3>Autumn and winter</h3>
-        <p>Michaelmas daisies, cyclamen, violas, poinsettias.</p>
+        <ul class="stag-list"><li>Michaelmas daisies</li><li>Violas</li><li>Chrysanthemums</li><li>Cyclamen</li><li>Poinsettias</li><li>Winter daisies</li><li>Azaleas</li><li>Camellias</li><li>Herbs</li><li>Fruit trees</li></ul>
+        <p>…and much more: come and see at the Nursery.</p>
       </article>
       <article class="stag" data-mesi="3,4,5">
         <span class="stag-ora">In season now</span>
         <h3>Spring</h3>
-        <p>Fruit trees, azaleas, roses, daisies, begonias, geraniums, mandevillas, surfinias, bougainvilleas.</p>
+        <ul class="stag-list"><li>Roses</li><li>Daisies</li><li>African daisies</li><li>Ranunculus</li><li>Dianthus</li><li>Iberis</li><li>Lewisias</li><li>Surfinias</li><li>Geraniums</li><li>Mandevillas</li><li>Bougainvilleas</li><li>Herbs</li><li>Strawberries</li><li>Vegetable seedlings</li></ul>
+        <p>…and all the spring blooms.</p>
       </article>
       <article class="stag" data-mesi="6,7,8">
         <span class="stag-ora">In season now</span>
         <h3>Summer</h3>
-        <p>Chilli peppers, lantanas, African daisies, portulacas, succulents.</p>
+        <ul class="stag-list"><li>Chilli peppers</li><li>Lantanas</li><li>African daisies</li><li>Portulacas</li><li>Begonias</li><li>Vinca</li><li>Geraniums</li><li>Mandevillas</li><li>Succulents</li></ul>
+        <p>…and many more sun-loving plants.</p>
       </article>
     </div>
   </div>
