@@ -706,6 +706,24 @@ section{padding:64px 0}
 .store-play{position:absolute;left:12px;bottom:12px;display:inline-flex;align-items:center;gap:6px;padding:8px 14px 8px 10px;border:0;border-radius:999px;background:rgba(0,0,0,.62);color:#fff;font:inherit;font-size:14px;font-weight:600;cursor:pointer;backdrop-filter:blur(4px)}
 .store-play svg{width:18px;height:18px}
 .store-play:hover{background:rgba(0,0,0,.78)}
+/* visore foto: clic su una foto per vederla grande e ingrandirla */
+.zoomabile{cursor:zoom-in}
+.foto-box{border:0;padding:0;margin:0;width:100vw;height:100dvh;max-width:none;max-height:none;background:rgba(10,14,11,.94);color:#fff;overflow:hidden}
+.foto-box::backdrop{background:rgba(10,14,11,.94)}
+.foto-box .scena{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;touch-action:none;overflow:hidden}
+.foto-box .scena img{max-width:94vw;max-height:calc(100dvh - 110px);object-fit:contain;transform-origin:0 0;user-select:none;-webkit-user-drag:none;cursor:zoom-in;transition:transform .2s ease}
+.foto-box.zoom .scena img{cursor:grab}
+.foto-box.trascina .scena img{transition:none;cursor:grabbing}
+.foto-box button{position:absolute;border:0;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;width:46px;height:46px;font-size:26px;line-height:1;cursor:pointer;z-index:2}
+.foto-box button:focus:not(:focus-visible){outline:none}
+.foto-box button:hover{background:rgba(255,255,255,.28)}
+.foto-box .chiudi{top:12px;right:12px}
+.foto-box .prec{left:12px;top:50%;margin-top:-23px}
+.foto-box .succ{right:12px;top:50%;margin-top:-23px}
+.foto-box .didascalia{position:absolute;left:0;right:0;bottom:0;padding:12px 70px 16px;text-align:center;font-size:15px;line-height:1.4;background:linear-gradient(transparent,rgba(0,0,0,.55));pointer-events:none}
+.foto-box .didascalia small{display:block;opacity:.7;font-size:12.5px;margin-top:3px}
+.foto-box.zoom .didascalia,.foto-box.zoom .prec,.foto-box.zoom .succ{opacity:0;pointer-events:none}
+@media (max-width:600px){.foto-box .prec,.foto-box .succ{display:none}.foto-box .didascalia{padding:12px 16px 18px}}
 .video-box{border:0;padding:0;background:transparent;max-width:92vw;max-height:92vh}
 .video-box::backdrop{background:rgba(0,0,0,.8)}
 .video-box video{display:block;width:auto;height:auto;max-width:min(92vw,1100px);max-height:86vh;border-radius:14px;background:#000}
@@ -2165,6 +2183,103 @@ setInterval(()=>{ if(!CONFIG.google.apiKey) document.querySelectorAll(".store").
 (function(){ const c=(typeof CONFIG!=="undefined"&&CONFIG.goatcounter)||""; if(!c) return;
   const s=document.createElement("script"); s.async=true; s.src="https://gc.zgo.at/count.js";
   s.dataset.goatcounter="https://"+c+".goatcounter.com/count"; document.body.appendChild(s); })();
+</script>
+<script>
+/* ---- Visore foto: clic per aprire, doppio clic / pizzico / rotella per ingrandire, frecce o scorrimento per cambiare ---- */
+(function(){
+  const EN = document.documentElement.lang === "en";
+  const T = EN ? {c:"Close",p:"Previous photo",s:"Next photo",h:"Double-tap or pinch to zoom"} : {c:"Chiudi",p:"Foto precedente",s:"Foto successiva",h:"Doppio tocco o pizzica per ingrandire"};
+  // segna le foto cliccabili (anche quelle aggiunte dopo, come le foto dei negozi)
+  function segna(){ document.querySelectorAll("main img, section img").forEach(i => { if (!i.classList.contains("zoomabile") && /\/media\//.test(i.src) && !i.closest("a,button,.hero,.top,footer,.slitta,.regali,dialog")) i.classList.add("zoomabile"); }); }
+  segna(); setTimeout(segna, 1500);
+  let d, im, cap, lista = [], idx = 0, sc = 1, tx = 0, ty = 0;
+  function crea(){
+    d = document.createElement("dialog"); d.className = "foto-box";
+    d.innerHTML = `<div class="scena"><img alt=""></div><div class="didascalia"></div>
+      <button class="prec" aria-label="${T.p}">‹</button><button class="succ" aria-label="${T.s}">›</button><button class="chiudi" aria-label="${T.c}">×</button>`;
+    document.body.appendChild(d);
+    im = d.querySelector("img"); cap = d.querySelector(".didascalia");
+    d.querySelector(".chiudi").onclick = () => d.close();
+    d.querySelector(".prec").onclick = () => vai(-1);
+    d.querySelector(".succ").onclick = () => vai(1);
+    d.addEventListener("close", () => { document.documentElement.style.overflow = ""; });
+    d.addEventListener("keydown", e => { if (e.key === "ArrowLeft") vai(-1); if (e.key === "ArrowRight") vai(1); });
+    gesti(d.querySelector(".scena"));
+  }
+  function applica(){ im.style.transform = `translate(${tx}px,${ty}px) scale(${sc})`; d.classList.toggle("zoom", sc > 1.01); }
+  function azzera(){ sc = 1; tx = ty = 0; applica(); }
+  // ingrandisce tenendo fermo il punto (px,py) dello schermo
+  function zoomA(nuova, px, py){
+    nuova = Math.min(5, Math.max(1, nuova));
+    const ox = im.offsetLeft, oy = im.offsetTop;                 // posizione dell'immagine senza traslazione
+    const lx = (px - ox - tx) / sc, ly = (py - oy - ty) / sc;    // punto in coordinate dell'immagine
+    sc = nuova; tx = px - ox - lx * sc; ty = py - oy - ly * sc;
+    if (sc === 1) tx = ty = 0;
+    limita(); applica();
+  }
+  function limita(){
+    if (sc <= 1){ tx = ty = 0; return; }
+    const w = im.offsetWidth * sc, h = im.offsetHeight * sc, W = innerWidth, H = innerHeight, ox = im.offsetLeft, oy = im.offsetTop;
+    tx = w > W ? Math.min(Math.max(tx, W - w - ox), -ox) : (W - w) / 2 - ox;
+    ty = h > H ? Math.min(Math.max(ty, H - h - oy), -oy) : (H - h) / 2 - oy;
+  }
+  function mostra(){
+    const f = lista[idx], fig = f.closest("figure"), fc = fig && fig.querySelector("figcaption");
+    azzera(); im.src = f.currentSrc || f.src; im.alt = f.alt;
+    const testo = fc ? [...fc.childNodes].map(n => n.textContent.trim()).filter(Boolean).join(" · ") : f.alt;
+    cap.innerHTML = ""; cap.textContent = testo;
+    const sm = document.createElement("small"); sm.textContent = (lista.length > 1 ? `${idx + 1} / ${lista.length} · ` : "") + T.h; cap.appendChild(sm);
+    d.querySelector(".prec").hidden = d.querySelector(".succ").hidden = lista.length < 2;
+  }
+  function vai(n){ if (lista.length < 2) return; idx = (idx + n + lista.length) % lista.length; mostra(); }
+  function gesti(z){
+    const p = new Map(); let ini = null, ultimoTap = 0, mosso = false;
+    z.addEventListener("pointerdown", e => {
+      if (e.target.closest("button")) return;
+      z.setPointerCapture(e.pointerId); p.set(e.pointerId, {x:e.clientX, y:e.clientY});
+      mosso = false;
+      if (p.size === 1) ini = {x:e.clientX, y:e.clientY, tx, ty, t:Date.now(), suFoto:e.target === im};
+      if (p.size === 2){ const [a, b] = [...p.values()]; ini = {dist:Math.hypot(a.x - b.x, a.y - b.y), sc, cx:(a.x + b.x) / 2, cy:(a.y + b.y) / 2}; }
+      d.classList.add("trascina");
+    });
+    z.addEventListener("pointermove", e => {
+      if (!p.has(e.pointerId) || !ini) return;
+      p.set(e.pointerId, {x:e.clientX, y:e.clientY});
+      if (p.size === 2 && ini.dist){
+        const [a, b] = [...p.values()]; mosso = true;
+        zoomA(ini.sc * Math.hypot(a.x - b.x, a.y - b.y) / ini.dist, (a.x + b.x) / 2, (a.y + b.y) / 2);
+      } else if (p.size === 1 && ini.x !== undefined){
+        const dx = e.clientX - ini.x, dy = e.clientY - ini.y;
+        if (Math.abs(dx) + Math.abs(dy) > 6) mosso = true;
+        if (sc > 1){ tx = ini.tx + dx; ty = ini.ty + dy; limita(); applica(); }
+        else { im.style.transform = `translateX(${dx}px)`; }
+      }
+    });
+    const su = e => {
+      if (!p.has(e.pointerId)) return;
+      p.delete(e.pointerId); d.classList.remove("trascina");
+      if (p.size === 1){ const [a] = [...p.values()]; ini = {x:a.x, y:a.y, tx, ty, t:Date.now()}; return; }   // da pizzico a trascinamento
+      if (!ini || ini.x === undefined){ ini = null; return; }
+      const dx = e.clientX - ini.x;
+      if (sc <= 1 && mosso){ if (Math.abs(dx) > 60 && lista.length > 1) vai(dx < 0 ? 1 : -1); else applica(); }
+      else if (!mosso){
+        const ora = Date.now();
+        if (ora - ultimoTap < 300){ zoomA(sc > 1.01 ? 1 : 2.5, e.clientX, e.clientY); ultimoTap = 0; }
+        else { ultimoTap = ora; if (e.pointerType === "mouse" && !ini.suFoto) d.close(); }   // clic sul fondo: chiude
+      }
+      ini = null;
+    };
+    z.addEventListener("pointerup", su); z.addEventListener("pointercancel", su);
+    z.addEventListener("wheel", e => { e.preventDefault(); zoomA(sc * (e.deltaY < 0 ? 1.2 : 1 / 1.2), e.clientX, e.clientY); }, {passive:false});
+  }
+  document.addEventListener("click", e => {
+    const f = e.target.closest("img.zoomabile"); if (!f || e.defaultPrevented) return;
+    if (!d) crea();
+    const gruppo = f.closest(".gallery,.natale-grid,.comp-grid,.euroflora,.lavoro-grid,section") || document.body;
+    lista = [...gruppo.querySelectorAll("img.zoomabile")]; idx = Math.max(0, lista.indexOf(f));
+    mostra(); document.documentElement.style.overflow = "hidden"; d.showModal();
+  });
+})();
 </script>
 </body>
 </html>
