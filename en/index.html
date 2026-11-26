@@ -746,6 +746,7 @@ section{padding:64px 0}
 
 .stagioni{padding-top:0}
 .stag-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.stag-sempre{grid-column:1/-1;border-top:3px solid var(--leaf)}
 @media (max-width:760px){.stag-grid{grid-template-columns:1fr}}
 .stag{border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;background:var(--surface);position:relative}
 .stag h3{font-family:var(--display);font-weight:400;font-size:26px;margin:0 0 6px}
@@ -1194,17 +1195,21 @@ section{scroll-margin-top:82px}
       <article class="stag" data-mesi="9,10,11,12,1,2">
         <span class="stag-ora">In season now</span>
         <h3>Autumn and winter</h3>
-        <p>Michaelmas daisies, violas, chrysanthemums, cyclamen, poinsettias, winter daisies, azaleas, camellias, herbs, fruit trees, hedging plants and climbers… and much more.</p>
+        <p>Michaelmas daisies, violas, chrysanthemums, cyclamen, poinsettias, winter daisies, azaleas, camellias… and much more.</p>
       </article>
       <article class="stag" data-mesi="3,4,5">
         <span class="stag-ora">In season now</span>
         <h3>Spring</h3>
-        <p>Roses, daisies, African daisies, ranunculus, dianthus, iberis, lewisias, surfinias, geraniums, mandevillas, bougainvilleas, herbs, strawberries, vegetable seedlings, hedging plants and climbers… and all the spring blooms.</p>
+        <p>Roses, daisies, African daisies, ranunculus, dianthus, iberis, lewisias, surfinias, geraniums, mandevillas, bougainvilleas, strawberries, vegetable seedlings… and all the spring blooms.</p>
       </article>
       <article class="stag" data-mesi="6,7,8">
         <span class="stag-ora">In season now</span>
         <h3>Summer</h3>
         <p>Chilli peppers, lantanas, African daisies, portulacas, begonias, vinca, geraniums, mandevillas, succulents… and many more sun-loving plants.</p>
+      </article>
+      <article class="stag stag-sempre">
+        <h3>All year round</h3>
+        <p>Seasonal herbs, fruit trees, citrus (lemons, oranges, mandarins…), hedging plants and climbers… and much more.</p>
       </article>
     </div>
   </div>
@@ -1856,7 +1861,7 @@ compToggle.addEventListener("click", ()=>{
 (function(){
   const mese = new Date().getMonth()+1;
   document.querySelectorAll(".stag").forEach(el=>{
-    if (el.dataset.mesi.split(",").map(Number).includes(mese)) el.classList.add("ora");
+    if (el.dataset.mesi && el.dataset.mesi.split(",").map(Number).includes(mese)) el.classList.add("ora");
   });
 })();
 
