@@ -1917,8 +1917,8 @@ compToggle.addEventListener("click", ()=>{
   function disegna(){
     const W = f.getBoundingClientRect().width || innerWidth, m = W < 700, P = m ? 120 : 200, G = m ? 20 : 30, z = m ? .55 : 1;
     // inizio e fine "sganciati": due anse più profonde e storte, diverse tra loro; in mezzo festoni ordinati
-    const sx = [{w:.85*P, g:195*z, k:-.1}, {w:.6*P, g:70*z, k:.16}],
-          dx = [{w:.65*P, g:62*z, k:.2}, {w:.8*P, g:150*z, k:-.14}];
+    const sx = [{w:.7*P, g:260*z, k:-.08}, {w:.6*P, g:70*z, k:.16}],
+          dx = [{w:.65*P, g:62*z, k:.2}, {w:1.15*P, g:205*z, k:-.14}];
     const lati = [...sx, ...dx].reduce((a, b) => a + b.w, 0), resto = Math.max(P, W - lati), n = Math.max(1, Math.round(resto / P));
     const seg = [...sx, ...Array.from({length:n}, () => ({w:resto / n, g:G, k:0})), ...dx];
     let x = 0, d = "M0 2", fondo = 0;
