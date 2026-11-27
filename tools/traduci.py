@@ -14,6 +14,11 @@ src = (ROOT / "index.html").read_text(encoding="utf-8")
 # Coppie (italiano, inglese). Applicate dalla più lunga alla più corta.
 T = [
 # ---------- head ----------
+('</svg>Altre foto</button>', '</svg>More photos</button>'),
+('"L\'interno del negozio di Albaro, con mazzi di fiori secchi appesi al soffitto e vasi sugli scaffali"', '"Inside the Albaro shop, with bunches of dried flowers hanging from the ceiling and vases on the shelves"'),
+('"La vetrina del negozio di via Albaro 16r con l\'insegna Floricoltura Lagomarsino"', '"The shop window at Via Albaro 16r with the Floricoltura Lagomarsino sign"'),
+('"Il bancone del negozio di Albaro con fiori secchi e luci di Natale"', '"The counter of the Albaro shop with dried flowers and Christmas lights"'),
+('"Decorazioni natalizie nel negozio di Albaro: alberello rosa, renne dorate e gnomo"', '"Christmas decorations in the Albaro shop: a pink tree, golden reindeer and a gnome"'),
 ('<span class="apri-prec">Le edizioni precedenti: 2022 e 2018</span><span class="chiudi-prec">Nascondi le edizioni precedenti</span>', '<span class="apri-prec">Previous editions: 2022 and 2018</span><span class="chiudi-prec">Hide previous editions</span>'),
 ('<strong style="color:var(--ink)">2018, Parchi di Nervi.</strong> Alla prima edizione di Euroflora ai Parchi di Nervi abbiamo realizzato la tavolozza del pittore, con il pennello e una grande cornice fiorita: più di mille visitatori si sono fermati a farsi una foto.', '<strong style="color:var(--ink)">2018, Parchi di Nervi.</strong> At the first edition of Euroflora in the Parchi di Nervi we created the painter\'s palette, with a brush and a large flower frame: more than a thousand visitors stopped to take a photo in it.'),
 ('alt="Cornice fiorita di margherite rosa, bianche e gialle a Euroflora 2018, con le aiuole sullo sfondo"', 'alt="Flower frame of pink, white and yellow daisies at Euroflora 2018, with flowerbeds behind"'),

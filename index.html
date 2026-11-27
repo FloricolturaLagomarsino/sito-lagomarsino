@@ -705,6 +705,7 @@ section{padding:64px 0}
 .store-play{position:absolute;left:12px;bottom:12px;display:inline-flex;align-items:center;gap:6px;padding:8px 14px 8px 10px;border:0;border-radius:999px;background:rgba(0,0,0,.62);color:#fff;font:inherit;font-size:14px;font-weight:600;cursor:pointer;backdrop-filter:blur(4px)}
 .store-play svg{width:18px;height:18px}
 .store-play:hover{background:rgba(0,0,0,.78)}
+.store-play.store-foto{left:auto;right:12px}
 /* visore foto: clic su una foto per vederla grande e ingrandirla */
 .zoomabile{cursor:zoom-in}
 .foto-box{border:0;padding:0;margin:0;width:100vw;height:100dvh;max-width:none;max-height:none;background:rgba(10,14,11,.94);color:#fff;overflow:hidden}
@@ -1555,6 +1556,12 @@ const CONFIG = {
       mapsQuery: "Floricoltura Lagomarsino, Via Albaro 16r, Genova",
       coords: "44.4001653,8.9583783",
       mapsUrl: "https://maps.app.goo.gl/R4ZwopH4Q3zwoDz76",
+      foto: "media/albaro-interno.jpg", fotoAlt: "L'interno del negozio di Albaro, con mazzi di fiori secchi appesi al soffitto e vasi sugli scaffali", fotoPos: "center 31%",
+      altreFoto: [
+        ["media/albaro-vetrina.jpg", "La vetrina del negozio di via Albaro 16r con l'insegna Floricoltura Lagomarsino"],
+        ["media/albaro-bancone.jpg", "Il bancone del negozio di Albaro con fiori secchi e luci di Natale"],
+        ["media/albaro-dettaglio.jpg", "Decorazioni natalizie nel negozio di Albaro: alberello rosa, renne dorate e gnomo"]
+      ],
       orari: null,           // ← null = "orari in arrivo"
       inApertura: true,      // ← togliere quando apre e mettere gli orari
     },
@@ -1687,7 +1694,7 @@ function renderStores(){
       return `<li class="${g===t.giorno?"today":""} ${special?"special":""}"><span>${GIORNI[g]}</span><span>${val}</span></li>`;
     }).join("");
     return `<article class="store" id="negozio-${n.id}">
-      ${n.foto?`<div class="store-photo"><img src="${n.foto}" alt="${n.fotoAlt||""}" loading="lazy"${n.fotoPos?` style="object-position:${n.fotoPos}"`:""}>${n.video?`<button type="button" class="store-play" data-video="${n.video}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>Guarda il video</button>`:""}</div>`:""}
+      ${n.foto?`<div class="store-photo"><img src="${n.foto}" alt="${n.fotoAlt||""}" loading="lazy"${n.fotoPos?` style="object-position:${n.fotoPos}"`:""}>${n.video?`<button type="button" class="store-play" data-video="${n.video}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>Guarda il video</button>`:""}${(n.altreFoto||[]).map(([src,alt])=>`<img src="${src}" alt="${alt}" loading="lazy" hidden>`).join("")}${n.altreFoto&&n.altreFoto.length?`<button type="button" class="store-play store-foto"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h3l2-2h6l2 2h3v13H4zM12 9a4 4 0 100 8 4 4 0 000-8z" fill="currentColor"/></svg>Altre foto</button>`:""}</div>`:""}
       <div class="store-top">
         <span class="store-type">${n.tipo}</span>
         <h3>${n.nome}</h3>
@@ -2169,6 +2176,7 @@ document.addEventListener("click", e=>{ if(menuPanel.classList.contains("open") 
 renderStores(); renderFeed(); setupOrder(); renderFooter(); caricaGoogle();
 /* Video del negozio (si carica solo quando lo apri) */
 document.addEventListener("click", e=>{
+  const fb = e.target.closest(".store-foto"); if (fb){ const i = fb.parentNode.querySelector("img"); i.classList.add("zoomabile"); fb.parentNode.querySelectorAll("img").forEach(x => x.classList.add("zoomabile")); i.click(); return; }
   const b = e.target.closest(".store-play"); if (!b) return;
   let d = document.getElementById("videoBox");
   if (!d){ d=document.createElement("dialog"); d.id="videoBox"; d.className="video-box";
@@ -2290,7 +2298,7 @@ setInterval(()=>{ if(!CONFIG.google.apiKey) document.querySelectorAll(".store").
   document.addEventListener("click", e => {
     const f = e.target.closest("img.zoomabile"); if (!f || e.defaultPrevented) return;
     if (!d) crea();
-    const gruppo = f.closest(".gallery,.natale-grid,.comp-grid,.euroflora,.lavoro-grid,section") || document.body;
+    const gruppo = f.closest(".store-photo,.gallery,.natale-grid,.comp-grid,.euroflora,.lavoro-grid,section") || document.body;
     lista = [...gruppo.querySelectorAll("img.zoomabile")]; idx = Math.max(0, lista.indexOf(f));
     mostra(); document.documentElement.style.overflow = "hidden"; d.showModal();
   });
