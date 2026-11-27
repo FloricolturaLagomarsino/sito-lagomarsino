@@ -733,6 +733,13 @@ section{padding:64px 0}
 @media (max-width:700px){.euroflora{grid-template-columns:1fr 1fr;height:auto}.euroflora img:first-child{grid-column:1/-1;aspect-ratio:3/2}.euroflora img:not(:first-child){aspect-ratio:2/3}}
 
 .euroflora.e25{grid-template-columns:1fr 1fr 1fr;height:480px}
+.euro-prec{margin-top:22px}
+.euro-prec>summary{list-style:none;cursor:pointer;display:inline-flex}
+.euro-prec>summary::-webkit-details-marker{display:none}
+.euro-prec .chiudi-prec,.euro-prec[open] .apri-prec{display:none}
+.euro-prec[open] .chiudi-prec{display:inline}
+.euroflora.e18{grid-template-columns:1fr 1.55fr}
+@media (max-width:700px){.euroflora.e18{grid-template-columns:1fr}.euroflora.e18 img,.euroflora.e18 img:first-child,.euroflora.e18 img:not(:first-child){grid-column:auto;aspect-ratio:auto;height:auto}}
 @media (max-width:700px){.euroflora.e25 img:first-child{grid-column:auto}.euroflora.e25 img{aspect-ratio:3/4}.euroflora.e25 img:last-child{grid-column:1/-1;aspect-ratio:4/3}}
 
 .comp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
@@ -1158,12 +1165,20 @@ footer{position:relative}
       <img src="media/euroflora25-1.jpg" alt="Aiuole di begonie, margherite e tagete bordate di vasi in terracotta a Euroflora 2025" loading="lazy">
       <img src="media/euroflora25-premi.jpg" alt="I sei primi premi e le due menzioni della giuria vinti a Euroflora 2025" loading="lazy">
     </div>
+    <details class="euro-prec">
+    <summary class="btn btn-line"><span class="apri-prec">Le edizioni precedenti: 2022 e 2018</span><span class="chiudi-prec">Nascondi le edizioni precedenti</span></summary>
     <p style="margin:28px 0 18px;color:var(--muted);max-width:60ch"><strong style="color:var(--ink)">2022, Parchi di Nervi.</strong> Abbiamo partecipato a Euroflora con un allestimento intorno alla fontana: margherite, gerani, felci e cesti fioriti coltivati nelle nostre serre.</p>
     <div class="euroflora">
       <img src="media/euroflora-1.jpg" alt="Allestimento Lagomarsino a Euroflora 2022: fontana circondata da margherite bianche, gerani e cesti fioriti" loading="lazy">
       <img src="media/euroflora-2.jpg" alt="Cesti di fiori gialli e bianchi davanti alla fontana, con il mare sullo sfondo" loading="lazy">
       <img src="media/euroflora-3.jpg" alt="Panchina arcobaleno con fioriere di gerani e cesti fioriti appesi ai rami" loading="lazy">
     </div>
+    <p style="margin:28px 0 18px;color:var(--muted);max-width:60ch"><strong style="color:var(--ink)">2018, Parchi di Nervi.</strong> Alla prima edizione di Euroflora ai Parchi di Nervi abbiamo realizzato la tavolozza del pittore, con il pennello e una grande cornice fiorita: più di mille visitatori si sono fermati a farsi una foto.</p>
+    <div class="euroflora e18">
+      <img src="media/euroflora18-cornice.jpg" alt="Cornice fiorita di margherite rosa, bianche e gialle a Euroflora 2018, con le aiuole sullo sfondo" loading="lazy">
+      <img src="media/euroflora18-tavolozza.jpg" alt="La tavolozza del pittore a Euroflora 2018: aiuole di fiori colorati, un grande pennello e lettere fatte di fiori" loading="lazy">
+    </div>
+    </details>
     <div class="fiere">
       <p><strong>Dove trovarci, oltre a Euroflora</strong></p>
       <ul>

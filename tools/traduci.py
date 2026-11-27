@@ -14,6 +14,10 @@ src = (ROOT / "index.html").read_text(encoding="utf-8")
 # Coppie (italiano, inglese). Applicate dalla più lunga alla più corta.
 T = [
 # ---------- head ----------
+('<span class="apri-prec">Le edizioni precedenti: 2022 e 2018</span><span class="chiudi-prec">Nascondi le edizioni precedenti</span>', '<span class="apri-prec">Previous editions: 2022 and 2018</span><span class="chiudi-prec">Hide previous editions</span>'),
+('<strong style="color:var(--ink)">2018, Parchi di Nervi.</strong> Alla prima edizione di Euroflora ai Parchi di Nervi abbiamo realizzato la tavolozza del pittore, con il pennello e una grande cornice fiorita: più di mille visitatori si sono fermati a farsi una foto.', '<strong style="color:var(--ink)">2018, Parchi di Nervi.</strong> At the first edition of Euroflora in the Parchi di Nervi we created the painter\'s palette, with a brush and a large flower frame: more than a thousand visitors stopped to take a photo in it.'),
+('alt="Cornice fiorita di margherite rosa, bianche e gialle a Euroflora 2018, con le aiuole sullo sfondo"', 'alt="Flower frame of pink, white and yellow daisies at Euroflora 2018, with flowerbeds behind"'),
+('alt="La tavolozza del pittore a Euroflora 2018: aiuole di fiori colorati, un grande pennello e lettere fatte di fiori"', 'alt="The painter\'s palette at Euroflora 2018: colourful flowerbeds, a giant brush and letters made of flowers"'),
 ('<html lang="it">', '<html lang="en">'),
 ('<title>Floricoltura Lagomarsino · Vivaio e fiorai a Genova Nervi, Albaro e Recco</title>',
  '<title>Floricoltura Lagomarsino · Plant nursery and florists in Genoa Nervi, Albaro and Recco</title>'),

@@ -734,6 +734,13 @@ section{padding:64px 0}
 @media (max-width:700px){.euroflora{grid-template-columns:1fr 1fr;height:auto}.euroflora img:first-child{grid-column:1/-1;aspect-ratio:3/2}.euroflora img:not(:first-child){aspect-ratio:2/3}}
 
 .euroflora.e25{grid-template-columns:1fr 1fr 1fr;height:480px}
+.euro-prec{margin-top:22px}
+.euro-prec>summary{list-style:none;cursor:pointer;display:inline-flex}
+.euro-prec>summary::-webkit-details-marker{display:none}
+.euro-prec .chiudi-prec,.euro-prec[open] .apri-prec{display:none}
+.euro-prec[open] .chiudi-prec{display:inline}
+.euroflora.e18{grid-template-columns:1fr 1.55fr}
+@media (max-width:700px){.euroflora.e18{grid-template-columns:1fr}.euroflora.e18 img,.euroflora.e18 img:first-child,.euroflora.e18 img:not(:first-child){grid-column:auto;aspect-ratio:auto;height:auto}}
 @media (max-width:700px){.euroflora.e25 img:first-child{grid-column:auto}.euroflora.e25 img{aspect-ratio:3/4}.euroflora.e25 img:last-child{grid-column:1/-1;aspect-ratio:4/3}}
 
 .comp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
@@ -1159,12 +1166,20 @@ footer{position:relative}
       <img src="../media/euroflora25-1.jpg" alt="Beds of begonias, daisies and marigolds edged with terracotta pots at Euroflora 2025" loading="lazy">
       <img src="../media/euroflora25-premi.jpg" alt="The six first prizes and two jury mentions won at Euroflora 2025" loading="lazy">
     </div>
+    <details class="euro-prec">
+    <summary class="btn btn-line"><span class="apri-prec">Previous editions: 2022 and 2018</span><span class="chiudi-prec">Hide previous editions</span></summary>
     <p style="margin:28px 0 18px;color:var(--muted);max-width:60ch"><strong style="color:var(--ink)">2022, Parchi di Nervi.</strong> We took part in Euroflora with a display around the fountain: daisies, geraniums, ferns and flower baskets grown in our greenhouses.</p>
     <div class="euroflora">
       <img src="../media/euroflora-1.jpg" alt="Lagomarsino display at Euroflora 2022: fountain surrounded by white daisies, geraniums and flower baskets" loading="lazy">
       <img src="../media/euroflora-2.jpg" alt="Baskets of yellow and white flowers in front of the fountain, with the sea behind" loading="lazy">
       <img src="../media/euroflora-3.jpg" alt="Rainbow bench with geranium planters and flower baskets hanging from the branches" loading="lazy">
     </div>
+    <p style="margin:28px 0 18px;color:var(--muted);max-width:60ch"><strong style="color:var(--ink)">2018, Parchi di Nervi.</strong> At the first edition of Euroflora in the Parchi di Nervi we created the painter's palette, with a brush and a large flower frame: more than a thousand visitors stopped to take a photo in it.</p>
+    <div class="euroflora e18">
+      <img src="../media/euroflora18-cornice.jpg" alt="Flower frame of pink, white and yellow daisies at Euroflora 2018, with flowerbeds behind" loading="lazy">
+      <img src="../media/euroflora18-tavolozza.jpg" alt="The painter's palette at Euroflora 2018: colourful flowerbeds, a giant brush and letters made of flowers" loading="lazy">
+    </div>
+    </details>
     <div class="fiere">
       <p><strong>Where else to find us</strong></p>
       <ul>
